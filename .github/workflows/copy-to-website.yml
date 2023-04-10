@@ -24,8 +24,16 @@ jobs:
           exclude: |
             **/.git*
             **/.git*/**
-            **/node_modules/**
-            fileToExclude.txt
+            **/data/**
+            **/.renv/**
+            **/.Rprofile
+            **/analyse.*
+            **/config.R
+            **/preprocess.py
+            **/Project.Rproj
+            **/README.md
+            **/renv.lock
+            **/requirements.txt
           dry-run: true
           
           

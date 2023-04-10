@@ -43,5 +43,6 @@ jobs:
         uses: planetoftheweb/copy-to-branches@v1
         env:
           key: gh-pages
-          files: analyse.html    
+          branches: main
+          files: analyse.html index.html    
       

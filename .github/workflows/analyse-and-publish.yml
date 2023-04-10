@@ -15,16 +15,20 @@ jobs:
         
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
+        
       - name: Install libcurl
         run: sudo apt-get install -y libcurl4-openssl-dev
+        
       - name: Install libudunits2 (for {units} in R)
         run: sudo apt-get install libudunits2-dev
+        
       - name: Install gdal
         run: |
           sudo add-apt-repository ppa:ubuntugis/ppa
           sudo apt-get update
           sudo apt-get install gdal-bin
           sudo apt-get install libgdal-dev libgeos-dev libproj-dev libsqlite0-dev
+          
       - name: Install libraries
         uses: r-lib/actions/setup-renv@v2
         with:
@@ -34,4 +38,10 @@ jobs:
         uses: quarto-dev/quarto-actions/publish@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # this secret is always available for github actions
+      
+      - name: Copy To Branches Action
+        uses: planetoftheweb/copy-to-branches@v1
+        env:
+          key: gh-pages
+          files: analyse.html    
       

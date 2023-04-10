@@ -19,7 +19,7 @@ jobs:
           username: ralphstr
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
-          server-dir: /home/ralphstr/public_html/monitoring-geodienste-ch
+          server-dir: /home/ralphstr/public_html/monitoring-geodienste-ch/
           log-level: verbose
           exclude: |
             **/.git*

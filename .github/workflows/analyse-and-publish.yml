@@ -10,9 +10,6 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Work around permission issue wrt planetoftheweb/copy-to-branches@v1
-        run: git config --system --add safe.directory /github/workspace
-        
       - name: Check out repository
         uses: actions/checkout@v3
         
@@ -43,7 +40,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # this secret is always available for github actions
       
       - name: Copy To Branches Action
-        uses: planetoftheweb/copy-to-branches@v1
+        uses: planetoftheweb/copy-to-branches@v1.3
         env:
           key: gh-pages
           branches: main

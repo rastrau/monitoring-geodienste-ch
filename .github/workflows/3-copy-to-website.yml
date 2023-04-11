@@ -18,8 +18,9 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
+          # FTP_DIR is defined relatively to the user's "root" directory: ./<...>/monitoring-geodienste-ch/
           server-dir: ${{ secrets.FTP_DIR }}
+          protocol: ftps
           log-level: verbose
           exclude: |
             **/.git*

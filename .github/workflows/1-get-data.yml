@@ -1,4 +1,4 @@
-name: 1 data collection and preprocessing (geodienste.ch)
+name: 1-data-collection-geodienste-ch
 
 on:
   schedule:

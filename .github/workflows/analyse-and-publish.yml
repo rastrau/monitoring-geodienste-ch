@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Work around permission issue wrt planetoftheweb/copy-to-branches@v1
-        run: git config --global --add safe.directory /github/workspace
+        run: git config --system --add safe.directory /github/workspace
         
       - name: Check out repository
         uses: actions/checkout@v3

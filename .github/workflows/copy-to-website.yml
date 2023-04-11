@@ -26,13 +26,16 @@ jobs:
             **/.git*/**
             **/data/**
             **/renv/**
+            **/renv.lock
+            **/renv/activate.R
+            **/renv/settings.dcf
+            **/renv/settings.json
             **/.Rprofile
             **/analyse.*
             **/config.R
             **/preprocess.py
             **/Project.Rproj
             **/README.md
-            **/renv.lock
             **/requirements.txt
           dry-run: true
           

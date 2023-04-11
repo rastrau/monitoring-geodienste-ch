@@ -15,12 +15,12 @@ jobs:
       - name: Copy files to website
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ralphstraumann.ch
+          server: sftp://ralphstraumann.ch
           username: ralphstr
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           server-dir: /home/ralphstr/public_html/monitoring-geodienste-ch/
-          log-level: standard
+          log-level: verbose
           exclude: |
             **/.git*
             **/.git*/**
@@ -37,6 +37,5 @@ jobs:
             **/Project.Rproj
             **/README.md
             **/requirements.txt
-          dry-run: false
           
           

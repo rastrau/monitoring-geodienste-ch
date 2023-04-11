@@ -44,5 +44,5 @@ jobs:
         env:
           key: gh-pages
           branches: main
-          files: analyse.html index.html    
+          files: index.html index_files/*
       

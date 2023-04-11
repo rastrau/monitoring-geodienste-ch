@@ -37,6 +37,6 @@ jobs:
             **/Project.Rproj
             **/README.md
             **/requirements.txt
-          dry-run: true
+          dry-run: false
           
           

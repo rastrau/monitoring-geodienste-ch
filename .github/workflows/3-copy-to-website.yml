@@ -15,7 +15,7 @@ jobs:
       - name: Copy files to website
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: sftp://ralphstraumann.ch
+          server: ralphstraumann.ch
           username: ralphstr
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps

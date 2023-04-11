@@ -468,10 +468,10 @@ plt_data_comparison_subset
 df_canton %>%
   mutate(
     category = case_when(
-      open_score_wo_nduc_canton >= med_openness & count_available_canton >= med_count ~ "überdurschnittlich viele Daten, überdurchschnittlich offen",
-      open_score_wo_nduc_canton >= med_openness & count_available_canton < med_count ~ "unterdurschnittliche Anzahl Daten, überdurchschnittlich offen",
-      open_score_wo_nduc_canton < med_openness & count_available_canton < med_count ~ "unterdurschnittliche Anzahl Daten, unterdurschnittlich offen",
-      open_score_wo_nduc_canton < med_openness & count_available_canton >= med_count ~ "überdurschnittlich viele Daten, unterdurschnittlich offen")) -> df_canton
+      open_score_wo_nduc_canton >= med_openness & count_available_canton >= med_count ~ "überdurchschnittlich viele Daten, überdurchschnittlich offen",
+      open_score_wo_nduc_canton >= med_openness & count_available_canton < med_count ~ "unterdurchschnittliche Anzahl Daten, überdurchschnittlich offen",
+      open_score_wo_nduc_canton < med_openness & count_available_canton < med_count ~ "unterdurchschnittliche Anzahl Daten, unterdurchschnittlich offen",
+      open_score_wo_nduc_canton < med_openness & count_available_canton >= med_count ~ "überdurchschnittlich viele Daten, unterdurchschnittlich offen")) -> df_canton
 
 
 swiss_map <- ne_states(country = "Switzerland", returnclass = "sf") %>%

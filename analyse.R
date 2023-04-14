@@ -273,7 +273,7 @@ plt_data_prop_all <- df2 %>%
   geom_col(position = position_stack(reverse = TRUE)) +
   scale_fill_manual(values = cols) +
   scale_x_continuous(labels = scales::percent) +
-  labs(fill = "Zugriffskategorie", caption = updated, x = "Anteil der Datensätze") +
+  labs(fill = "Zugriffskategorie", x = "Anteil der Datensätze") +
   theme_options +
   theme(axis.title.y = element_blank())
 
@@ -289,7 +289,7 @@ plt_data_prop_wo_nd <- df2 %>%
   geom_col(position = position_stack(reverse = TRUE)) +
   scale_fill_manual(values = cols) +
   scale_x_continuous(labels = scales::percent) +
-  labs(fill = "Zugriffskategorie", caption = updated, x = "Anteil der untersuchten Datensätze") +
+  labs(fill = "Zugriffskategorie", x = "Anteil der untersuchten Datensätze") +
   theme_options +
   theme(axis.title.y = element_blank())
 
@@ -305,7 +305,7 @@ plt_data_prop_wo_nduc <- df2 %>%
   geom_col(position = position_stack(reverse = TRUE)) +
   scale_fill_manual(values = cols) +
   scale_x_continuous(labels = scales::percent) +
-  labs(fill = "Zugriffskategorie", caption = updated, x = "Anteil der untersuchten Datensätze") +
+  labs(fill = "Zugriffskategorie", x = "Anteil der untersuchten Datensätze") +
   theme_options +
   theme(axis.title.y = element_blank())
 
@@ -361,7 +361,7 @@ plt_data_missingdata <- df2_missing %>%
                           "Themen in dieser Kategorie:\n", topics))) +
   geom_col(position = position_stack(reverse = TRUE)) +
   scale_fill_manual(values = cols) +
-  labs(fill = "Datenverfügbarkeit", caption = updated, x = "Anzahl nicht vorhandener Datensätze") +
+  labs(fill = "Datenverfügbarkeit", x = "Anzahl nicht vorhandener Datensätze") +
   theme_options +
   theme(axis.title.y = element_blank())
 
@@ -387,12 +387,12 @@ df_canton <- df2 %>%
 
 
 # Produce plot
-min_openness <- 0.8
+min_openness <- 1
 med_openness <- median(df_canton$open_score_wo_nduc_canton)
-max_openness <- 3 + 0.2
-min_count <- min(df_canton$count_available_canton) - 1
+max_openness <- 3 + 0.15
+min_count <- min(df_canton$count_available_canton) - 0.5
 med_count <- median(df_canton$count_available_canton)
-max_count <- max(df_canton$count_available_canton) + 1
+max_count <- max(df_canton$count_available_canton) + 0.5
 
 plt_data_comparison <- df_canton %>%
   ggplot() +
@@ -411,16 +411,18 @@ plt_data_comparison <- df_canton %>%
                 text = "überdurchschnittliche Anzahl verfügbarer Datensätze,\nüberdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#50B593") +
   geom_text(aes(x = open_score_wo_nduc_canton,
                 y = count_available_canton,
-                label = canton,
+                label = paste0(sprintf("<b>%s</b>", canton)),
                 text = str_c("Kanton ", canton, "\n\n",
                              "Offenheit: ", round(open_score_wo_nduc_canton, 2), "\n",
                              "Verfügbare Datensätze: ", count_available_canton)),
-            fontface = "bold",
-            position = position_jitter(width = 0.1, height = 0.4)) +
-  scale_x_continuous(limits = c(min_openness, max_openness), breaks = seq(0, 3, 0.5)) +
-  scale_y_continuous(breaks = seq(0, max_count, 2)) +
-  labs(caption = "",
-       y = "Anzahl verfügbarer Datensätze",
+            size = 5,
+            position = position_jitter(width = 0.05, height = 0.2)) +
+  scale_x_continuous(limits = c(min_openness, max_openness),
+                     breaks = seq(0, 3, 0.5),
+                     expand = expansion(add = c(0.03, 0))) +
+  scale_y_continuous(breaks = seq(0, max_count, 1),
+                     expand = expansion(add = c(0.3, 0.2))) +
+  labs(y = "Anzahl verfügbarer Datensätze",
        x = "Offenheit der verfügbaren Datensätze") +
   theme_options
 
@@ -456,8 +458,7 @@ plt_data_comparison_subset <- df_canton %>%
             position = position_jitter(width = 0.005, height = 0.2)) +
   scale_x_continuous(limits = c(min_openness, max_openness), breaks = seq(0, 3, 0.05)) +
   scale_y_continuous(limits = c(min_count, max_count), breaks = seq(min_count, max_count, 2)) +
-  labs(caption = "",
-       y = "Anzahl verfügbarer Datensätze",
+  labs(y = "Anzahl verfügbarer Datensätze",
        x = "Offenheit der verfügbaren Datensätze") +
   theme_options
 
@@ -468,10 +469,10 @@ plt_data_comparison_subset
 df_canton %>%
   mutate(
     category = case_when(
-      open_score_wo_nduc_canton >= med_openness & count_available_canton >= med_count ~ "überdurchschnittlich viele Daten, überdurchschnittlich offen",
-      open_score_wo_nduc_canton >= med_openness & count_available_canton < med_count ~ "unterdurchschnittliche Anzahl Daten, überdurchschnittlich offen",
-      open_score_wo_nduc_canton < med_openness & count_available_canton < med_count ~ "unterdurchschnittliche Anzahl Daten, unterdurchschnittlich offen",
-      open_score_wo_nduc_canton < med_openness & count_available_canton >= med_count ~ "überdurchschnittlich viele Daten, unterdurchschnittlich offen")) -> df_canton
+      open_score_wo_nduc_canton >= med_openness & count_available_canton >= med_count ~ "überdurchschnittlich viele Daten,\nüberdurchschnittlich offen",
+      open_score_wo_nduc_canton >= med_openness & count_available_canton < med_count ~ "unterdurchschnittliche Anzahl Daten,\nüberdurchschnittlich offen",
+      open_score_wo_nduc_canton < med_openness & count_available_canton < med_count ~ "unterdurchschnittliche Anzahl Daten,\nunterdurchschnittlich offen",
+      open_score_wo_nduc_canton < med_openness & count_available_canton >= med_count ~ "überdurchschnittlich viele Daten,\nunterdurchschnittlich offen")) -> df_canton
 
 
 swiss_map <- ne_states(country = "Switzerland", returnclass = "sf") %>%
@@ -481,26 +482,26 @@ swiss_map <- ne_states(country = "Switzerland", returnclass = "sf") %>%
 cantons_map <- ggplot(data = swiss_map,
                       aes(fill = category)) +
   geom_sf(color = "white") +
-  scale_fill_manual(values =
-                      cols <- c("#50B593", "#85CCB5", "#85CCD2", "#91BFDB")) +
+  scale_fill_manual(values = c("#50B593", "#85CCB5", "#85CCD2", "#91BFDB")) +
   theme_options +
-  theme(axis.text=element_blank(),
+  theme(axis.text = element_blank(),
         legend.position = "bottom",
-        legend.spacing.y = unit(0, 'cm'),
-        legend.text=element_text(size=12),
-        panel.background=element_blank(),
-        panel.grid.major=element_blank(),
-        panel.grid.minor=element_blank(),
+        legend.spacing.x = unit(0.3, 'cm'),
+        legend.spacing.y = unit(0.3, 'cm'),
+        legend.text = element_text(size = 9),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
         panel.margin = unit(c(0, 0, 0, 0), "cm"),
-        axis.ticks=element_blank(),
-        axis.text.x=element_blank(),
-        axis.text.y=element_blank(),
-        axis.title.x=element_blank(),
-        axis.title.y=element_blank(),
+        axis.ticks = element_blank(),
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
         plot.background = element_rect(fill = "white", colour = NA),
-        plot.margin = unit(c(-.2, -2, -.2, -2), "cm")) +
-  labs(x=NULL, y=NULL) +
-  guides(fill = guide_legend(nrow = 4, byrow = TRUE))
+        plot.margin = unit(c(-1.4, -1, -1, -1.1), "cm")) +
+  labs(x = NULL, y = NULL) +
+  guides(fill = guide_legend(nrow = 2, byrow = TRUE))
 
 ggsave(here("map-data-openness-completeness.png"),
-       cantons_map, width = 22, height = 18, units = "cm")
+       cantons_map, width = 22, height = 17.3, units = "cm")

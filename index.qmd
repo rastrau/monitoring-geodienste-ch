@@ -64,6 +64,9 @@ Wieso Nutzerinnen und Nutzer je nach Situation den einen oder anderen Bezugskana
 ```{r}
 #| label: fig-data-openness-wo-nd
 #| fig-cap: !expr str_c("Verfügbarkeit (Zugriffskategorie) von Geodaten auf geodienste.ch  (Stand ", updated, "). Die Kategorie «Keine Daten» ist ausgeblendet. Die Datensatz-Bezeichnungen, die beim Überfahren der Grafik erscheinen, sind in @sec-datensaetze erklärt.")
+#| column: page-inset-right
+#| fig-height: 10
+#| fig-width: 10
 #| warning: false
 #| echo: false
 
@@ -76,6 +79,9 @@ Auch in @fig-data-openness-wo-nduc wird die Offenheit des Zugriffs auf Daten-Dow
 ```{r}
 #| label: fig-data-openness-wo-nduc
 #| fig-cap: !expr str_c("Verfügbarkeit (Zugriffskategorie) von Geodaten auf geodienste.ch (Stand ", updated, "). Die Kategorie «Keine Daten» ist ausgeblendet. Die Datensatz-Bezeichnungen, die beim Überfahren der Grafik erscheinen, sind in @sec-datensaetze erklärt.")
+#| column: page-inset-right
+#| fig-height: 10
+#| fig-width: 10
 #| warning: false
 #| echo: false
 
@@ -94,6 +100,8 @@ Auf geodienste.ch können die exakten Gründe für das Fehlen eines bestimmten D
 ```{r}
 #| label: fig-data-completeness
 #| fig-cap: !expr str_c("Nicht vorhandene Geodaten auf geodienste.ch (Zugriffskategorien «Keine Daten» und «Im Aufbau») (Stand ", updated, "). Das Fürstentum Liechtenstein verfügt nur über sehr wenige Datensätze auf geodienste.ch; es wurde deshalb aus der Visualisierung entfernt. Die Datensatz-Bezeichnungen, die beim Überfahren der Grafik erscheinen, sind in @sec-datensaetze erklärt.")
+#| fig-height: 8
+#| fig-width: 10
 #| warning: false
 #| echo: false
 
@@ -110,6 +118,9 @@ Lesebeispiel für @fig-data-openness-completeness: Kantone im dunkelgrünen Bere
 ```{r}
 #| label: fig-data-openness-completeness
 #| fig-cap: !expr str_c("Mittlere Offenheit der auf geodienste.ch verfügbaren Datensätze (horizontale Achse) und Anzahl auf geodienste.ch verfügbarer Datensätze (vertikale Achse) (Stand ", updated, "). Achtung, die vertikale Achse beginnt *nicht* bei 0. Die Grafik ist zoombar mit der Werkzeugleiste oberhalb der Grafik. Das Fürstentum Liechtenstein verfügt nur über sehr wenige Datensätze auf geodienste.ch; es wurde deshalb aus der Visualisierung entfernt. Die Grafik ist zoombar mit der Werkzeugleiste oberhalb der Grafik.")
+#| column: page-inset-right
+#| fig-height: 15
+#| fig-width: 10
 #| warning: false
 #| echo: false
 
@@ -117,21 +128,12 @@ plt_data_comparison
 
 ```
 
-@fig-data-openness-completeness-subset ist ein Ausschnitt aus @fig-data-openness-completeness, der auf den Bereich von mittlerer Offenheit und mittlerer Vollständigkeit fokussiert.
+In @fig-map-data-openness-completeness sind die Kantone gemäss der Offenheit und der Anzahl ihrer Datensätze auf geodienste.ch eingefärbt. Die Farben entsprechen der Einfärbung der unterschiedlichen Bereiche in @fig-data-openness-completeness.
 
-```{r}
-#| label: fig-data-openness-completeness-subset
-#| fig-cap: !expr str_c("Mittlere Offenheit der auf geodienste.ch verfügbaren Datensätze (horizontale Achse) und Anzahl auf geodienste.ch verfügbarer Datensätze (vertikale Achse)  (Stand ", updated, "). Die Abbildung zeigt einen Ausschnitt von @fig-data-openness-completeness. Achtung, die Achsen beginnen *nicht* bei 0. Die Grafik ist zoombar mit der Werkzeugleiste oberhalb der Grafik.")
-#| warning: false
-#| echo: false
-
-plt_data_comparison_subset
-
-```
-
-In @fig-map-data-openness-completeness sind die Kantone gemäss der Offenheit und der Anzahl ihrer Datensätze auf geodienste.ch eingefärbt. Die Farben entsprechen der Einfärbung der unterschiedlichen Bereiche in @fig-data-openness-completeness und @fig-data-openness-completeness-subset.
-
+:::{.column-page-inset-right}
 ![Offenheit und Anzahl der auf geodienste.ch verfügbaren Datensätze der Kantone.](map-data-openness-completeness.png){#fig-map-data-openness-completeness}
+:::
+
 
 ## Erläuterungen
 
@@ -167,7 +169,7 @@ Wenn für die Nutzung eines Datensatzes ein Vertrag unterschrieben werden muss, 
 In den Abbildungen oben werden Datensätze auf geodienste.ch wegen dem beschränkten Platz mit den folgenden Abkürzungen bezeichnet:
 
 | Abkürzung | Datensatz                                                                                            |
-|----------------------|--------------------------------------------------|
+|-------------------|-----------------------------------------------------|
 | AV        | Amtliche Vermessung                                                                                  |
 | BdF       | Landwirtschaftliche Bewirtschaftung -- Biodiversitätsförderflächen, Qualitätsstufe II und Vernetzung |
 | ELq       | Landwirtschaftliche Bewirtschaftung -- Elemente mit Landschaftsqualität                              |

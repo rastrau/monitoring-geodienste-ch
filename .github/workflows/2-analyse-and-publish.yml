@@ -34,15 +34,15 @@ jobs:
         with:
           cache-version: 1
 
-      - name: Publish to GitHub Pages (and render)
-        uses: quarto-dev/quarto-actions/publish@v2
+      - name: Render
+        uses: quarto-dev/quarto-actions/render@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # this secret is always available for github actions
       
-      - name: Copy To Branches Action
-        uses: planetoftheweb/copy-to-branches@v1.3
-        env:
-          key: gh-pages
-          branches: main
-          files: index.html index_files/*
+      #- name: Copy To Branches Action
+      #  uses: planetoftheweb/copy-to-branches@v1.3
+      #  env:
+      #    key: gh-pages
+      #    branches: main
+      #    files: index.html index_files/*
       

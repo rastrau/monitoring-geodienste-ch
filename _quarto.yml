@@ -1,0 +1,32 @@
+project:
+  type: website
+
+website:
+  favicon: assets/favicon.ico
+  page-footer:
+    left: "&copy; Ralph Straumann"
+    right:
+      - icon: linkedin
+        href: https://www.linkedin.com/in/ralphstraumann
+      - icon: mastodon
+        href: https://mstdn.social/@rastrau
+      - icon: github
+        href: https://github.com/rastrau
+
+  site-url: https://ralphstraumann.ch
+  navbar:
+    background: primary
+    logo: assets/logo.png
+    search: false
+
+format:
+  html:
+    theme: lumen
+    anchor-sections: true
+    smooth-scroll: true
+    css: styles.css
+    toc: true
+    email-obfuscation: javascript
+
+editor: visual
+

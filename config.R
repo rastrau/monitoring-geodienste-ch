@@ -10,7 +10,7 @@ factor_levels_publication <- c("Frei erhältlich", "Frei erhältlich, mit Vertra
 
 factor_levels_publication_missing <- c("Keine Daten", "Im Aufbau")
 
-cols <- c("#50B593", "#85CCB5", "#4575B4", "#91BFDB", "#FF9F73", "#E66244", "#B9B9B9", "#9F9F9F")
+cols <- c("#56C190", "#85CCA9", "#4575B4", "#91BFDB", "#FF9F73", "#E66244", "#B9B9B9", "#9F9F9F")
 
 theme_options <-
   theme_minimal() +

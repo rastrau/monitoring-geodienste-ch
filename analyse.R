@@ -482,7 +482,7 @@ swiss_map <- ne_states(country = "Switzerland", returnclass = "sf") %>%
 cantons_map <- ggplot(data = swiss_map,
                       aes(fill = category)) +
   geom_sf(color = "white") +
-  scale_fill_manual(values = c("#50B593", "#85CCB5", "#85CCD2", "#91BFDB")) +
+  scale_fill_manual(values = c("#56C190", "#85CCA9", "#85CCD2", "#91BFDB")) +
   theme_options +
   theme(axis.text = element_blank(),
         legend.position = "bottom",

@@ -402,13 +402,13 @@ plt_data_comparison <- df_canton %>%
                 text = "unterdurchschnittliche Anzahl verfügbarer Datensätze,\nunterdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#91BFDB") +
   geom_rect(aes(xmin = min_openness, xmax = med_openness,
                 ymin = med_count, ymax = max_count,
-                text = "überdurchschnittliche Anzahl verfügbarer Datensätze,\nunterdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#85CCB5") +
+                text = "überdurchschnittliche Anzahl verfügbarer Datensätze,\nunterdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#85CCA9") +
   geom_rect(aes(xmin = med_openness, xmax = max_openness,
                 ymin = min_count, ymax = med_count,
                 text = "unterdurchschnittliche Anzahl verfügbarer Datensätze,\nüberdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#85CCD2") +
   geom_rect(aes(xmin = med_openness, xmax = max_openness,
                 ymin = med_count, ymax = max_count,
-                text = "überdurchschnittliche Anzahl verfügbarer Datensätze,\nüberdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#50B593") +
+                text = "überdurchschnittliche Anzahl verfügbarer Datensätze,\nüberdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#54B987") +
   geom_text(aes(x = open_score_wo_nduc_canton,
                 y = count_available_canton,
                 label = paste0(sprintf("<b>%s</b>", canton)),
@@ -441,13 +441,13 @@ plt_data_comparison_subset <- df_canton %>%
                 text = "unterdurchschnittliche Anzahl verfügbarer Datensätze,\nunterdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#91BFDB") +
   geom_rect(aes(xmin = min_openness, xmax = med_openness,
                 ymin = med_count, ymax = max_count,
-                text = "überdurchschnittliche Anzahl verfügbarer Datensätze,\nunterdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#85CCB5") +
+                text = "überdurchschnittliche Anzahl verfügbarer Datensätze,\nunterdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#85CCA9") +
   geom_rect(aes(xmin = med_openness, xmax = max_openness,
                 ymin = min_count, ymax = med_count,
                 text = "unterdurchschnittliche Anzahl verfügbarer Datensätze,\nüberdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#85CCD2") +
   geom_rect(aes(xmin = med_openness, xmax = max_openness,
                 ymin = med_count, ymax = max_count,
-                text = "überdurchschnittliche Anzahl verfügbarer Datensätze,\nüberdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#50B593") +
+                text = "überdurchschnittliche Anzahl verfügbarer Datensätze,\nüberdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#54B987") +
   geom_text(aes(x = open_score_wo_nduc_canton,
                 y = count_available_canton,
                 label = canton,
@@ -482,7 +482,7 @@ swiss_map <- ne_states(country = "Switzerland", returnclass = "sf") %>%
 cantons_map <- ggplot(data = swiss_map,
                       aes(fill = category)) +
   geom_sf(color = "white") +
-  scale_fill_manual(values = c("#56C190", "#85CCA9", "#85CCD2", "#91BFDB")) +
+  scale_fill_manual(values = c("#54B987", "#85CCA9", "#85CCD2", "#91BFDB")) +
   theme_options +
   theme(axis.text = element_blank(),
         legend.position = "bottom",

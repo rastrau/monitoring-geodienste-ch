@@ -1,0 +1,17 @@
+/* css styles */
+#quarto-header > nav {
+  background-color: #053660;
+  border-color: #0961AD;
+}
+
+a {
+  color: #1A69AD;
+}
+
+a:hover {
+  color: #0C84ED;
+}
+
+h2 > a {
+  text-decoration: none!important;
+}

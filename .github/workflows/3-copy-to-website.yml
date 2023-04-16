@@ -20,6 +20,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           # FTP_DIR is defined relatively to the user's "root" directory: ./<...>/monitoring-geodienste-ch/
           server-dir: ${{ secrets.FTP_DIR }}
+          local-dir: ./_site/
           protocol: ftps
           log-level: verbose
           exclude: |

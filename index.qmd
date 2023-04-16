@@ -21,7 +21,6 @@ crossref:
   fig-prefix: Abbildung
   tbl-prefix: Tabelle
 link-external-icon: true
-footnotes-hover: true
 reference-location: margin
 search: false
 ---
@@ -40,15 +39,22 @@ source(here("analyse.R"), encoding = "UTF-8")
 *Ralph Straumann\
 Zuletzt aktualisiert: `r updated`*
 
-**Diese Webseite zeigt, wie die Schweizer Kantone räumliche Daten, auch Geodaten genannt, auf der Plattform [geodienste.ch](https://geodienste.ch) zur Verfügung stellen.** **Das Angebot der Kantone wird verglichen in Bezug auf die Anzahl angebotener Datensätze und in Bezug darauf, wie offen die Kantone den Zugriff auf ihre jeweiligen Geodaten gestalten.**
-
-Bei der Gestaltung der Webseite wurde darauf geachtet, dass die Informationen für möglichst viele Personen verständlich sind. Spezielle Begriffe sind mit dem Symbol «<abbr title="Demo">ⓘ</abbr>» gekennzeichnet. Wenn Sie den Mauszeiger über das Symbol halten, erhalten Sie eine kurze Erklärung des Begriffs. Die Abbildungen auf dieser Webseite sind interaktiv. Wenn Sie den Mauszeiger über eine Abbildung bewegen, erscheint zudem eine Werkzeugleiste oben rechts neben der Abbildung. Mit dem Kamera-Symbol 📷 können Sie die Abbildung herunterladen.
+**Unter [geodienste.ch](https://geodienste.ch) stellen die Kantone und das Fürstentum Liechtenstein ihre räumlichen Daten, auch Geodaten genannt, zur Verfügung. Die Daten sind so für interessierte Personen und Organisationen zugänglich. Diese Webseite untersucht, wie die Schweizer Kantone ihre Geodaten auf geodienste.ch zur Verfügung stellen. Das Daten-Angebot wird verglichen in Bezug auf die Anzahl angebotener Datensätze und in Bezug darauf, wie offen die Kantone den Zugriff auf ihre jeweiligen Geodaten gestalten.**
 
 ## Einführung
 
-Unter [geodienste.ch](https://geodienste.ch) stellen die Kantone und das Fürstentum Liechtenstein ihre sogenannten Geobasisdaten <abbr title="Geobasisdaten sind eine spezielle Art von Geodaten, nämlich «Geodaten, die auf einem rechtsetzenden Erlass des Bundes, eines Kantons oder einer Gemeinde beruhen» (Bundesgesetz über Geoinformation, Fedlex 510.62)">ⓘ</abbr> zur Verfügung. Die Daten sind so für interessierte Personen und Organisationen zugänglich.
+::: callout-tip
+Bei der Gestaltung dieser Webseite wurde darauf geachtet, dass die Informationen für möglichst viele Personen verständlich sind. Spezielle Begriffe sind mit dem Symbol «<abbr title="Demo">ⓘ</abbr>» gekennzeichnet. Wenn Sie den Mauszeiger über das Symbol halten, erhalten Sie eine kurze Erklärung des vorangestellten Begriffs.
 
-Die Geobasisdaten sind möglichst schweizweit verfügbar, strukturell harmonisiert <abbr title="das heisst: in pro Thema einheitlichen Datenmodellen">ⓘ</abbr> und aggregiert<abbr title="das heisst: über Kantonsgrenzen hinweg zusammengefügt">ⓘ</abbr>. Sie können von geodienste.ch auf verschiedenen Wegen bezogen und gemäss der jeweiligen Nutzungsbedingungen für eigene Zwecke genutzt werden.
+Die meisten Abbildungen auf dieser Webseite sind interaktiv. Wenn Sie den Mauszeiger über eine Abbildung bewegen, erscheint zudem eine Werkzeugleiste oben rechts neben der Abbildung. Mit dem Kamera-Symbol können Sie die Abbildung herunterladen.
+:::
+
+Unter [geodienste.ch](https://geodienste.ch) stellen die Kantone und das Fürstentum Liechtenstein ihre sogenannten Geobasisdaten <abbr title="Geobasisdaten 
+sind eine spezielle Art von Geodaten, nämlich «Geodaten, die auf einem 
+rechtsetzenden Erlass des Bundes, eines Kantons oder einer Gemeinde beruhen» 
+(Bundesgesetz über Geoinformation, Fedlex 510.62)">ⓘ</abbr> zur Verfügung. Die Daten sind so für interessierte Personen und Organisationen zugänglich.
+
+Die Geobasisdaten sind möglichst schweizweit verfügbar, strukturell harmonisiert <abbr title="das heisst: in pro Thema einheitlichen Datenmodellen">ⓘ</abbr> und aggregiert <abbr title="das heisst: über Kantonsgrenzen hinweg zusammengefügt">ⓘ</abbr>. Sie können von geodienste.ch auf verschiedenen Wegen bezogen und gemäss der jeweiligen Nutzungsbedingungen für eigene Zwecke genutzt werden.
 
 Die Geodaten können entweder in Form von Daten-Downloads oder in Form von Darstellungsdiensten genutzt werden:
 
@@ -60,6 +66,10 @@ Wieso Nutzerinnen und Nutzer je nach Situation den einen oder anderen Bezugskana
 ## Wie offen ist der Zugriff auf die Daten?
 
 @fig-data-openness-wo-nd zeigt, wie einfach und offen der Zugriff auf Daten-Downloads der einzelnen Kantone auf geodienste.ch ist. Das Vorgehen zur Bewertung der Offenheit des Zugriffs ist unter @sec-bewertung-der-offenheit erklärt. Die Abbildung zeigt die relativen Anteile der Zugriffskategorien für alle Geodaten des jeweiligen Kantons. Die Kategorie «Keine Daten» ist ausgeblendet (siehe dazu auch die Ausführungen in @sec-vollstaendigkeit).
+
+::: callout-tip
+Die meisten Abbildungen auf dieser Webseite sind interaktiv. Wenn Sie den Mauszeiger über eine Abbildung bewegen, erscheint zudem eine Werkzeugleiste oben rechts neben der Abbildung. Mit dem Kamera-Symbol können Sie die Abbildung herunterladen.
+:::
 
 ```{r}
 #| label: fig-data-openness-wo-nd
@@ -117,9 +127,9 @@ Lesebeispiel für @fig-data-openness-completeness: Kantone im dunkelgrünen Bere
 
 ```{r}
 #| label: fig-data-openness-completeness
-#| fig-cap: !expr str_c("Mittlere Offenheit der auf geodienste.ch verfügbaren Datensätze (horizontale Achse) und Anzahl auf geodienste.ch verfügbarer Datensätze (vertikale Achse) (Stand ", updated, "). Achtung, die vertikale Achse beginnt *nicht* bei 0. Die Grafik ist zoombar mit der Werkzeugleiste oberhalb der Grafik. Das Fürstentum Liechtenstein verfügt nur über sehr wenige Datensätze auf geodienste.ch; es wurde deshalb aus der Visualisierung entfernt. Die Grafik ist zoombar mit der Werkzeugleiste oberhalb der Grafik.")
+#| fig-cap: !expr str_c("Mittlere Offenheit der auf geodienste.ch verfügbaren Datensätze (horizontale Achse) und Anzahl auf geodienste.ch verfügbarer Datensätze (vertikale Achse) (Stand ", updated, "). Achtung, die vertikale Achse beginnt *nicht* bei 0. Die Grafik ist zoombar mit der Werkzeugleiste oberhalb der Grafik. Das Fürstentum Liechtenstein verfügt nur über sehr wenige Datensätze auf geodienste.ch; es wurde deshalb aus der Visualisierung entfernt.")
 #| column: page-inset-right
-#| fig-height: 15
+#| fig-height: 13
 #| fig-width: 10
 #| warning: false
 #| echo: false
@@ -130,10 +140,13 @@ plt_data_comparison
 
 In @fig-map-data-openness-completeness sind die Kantone gemäss der Offenheit und der Anzahl ihrer Datensätze auf geodienste.ch eingefärbt. Die Farben entsprechen der Einfärbung der unterschiedlichen Bereiche in @fig-data-openness-completeness.
 
-:::{.column-page-inset-right}
+::: column-page-inset-right
 ![Offenheit und Anzahl der auf geodienste.ch verfügbaren Datensätze der Kantone.](map-data-openness-completeness.png){#fig-map-data-openness-completeness}
 :::
 
+::: callout-note
+Haben Sie einen Fehler entdeckt? Bitte geben Sie mir einen [Hinweis per Mail](mailto:geodienste-ch@ralphstraumann.ch). Vielen Dank!
+:::
 
 ## Erläuterungen
 
@@ -169,7 +182,7 @@ Wenn für die Nutzung eines Datensatzes ein Vertrag unterschrieben werden muss, 
 In den Abbildungen oben werden Datensätze auf geodienste.ch wegen dem beschränkten Platz mit den folgenden Abkürzungen bezeichnet:
 
 | Abkürzung | Datensatz                                                                                            |
-|-------------------|-----------------------------------------------------|
+|------------------|------------------------------------------------------|
 | AV        | Amtliche Vermessung                                                                                  |
 | BdF       | Landwirtschaftliche Bewirtschaftung -- Biodiversitätsförderflächen, Qualitätsstufe II und Vernetzung |
 | ELq       | Landwirtschaftliche Bewirtschaftung -- Elemente mit Landschaftsqualität                              |

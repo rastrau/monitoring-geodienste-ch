@@ -3,6 +3,12 @@ project:
 
 website:
   favicon: assets/favicon.ico
+  twitter-card: 
+    title: "Verfügbarkeit von Geodaten auf geodienste.ch"
+    description: "Unter geodienste.ch stellen die Schweizer Kantone ihre räumlichen Daten interessierten Personen und Organisationen zur Verfügung. Diese Untersuchung zeigt, wie die Kantone ihre Geodaten auf geodienste.ch bereitstellen. Das Daten-Angebot wird verglichen in Bezug auf die Anzahl angebotener Datensätze und in Bezug darauf, wie offen die Kantone den Zugriff auf ihre jeweiligen Geodaten gestalten."
+    image: ./map-data-openness-completeness.png
+    card-style: summary_large_image
+  site-url: https://ralphstraumann.ch/monitoring-geodienste-ch
   page-footer:
     left: "&copy; Ralph Straumann"
     right:

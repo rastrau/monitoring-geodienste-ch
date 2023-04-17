@@ -45,8 +45,6 @@ Zuletzt aktualisiert: `r updated`*
 
 ::: callout-tip
 Bei der Gestaltung dieser Webseite wurde darauf geachtet, dass die Informationen für möglichst viele Personen verständlich sind. Spezielle Begriffe sind mit dem Symbol «<abbr title="Demo">ⓘ</abbr>» gekennzeichnet. Wenn Sie den Mauszeiger über das Symbol halten, erhalten Sie eine kurze Erklärung des vorangestellten Begriffs.
-
-Die meisten Abbildungen auf dieser Webseite sind interaktiv. Wenn Sie den Mauszeiger über eine Abbildung bewegen, erscheint zudem eine Werkzeugleiste oben rechts neben der Abbildung. Mit dem Kamera-Symbol können Sie die Abbildung herunterladen.
 :::
 
 Unter [geodienste.ch](https://geodienste.ch) stellen die Kantone und das Fürstentum Liechtenstein ihre sogenannten Geobasisdaten <abbr title="Geobasisdaten 
@@ -58,10 +56,14 @@ Die Geobasisdaten sind möglichst schweizweit verfügbar, strukturell harmonisie
 
 Die Geodaten können entweder in Form von Daten-Downloads oder in Form von Darstellungsdiensten genutzt werden:
 
+-   **Darstellungsdienste** sind Schnittstellen, welche das Ansehen der Daten in einer vom Datenanbieter vordefinierten Darstellung ermöglichen.
 -   **Daten-Download** bezeichnet in der vorliegenden Analyse das Herunterladen von Daten in Form von Dateien oder die Nutzung eines sogenannten Downloaddienstes. geodienste.ch bietet dateibasierte Daten-Downloads in verschiedenen gängigen Datenformaten <abbr title="aktuell: Interlis, Shapefile und Geopackage">ⓘ</abbr> an.
--   **Darstellungsdienste** sind Schnittstellen, welche das Ansehen der Daten in einer vom Datenanbieter vordefinierten Darstellung ermöglichen. Bei der Nutzung von Darstellungsdiensten erhalten die Nutzerinnen und Nutzer also ein Bild der Daten, beim Daten-Download die Daten selbst.
 
-Wieso Nutzerinnen und Nutzer je nach Situation den einen oder anderen Bezugskanal bevorzugen können, ist in @sec-daten-downloads-versus-darstellungsdienste erklärt.
+Bei der Nutzung von Darstellungsdiensten erhalten die Nutzerinnen und Nutzer also ein Bild der Daten, beim Daten-Download die Daten selbst. Wieso Nutzerinnen und Nutzer je nach Situation den einen oder anderen Bezugskanal bevorzugen können, ist in @sec-daten-downloads-versus-darstellungsdienste erklärt. In der Folge werden Daten-Downloads thematisiert.
+
+::: callout-note
+Die Idee für die Erstellung dieser Webseite entstand durch eine [Visualisierung des Angebots von geodienste.ch](https://www.ratnaweera.xyz/blog/2021-12-01-opendata-per-canton/opendata-per-canton.html) von [Nils Ratnaweera](https://www.ratnaweera.xyz), von der unterdessen auch eine [selbst-aktualisierende Version](https://www.ratnaweera.xyz/apps/geodienste-kantone) besteht.
+:::
 
 ## Wie offen ist der Zugriff auf die Daten?
 
@@ -182,7 +184,7 @@ Wenn für die Nutzung eines Datensatzes ein Vertrag unterschrieben werden muss, 
 In den Abbildungen oben werden Datensätze auf geodienste.ch wegen dem beschränkten Platz mit den folgenden Abkürzungen bezeichnet:
 
 | Abkürzung | Datensatz                                                                                            |
-|------------------|------------------------------------------------------|
+|-------------------|-----------------------------------------------------|
 | AV        | Amtliche Vermessung                                                                                  |
 | BdF       | Landwirtschaftliche Bewirtschaftung -- Biodiversitätsförderflächen, Qualitätsstufe II und Vernetzung |
 | ELq       | Landwirtschaftliche Bewirtschaftung -- Elemente mit Landschaftsqualität                              |
@@ -231,4 +233,4 @@ Als Datenquelle für diese Webseite wird die auf [Swagger](https://swagger.io) u
 
 Die Informationen von geodienste.ch werden vor der eigentlichen Analyse einer Vorprozessierung unterzogen. Für die Abfrage der Informationen von geodienste.ch und die Vorprozessierung wird [Python 3.9](https://www.python.org/downloads/release/python-390) mit [Pandas](https://pandas.pydata.org) benutzt. Für die nachfolgenden Berechnungen, die Erstellung der interaktiven Visualisierungen und das Rendering des vorliegenden Reports werden [R](https://www.r-project.org) und [Quarto](https://quarto.org) verwendet. Die Daten und die Analyse werden jeweils wöchentlich am frühen Montagmorgen aktualisiert.
 
-Die Workflows für den Bezug der Daten und für die Analyse selbst werden mittels [GitHub Actions](https://github.com/features/actions) automatisch umgesetzt. Das Dependency Management <abbr title="Verwaltung der für die erfolgreiche Ausführung eines Programms notwendigen Ressourcen wie beispielsweise Libraries oder Module">ⓘ</abbr> erfolgt mit [pip](https://pypi.org/project/pip) und einer `requirements.txt`-Datei für die Python-Komponente bzw. mit [renv](https://rstudio.github.io/renv/articles/renv.html) für die R-Komponente. Der Report wird mittels [GitHub Pages](https://pages.github.com) publiziert.
+Die Workflows für den Bezug der Daten und für die Analyse selbst werden mittels [GitHub Actions](https://github.com/features/actions) automatisch umgesetzt. Das Dependency Management <abbr title="Verwaltung der für die erfolgreiche Ausführung eines Programms notwendigen Ressourcen wie beispielsweise Libraries oder Module">ⓘ</abbr> erfolgt mit [pip](https://pypi.org/project/pip) und einer `requirements.txt`-Datei für die Python-Komponente bzw. mit [renv](https://rstudio.github.io/renv/articles/renv.html) für die R-Komponente.

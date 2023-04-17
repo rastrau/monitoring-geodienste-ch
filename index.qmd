@@ -21,8 +21,6 @@ crossref:
   fig-prefix: Abbildung
   tbl-prefix: Tabelle
 link-external-icon: true
-reference-location: margin
-search: false
 ---
 
 ```{r}

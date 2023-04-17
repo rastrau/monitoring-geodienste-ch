@@ -38,6 +38,15 @@ jobs:
         uses: quarto-dev/quarto-actions/render@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # this secret is always available for github actions
+
+      - name: Push contents of _site folder to repo
+        uses: github-actions-x/commit@v2.9
+        with:
+          push-branch: 'main'
+          commit-message: 'Render'
+          force-add: 'true'
+          files: _site/ 
+          name: autoupdate
       
       #- name: Copy To Branches Action
       #  uses: planetoftheweb/copy-to-branches@v1.3

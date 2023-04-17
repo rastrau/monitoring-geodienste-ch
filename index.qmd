@@ -18,7 +18,7 @@ number-sections: true
 crossref: 
   fig-title: Abb.
   tbl-title: Tab.
-  fig-prefix: Abbildung
+  fig-prefix: Abbildung``
   tbl-prefix: Tabelle
 link-external-icon: true
 ---
@@ -174,8 +174,6 @@ Wenn für die Nutzung eines Datensatzes ein Vertrag unterschrieben werden muss, 
 -   *Frei verfügbar, mit Vertrag*: 1.5 Punkte
 -   *Registrierung erforderlich, mit Vertrag*: 1 Punkt
 -   *Freigabe erforderlich, mit Vertrag*: 0.5 Punkte
-
-(Mir erschliesst sich der Sinn der Kombinationen «*Frei verfügbar, mit Vertrag»* und «*Registrierung erforderlich, mit Vertrag»* nicht, aber sie werden oder wurden schon so vergeben.)
 
 ### Datensätze {#sec-datensaetze}
 

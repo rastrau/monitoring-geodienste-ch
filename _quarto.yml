@@ -8,7 +8,12 @@ website:
     description: "Unter geodienste.ch stellen die Schweizer Kantone ihre räumlichen Daten interessierten Personen und Organisationen zur Verfügung. Diese Untersuchung zeigt, wie die Kantone ihre Geodaten auf geodienste.ch bereitstellen. Das Daten-Angebot wird verglichen in Bezug auf die Anzahl angebotener Datensätze und in Bezug darauf, wie offen die Kantone den Zugriff auf ihre jeweiligen Geodaten gestalten."
     image: ./map-data-openness-completeness.png
     card-style: summary_large_image
-  site-url: https://ralphstraumann.ch/monitoring-geodienste-ch
+    site-url: https://ralphstraumann.ch/monitoring-geodienste-ch
+  open-graph:
+    title: "Verfügbarkeit von Geodaten auf geodienste.ch"
+    description: "Unter geodienste.ch stellen die Schweizer Kantone ihre räumlichen Daten interessierten Personen und Organisationen zur Verfügung. Diese Untersuchung zeigt, wie die Kantone ihre Geodaten auf geodienste.ch bereitstellen. Das Daten-Angebot wird verglichen in Bezug auf die Anzahl angebotener Datensätze und in Bezug darauf, wie offen die Kantone den Zugriff auf ihre jeweiligen Geodaten gestalten."
+    image: ./map-data-openness-completeness.png
+    locale: de_CH
   page-footer:
     left: "&copy; Ralph Straumann"
     right:
@@ -18,13 +23,11 @@ website:
         href: https://mstdn.social/@rastrau
       - icon: github
         href: https://github.com/rastrau
-
-  site-url: https://ralphstraumann.ch
   navbar:
     background: primary
     logo: assets/logo.png
     search: false
-
+    
 format:
   html:
     theme: lumen
@@ -33,6 +36,3 @@ format:
     css: styles.css
     toc: true
     email-obfuscation: javascript
-
-editor: visual
-

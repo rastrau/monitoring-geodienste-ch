@@ -37,7 +37,7 @@ source(here("analyse.R"), encoding = "UTF-8")
 *Ralph Straumann\
 Zuletzt aktualisiert: `r updated`*
 
-**Unter [geodienste.ch](https://geodienste.ch) stellen die Kantone und das Fürstentum Liechtenstein ihre räumlichen Daten, auch Geodaten genannt, zur Verfügung. Die Daten sind so für interessierte Personen und Organisationen zugänglich. Diese Webseite untersucht, wie die Schweizer Kantone ihre Geodaten auf geodienste.ch zur Verfügung stellen. Das Daten-Angebot wird verglichen in Bezug auf die Anzahl angebotener Datensätze und in Bezug darauf, wie offen die Kantone den Zugriff auf ihre jeweiligen Geodaten gestalten.**
+**Unter [geodienste.ch](https://geodienste.ch) stellen die Kantone und das Fürstentum Liechtenstein ihre räumlichen Daten, auch Geodaten genannt, zur Verfügung. Die Daten sind so für interessierte Personen und Organisationen zugänglich. Diese Webseite untersucht, wie die Schweizer Kantone ihre Geodaten auf geodienste.ch zur Verfügung stellen. Das Daten-Angebot wird verglichen in Bezug auf die Anzahl angebotener Datensätze und in Bezug darauf, wie offen die Kantone den Zugriff auf ihre jeweiligen Geodaten gestalten. Die Daten und die Analyse werden jeweils wöchentlich am frühen Montagmorgen aktualisiert.**
 
 ## Einführung
 
@@ -60,6 +60,8 @@ Die Geodaten können entweder in Form von Daten-Downloads oder in Form von Darst
 Bei der Nutzung von Darstellungsdiensten erhalten die Nutzerinnen und Nutzer also ein Bild der Daten, beim Daten-Download die Daten selbst. Wieso Nutzerinnen und Nutzer je nach Situation den einen oder anderen Bezugskanal bevorzugen können, ist in @sec-daten-downloads-versus-darstellungsdienste erklärt. In der Folge werden Daten-Downloads thematisiert.
 
 ::: callout-note
+Die Daten und die Analyse werden jeweils wöchentlich am frühen Montagmorgen aktualisiert.
+
 Die Idee für die Erstellung dieser Webseite entstand durch eine [Visualisierung des Angebots von geodienste.ch](https://www.ratnaweera.xyz/blog/2021-12-01-opendata-per-canton/opendata-per-canton.html) von [Nils Ratnaweera](https://www.ratnaweera.xyz), von der unterdessen auch eine [selbst-aktualisierende Version](https://www.ratnaweera.xyz/apps/geodienste-kantone) besteht.
 :::
 

@@ -15,7 +15,7 @@ website:
     image: ./assets/titlecard.png
     locale: de_CH
   page-footer:
-    left: "&copy; Ralph Straumann"
+    left: "CC-BY Ralph Straumann"
     right:
       - icon: linkedin
         href: https://www.linkedin.com/in/ralphstraumann

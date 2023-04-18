@@ -1,7 +1,7 @@
 /* css styles */
 #quarto-header > nav {
   background-color: #053660;
-  border-color: #0961AD;
+  border-bottom-color: #0961AD;
 }
 
 a {

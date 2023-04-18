@@ -2,6 +2,9 @@
 #quarto-header > nav {
   background-color: #053660;
   border-bottom-color: #0961AD;
+  border-top-color: #053660!important;
+  border-right-color: #053660!important;
+  border-left-color: #053660!important;
 }
 
 a {

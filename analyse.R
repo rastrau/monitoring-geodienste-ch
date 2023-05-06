@@ -567,5 +567,22 @@ df_recent_cleaned <- df_recent %>%
 
 
 df_change <- df_current_cleaned %>%
-inner_join(df_recent_cleaned, by = c("canton", "topic_title"))
+  inner_join(df_recent_cleaned, 
+             by = join_by(canton, topic_title),
+             suffix = c("_current", "_recent"))
 
+df_change <- df_change %>%
+  mutate(
+    publication_data_current = ifelse(
+      contract_required_data_current == TRUE, 
+      str_c(publication_data_current, ", mit Vertrag"),
+      publication_data_current),
+    publication_data_recent = ifelse(
+      contract_required_data_recent == TRUE, 
+      str_c(publication_data_recent, ", mit Vertrag"),
+      publication_data_recent) %>%
+  mutate(change = str_c(
+    publication_data_recent, 
+    " → ", 
+    publication_data_current)) %>%
+  filter(publication_data_current <> publication_data_recent)

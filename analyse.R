@@ -583,6 +583,6 @@ df_change <- df_change %>%
       publication_data_recent) %>%
   mutate(change = str_c(
     publication_data_recent, 
-    " → ", 
+    " →↦ ", 
     publication_data_current)) %>%
   filter(publication_data_current <> publication_data_recent)

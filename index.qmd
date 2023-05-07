@@ -9,6 +9,7 @@ format:
     abstract: ""
     css: custom-styles.css  
     smooth-scroll: true
+    df-print: kable
 editor: visual
 toc: true
 toc-depth: 3
@@ -152,6 +153,18 @@ Sämtlicher Programm-Code hinter dieser Webseite **--** inklusive Bezug, Aufbere
 Haben Sie einen Fehler entdeckt? Bitte geben Sie mir einen [Hinweis per Mail](mailto:geodienste-ch@ralphstraumann.ch) oder [eröffnen Sie einen Issue auf GitHub](https://github.com/rastrau/geodienste-ch/issues). Vielen Dank!
 :::
 
+## Veränderungen der letzten Wochen
+
+Die folgende Tabelle zeigt Veränderungen der Zugriffskategorie gegenüber dem `r date_recent`, falls welche aufgetreten sind. 
+
+```{r}
+#| label: Changes
+#| tbl-cap: Veränderungen der Zugriffskategorie von Daten auf geodienste.ch
+#| warning: false
+#| echo: false
+df_changes
+```
+
 ## Erläuterungen
 
 ### Bewertung der Offenheit {#sec-bewertung-der-offenheit}
@@ -184,7 +197,7 @@ Wenn für die Nutzung eines Datensatzes ein Vertrag unterschrieben werden muss, 
 In den Abbildungen oben werden Datensätze auf geodienste.ch wegen dem beschränkten Platz mit den folgenden Abkürzungen bezeichnet:
 
 | Abkürzung | Datensatz                                                                                            |
-|---------------------|---------------------------------------------------|
+|----------------------|--------------------------------------------------|
 | AV        | Amtliche Vermessung                                                                                  |
 | BdF       | Landwirtschaftliche Bewirtschaftung -- Biodiversitätsförderflächen, Qualitätsstufe II und Vernetzung |
 | ELq       | Landwirtschaftliche Bewirtschaftung -- Elemente mit Landschaftsqualität                              |

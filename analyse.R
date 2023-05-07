@@ -73,6 +73,8 @@ df <- df %>%
     contract_required_data = replace_na(contract_required_data, FALSE),
     contract_required_wms = replace_na(contract_required_data, FALSE))
 
+df_current_cleaned <- df
+
 df %>%
   group_by(topic_title) %>%
   mutate(cantons = paste0(canton, collapse = ", "),
@@ -505,3 +507,83 @@ cantons_map <- ggplot(data = swiss_map,
 
 ggsave(here("map-data-openness-completeness.png"),
        cantons_map, width = 22, height = 17.3, units = "cm")
+
+
+# Change detection
+
+# Find the previous CSV file (the one before the current one)
+csv_files <- list.files(path="data",
+                        pattern="^\\d{4}-\\d{2}-\\d{2}-geodienste-ch\\.csv$",
+                        full.names=TRUE)
+csv_files <- str_sort(csv_files, decreasing=TRUE)
+recent_csv_file <- csv_files[5]
+
+# Read and clean the previous CSV file
+df_recent <- read_delim(recent_csv_file, delim = ";", na = c("{}", "''", '""', ""))
+df_recent <- df_recent %>%
+  filter(!str_detect(topic_title, "verwaltungsintern")) %>%
+  mutate(topic_title_short =
+           case_when(
+             topic_title == "Amtliche Vermessung" ~ "AV",
+             topic_title == "Fixpunkte (Kategorie 2)" ~ "FP",
+             topic_title == "Fruchtfolgeflächen" ~ "FFF",
+             topic_title == "Gefahrenkarten" ~ "Gk",
+             topic_title == "Kantonale Ausnahmetransportrouten" ~ "KAtr",
+             topic_title == "Kataster der belasteten Standorte" ~ "KbS",
+             topic_title == "Landw. Bewirtschaftung: Bewirtschaftungseinheit" ~ "LBe",
+             topic_title == "Landw. Bewirtschaftung: Biodiversitätsförderflächen, Qualitätsstufe II und Vernetzung" ~ "BdF",
+             topic_title == "Landw. Bewirtschaftung: Elemente mit Landschaftsqualität" ~ "ELq",
+             topic_title == "Landw. Bewirtschaftung: Nutzungsflächen" ~ "NF",
+             topic_title == "Landw. Bewirtschaftung: Perimeter LN- und Sömmerungsflächen" ~ "PLSF",
+             topic_title == "Landw. Bewirtschaftung: Perimeter Terrassenreben" ~ "PTr",
+             topic_title == "Landw. Bewirtschaftung: Rebbaukataster" ~ "RbK",
+             topic_title == "Leitungskataster" ~ "LK",
+             topic_title == "Luftbild" ~ "LB",
+             topic_title == "Lärmempfindlichkeitsstufen (in Nutzungszonen)" ~ "LeS",
+             topic_title == "Naturereigniskataster" ~ "NeK",
+             topic_title == "Nutzungsplanung (kantonal / kommunal)" ~ "NuP",
+             topic_title == "Planerischer Gewässerschutz" ~ "PGs",
+             topic_title == "Planung der Revitalisierungen von Seeufern" ~ "RSu",
+             topic_title == "Planungszonen" ~ "Pz",
+             topic_title == "Richtplanung erneuerbare Energien" ~ "ReE",
+             topic_title == "Statische Waldgrenzen" ~ "SWG",
+             topic_title == "Stromversorgungssicherheit: Netzgebiete" ~ "SNG",
+             topic_title == "Waldabstandslinien" ~ "WaL",
+             topic_title == "Waldreservate" ~ "Wr",
+             topic_title == "Wildruhezonen" ~ "WrZ")) %>%
+  mutate(
+    publication_data = ifelse(
+      publication_data %in% c("Keine Daten", "keine Daten", ""),
+      "Keine Daten",
+      publication_data),
+    publication_wms = ifelse(
+      publication_wms %in% c("Keine Daten","keine Daten", ""),
+      "Keine Daten",
+      publication_wms)) %>%
+  mutate(
+    contract_required_data = replace_na(contract_required_data, FALSE),
+    contract_required_wms = replace_na(contract_required_data, FALSE))
+
+# Join the recent data to the current data and keep records with changes
+df_changes <- df_current_cleaned %>%
+  inner_join(df_recent,
+             by = c("canton", "topic_title"),
+             suffix = c("_current", "_recent")) %>%
+  mutate(
+    publication_data_current = ifelse(
+      contract_required_data_current == TRUE,
+      str_c(publication_data_current, ", mit Vertrag"),
+      publication_data_current),
+    publication_data_recent = ifelse(
+      contract_required_data_recent == TRUE,
+      str_c(publication_data_recent, ", mit Vertrag"),
+      publication_data_recent)) %>%
+  filter(publication_data_current != publication_data_recent) %>%
+  select(canton, topic_title, publication_data_recent, publication_data_current)
+
+# Rename dataframe columns and sort by canton and by dataset title
+date_recent <- format(min(df_recent$updated), "%d.%m.%Y")
+names(df_changes) <- c("Kanton", "Datensatz",
+                      str_c("Zugriffsregelung am ", date_recent),
+                      "Zugriffsregelung neu")
+df_changes <- arrange(df_changes, Kanton, Datensatz)

@@ -19,7 +19,7 @@ number-sections: true
 crossref: 
   fig-title: Abb.
   tbl-title: Tab.
-  fig-prefix: Abbildung``
+  fig-prefix: Abbildung
   tbl-prefix: Tabelle
 link-external-icon: true
 ---

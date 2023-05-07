@@ -512,16 +512,15 @@ ggsave(here("map-data-openness-completeness.png"),
 # Change detection
 
 # Find the previous CSV file (the one before the current one)
-csv_files <- list.files(path="data",pattern="20*.csv$", full.names=TRUE)
-print(csv_files)  ## list all files in path
+csv_files <- list.files(path="data",
+                        pattern="^\\d{4}-\\d{2}-\\d{2}-geodienste-ch\\.csv$",
+                        full.names=TRUE)
 csv_files <- str_sort(csv_files, decreasing=TRUE)
-print(csv_files)
-print(csv_files[0])
-recent_csv_file <- csv_files[0]
+recent_csv_file <- csv_files[5]
 
 # Read and clean the previous CSV file
 df_recent <- read_delim(recent_csv_file, delim = ";", na = c("{}", "''", '""', ""))
-df_recent_cleaned <- df_recent %>%
+df_recent <- df_recent %>%
   filter(!str_detect(topic_title, "verwaltungsintern")) %>%
   mutate(topic_title_short =
            case_when(
@@ -565,24 +564,26 @@ df_recent_cleaned <- df_recent %>%
     contract_required_data = replace_na(contract_required_data, FALSE),
     contract_required_wms = replace_na(contract_required_data, FALSE))
 
-
-df_change <- df_current_cleaned %>%
-  inner_join(df_recent_cleaned, 
-             by = join_by(canton, topic_title),
-             suffix = c("_current", "_recent"))
-
-df_change <- df_change %>%
+# Join the recent data to the current data and keep records with changes
+df_changes <- df_current_cleaned %>%
+  inner_join(df_recent,
+             by = c("canton", "topic_title"),
+             suffix = c("_current", "_recent")) %>%
   mutate(
     publication_data_current = ifelse(
-      contract_required_data_current == TRUE, 
+      contract_required_data_current == TRUE,
       str_c(publication_data_current, ", mit Vertrag"),
       publication_data_current),
     publication_data_recent = ifelse(
-      contract_required_data_recent == TRUE, 
+      contract_required_data_recent == TRUE,
       str_c(publication_data_recent, ", mit Vertrag"),
-      publication_data_recent) %>%
-  mutate(change = str_c(
-    publication_data_recent, 
-    " →↦ ", 
-    publication_data_current)) %>%
-  filter(publication_data_current <> publication_data_recent)
+      publication_data_recent)) %>%
+  filter(publication_data_current != publication_data_recent) %>%
+  select(canton, topic_title, publication_data_recent, publication_data_current)
+
+# Rename dataframe columns and sort by canton and by dataset title
+date_recent <- format(min(df_recent$updated), "%d.%m.%Y")
+names(df_changes) <- c("Kanton", "Datensatz",
+                      str_c("Zugriffsregelung am ", date_recent),
+                      "Zugriffsregelung neu")
+df_changes <- arrange(df_changes, Kanton, Datensatz)

@@ -43,7 +43,7 @@ Zuletzt aktualisiert: `r updated`*
 ## Einführung
 
 ::: callout-tip
-Bei der Gestaltung dieser Webseite wurde darauf geachtet, dass die Informationen für möglichst viele Personen verständlich sind. Spezielle Begriffe sind mit einem Kommentar erklärt. Wenn Sie auf die hochgestellte Zahl klicken, erhalten Sie in einer Fussnote eine kurze Erklärung des vorangestellten Begriffs. Hier ist ein Beispiel^[Hier ist ein Beispiel für einen Kommentar. Mit Klick auf das Symbol %laquo;↩︎&raquo; gelangen Sie an den Ort zurück, von dem Sie zu dieser Erklärung gesprungen sind:].
+Bei der Gestaltung dieser Webseite wurde darauf geachtet, dass die Informationen für möglichst viele Personen verständlich sind. Spezielle Begriffe sind mit einem Kommentar erklärt. Wenn Sie auf die hochgestellte Zahl klicken, erhalten Sie in einer Fussnote eine kurze Erklärung des vorangestellten Begriffs. Hier ist ein Beispiel^[Hier ist ein Beispiel eines erläuternden Kommentars. Mit Klick auf das Symbol &laquo;↩︎&raquo; gelangen Sie übrigens an genau den Ort zurück, von dem Sie zu dieser Erklärung gesprungen sind: ].
 :::
 
 Unter [geodienste.ch](https://geodienste.ch) stellen die Kantone und das Fürstentum Liechtenstein ihre sogenannten Geobasisdaten^[Geobasisdaten 

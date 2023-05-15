@@ -43,7 +43,7 @@ Zuletzt aktualisiert: `r updated`*
 ## Einführung
 
 ::: callout-tip
-Bei der Gestaltung dieser Webseite wurde darauf geachtet, dass die Informationen für möglichst viele Personen verständlich sind. Spezielle Begriffe sind mit dem Symbol «<abbr title="Demo">ⓘ</abbr>» gekennzeichnet. Wenn Sie den Mauszeiger über das Symbol halten, erhalten Sie eine kurze Erklärung des vorangestellten Begriffs.
+Bei der Gestaltung dieser Webseite wurde darauf geachtet, dass die Informationen für möglichst viele Personen verständlich sind. Spezielle Begriffe sind mit einem Kommentar erklärt. Wenn Sie auf die hochgestellte Zahl klicken, erhalten Sie eine kurze Erklärung des vorangestellten Begriffs. Hier ist ein Beispiel^[Hier ist ein Beispiel für einen Kommentar].
 :::
 
 Unter [geodienste.ch](https://geodienste.ch) stellen die Kantone und das Fürstentum Liechtenstein ihre sogenannten Geobasisdaten <abbr title="Geobasisdaten 

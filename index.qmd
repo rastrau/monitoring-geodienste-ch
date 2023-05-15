@@ -21,7 +21,6 @@ crossref:
   tbl-title: Tab.
   fig-prefix: Abbildung
   tbl-prefix: Tabelle
-reference-location: margin
 link-external-icon: false
 ---
 

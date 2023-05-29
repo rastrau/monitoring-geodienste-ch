@@ -511,7 +511,7 @@ ggsave(here("map-data-openness-completeness.png"),
 
 # Change detection
 
-# Find the previous CSV file (the one before the current one)
+# Find the CSV file from four weeks ago
 csv_files <- list.files(path="data",
                         pattern="^\\d{4}-\\d{2}-\\d{2}-geodienste-ch\\.csv$",
                         full.names=TRUE)

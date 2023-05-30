@@ -4,7 +4,7 @@
 
 On [geodienste.ch](https://geodienste.ch), the cantons and the Principality of Liechtenstein make their geodata available to the public. The geodata are available as far as possible throughout Switzerland, in a structurally harmonized and aggregated form. They can be obtained from geodienste.ch in various ways and used for one's own purposes in accordance with the respective terms and conditions.
 
-This repository underpins a [website which shows how the Swiss cantons provide spatial data on the platform geodienste.ch](https://rastrau.github.io/geodienste-ch). The website compares the cantons' offerings in terms of the number of available datasets and in terms of how openly the cantons make their data available (e.g. what are the terms and conditions for using the data?, is a contract required to use the data?, etc.).
+This repository underpins a [website which shows how the Swiss cantons provide spatial data on the platform geodienste.ch](https://ralphstraumann.ch/monitoring-geodienste-ch). The website compares the cantons' offerings in terms of the number of available datasets and in terms of how openly the cantons make their data available (e.g. what are the terms and conditions for using the data?, is a contract required to use the data?, etc.).
 
 ## Technologies
 

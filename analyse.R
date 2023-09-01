@@ -401,7 +401,7 @@ plt_data_comparison <- df_canton %>%
   # In sequence: bottom left, bottom right, top left, and top right
   geom_rect(aes(xmin = min_openness, xmax = med_openness,
                 ymin = min_count, ymax = med_count,
-                text = "unterdurchschnittliche Anzahl verfügbarer Datensätze,\nunterdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#91BFDB") +
+                text = "unterdurchschnittliche Anzahl verfügbarer Datensätze,\nunterdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#AABFDB") +
   geom_rect(aes(xmin = min_openness, xmax = med_openness,
                 ymin = med_count, ymax = max_count,
                 text = "überdurchschnittliche Anzahl verfügbarer Datensätze,\nunterdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#85CCA9") +

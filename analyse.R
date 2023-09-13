@@ -85,6 +85,12 @@ df %>%
   select(topic_title, count, cantons) %>%
   unique() %>% View()
 
+df %>%
+  filter(topic_title_short == "unbekannt") %>%
+  group_by(topic_title) %>%
+  select(topic_title, topic_title_short) %>%
+  unique() %>% View()
+
 # Compute openness scores (for data and for WMS) per dataset ----------------------------------
 
 df <- df %>%

@@ -399,7 +399,7 @@ df_canton <- df2 %>%
 
 
 # Produce plot
-min_openness <- 1
+min_openness <- min(df_canton$open_score_wo_nduc_canton) - 0.15
 med_openness <- median(df_canton$open_score_wo_nduc_canton)
 max_openness <- 3 + 0.15
 min_count <- min(df_canton$count_available_canton) - 0.5

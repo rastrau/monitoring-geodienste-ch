@@ -31,6 +31,7 @@ updated <- format(min(df$updated), "%d.%m.%Y")
 
 df <- df %>%
   filter(!str_detect(topic_title, "verwaltungsintern")) %>%
+  filter(!str_detect(canton, "Broker")) %>%
   mutate(topic_title_short =
            case_when(
              topic_title == "Amtliche Vermessung" ~ "AV",
@@ -60,6 +61,8 @@ df <- df %>%
              topic_title == "Waldabstandslinien" ~ "WaL",
              topic_title == "Waldreservate" ~ "Wr",
              topic_title == "Wildruhezonen" ~ "WrZ")) %>%
+  # If this occurs, topic_title_short is not yet defined:
+  mutate(topic_title_short = ifelse(is.na(topic_title_short), "unbekannt", topic_title_short)) %>%
   mutate(
     publication_data = ifelse(
       publication_data %in% c("Keine Daten", "keine Daten", ""),

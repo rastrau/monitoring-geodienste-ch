@@ -80,8 +80,7 @@ df %>%
   mutate(cantons = paste0(canton, collapse = ", "),
          count = n()) %>%
   select(topic_title, count, cantons) %>%
-  unique()
-
+  unique() %>% View()
 
 # Compute openness scores (for data and for WMS) per dataset ----------------------------------
 

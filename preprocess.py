@@ -6,7 +6,7 @@ import csv
 import datetime
 import collections
 
-json_url = "https://www.geodienste.ch/info/services.json?restricted_topics=true&language=de"
+json_url = "https://www.geodienste.ch/info/services.json?restricted_topics=false&language=de"
 
 # Retrieve JSON from geodienste.ch
 response = urlopen(json_url)

@@ -401,7 +401,7 @@ plt_data_comparison <- df_canton %>%
   # In sequence: bottom left, bottom right, top left, and top right
   geom_rect(aes(xmin = min_openness, xmax = med_openness,
                 ymin = min_count, ymax = med_count,
-                text = "unterdurchschnittliche Anzahl verfügbarer Datensätze,\nunterdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#91BFDB") +
+                text = "unterdurchschnittliche Anzahl verfügbarer Datensätze,\nunterdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#AABFDB") +
   geom_rect(aes(xmin = min_openness, xmax = med_openness,
                 ymin = med_count, ymax = max_count,
                 text = "überdurchschnittliche Anzahl verfügbarer Datensätze,\nunterdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#85CCA9") +
@@ -440,7 +440,7 @@ plt_data_comparison_subset <- df_canton %>%
   # In sequence: bottom left, top left, bottom right, and top right
   geom_rect(aes(xmin = min_openness, xmax = med_openness,
                 ymin = min_count, ymax = med_count,
-                text = "unterdurchschnittliche Anzahl verfügbarer Datensätze,\nunterdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#91BFDB") +
+                text = "unterdurchschnittliche Anzahl verfügbarer Datensätze,\nunterdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#AABFDB") +
   geom_rect(aes(xmin = min_openness, xmax = med_openness,
                 ymin = med_count, ymax = max_count,
                 text = "überdurchschnittliche Anzahl verfügbarer Datensätze,\nunterdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#85CCA9") +
@@ -478,13 +478,14 @@ df_canton %>%
 
 
 swiss_map <- ne_states(country = "Switzerland", returnclass = "sf") %>%
-  select(postal) %>%
-  left_join(df_canton, by = c("postal" = "canton"))
+  select(iso_3166_2) %>%
+  mutate(iso_3166_2 = str_replace(iso_3166_2, 'CH-', '')) %>%
+  left_join(df_canton, by = c("iso_3166_2" = "canton"))
 
 cantons_map <- ggplot(data = swiss_map,
                       aes(fill = category)) +
   geom_sf(color = "white") +
-  scale_fill_manual(values = c("#54B987", "#85CCA9", "#85CCD2", "#91BFDB")) +
+  scale_fill_manual(values = c("#54B987", "#85CCA9", "#85CCD2", "#AABFDB")) +
   theme_options +
   theme(axis.text = element_blank(),
         legend.position = "bottom",

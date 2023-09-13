@@ -35,6 +35,7 @@ df <- df %>%
   mutate(topic_title_short =
            case_when(
              topic_title == "Amtliche Vermessung" ~ "AV",
+             topic_title == "Elektrische Anlagen mit einer Nennspannung von über 36 kV" ~ "EAl36",
              topic_title == "Fixpunkte (Kategorie 2)" ~ "FP",
              topic_title == "Fruchtfolgeflächen" ~ "FFF",
              topic_title == "Gefahrenkarten" ~ "Gk",
@@ -51,6 +52,7 @@ df <- df %>%
              topic_title == "Luftbild" ~ "LB",
              topic_title == "Lärmempfindlichkeitsstufen (in Nutzungszonen)" ~ "LeS",
              topic_title == "Naturereigniskataster" ~ "NeK",
+             topic_title == "Naturereigniskataster erweitert" ~ "NeKe",
              topic_title == "Nutzungsplanung (kantonal / kommunal)" ~ "NuP",
              topic_title == "Planerischer Gewässerschutz" ~ "PGs",
              topic_title == "Planung der Revitalisierungen von Seeufern" ~ "RSu",

@@ -6,6 +6,11 @@ On [geodienste.ch](https://geodienste.ch), the cantons and the Principality of L
 
 This repository underpins a [website which shows how the Swiss cantons provide spatial data on the platform geodienste.ch](https://ralphstraumann.ch/monitoring-geodienste-ch). The website compares the cantons' offerings in terms of the number of available datasets and in terms of how openly the cantons make their data available (e.g. what are the terms and conditions for using the data?, is a contract required to use the data?, etc.).
 
+## Presentation
+In September 2023, I have presented this monitoring solution to KGK-CGC (the operating organisation behind geodienste.ch) and cantonal representatives. The presentation goes into some details also in technical regards. Slides (in German and French):
+
+<img src="https://github.com/rastrau/geodienste-ch/blob/main/assets/presentation.png" alt= "KGK-CGC workshop presentation" title="KGK-CGC workshop presentation" width="50%">
+
 ## Technologies
 
 This repository obtains data from the application programming interface (API) of geodienste.ch which is based on [Swagger](https://swagger.io) and the [OpenAPI Specification 3](https://swagger.io/specification). The analysis is carried out using [Python 3.9](https://www.python.org/downloads/release/python-390) with [pandas](https://pandas.pydata.org) as well as using [R](https://www.r-project.org), various R packages and [Quarto](https://quarto.org). The data and analysis are updated weekly on early Monday mornings. The whole process is orchestrated using GitHub Actions.

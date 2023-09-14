@@ -31,9 +31,11 @@ updated <- format(min(df$updated), "%d.%m.%Y")
 
 df <- df %>%
   filter(!str_detect(topic_title, "verwaltungsintern")) %>%
+  filter(!str_detect(canton, "Broker")) %>%
   mutate(topic_title_short =
            case_when(
              topic_title == "Amtliche Vermessung" ~ "AV",
+             topic_title == "Elektrische Anlagen mit einer Nennspannung von über 36 kV" ~ "EAl36",
              topic_title == "Fixpunkte (Kategorie 2)" ~ "FP",
              topic_title == "Fruchtfolgeflächen" ~ "FFF",
              topic_title == "Gefahrenkarten" ~ "Gk",
@@ -50,6 +52,7 @@ df <- df %>%
              topic_title == "Luftbild" ~ "LB",
              topic_title == "Lärmempfindlichkeitsstufen (in Nutzungszonen)" ~ "LeS",
              topic_title == "Naturereigniskataster" ~ "NeK",
+             topic_title == "Naturereigniskataster erweitert" ~ "NeKe",
              topic_title == "Nutzungsplanung (kantonal / kommunal)" ~ "NuP",
              topic_title == "Planerischer Gewässerschutz" ~ "PGs",
              topic_title == "Planung der Revitalisierungen von Seeufern" ~ "RSu",
@@ -60,6 +63,8 @@ df <- df %>%
              topic_title == "Waldabstandslinien" ~ "WaL",
              topic_title == "Waldreservate" ~ "Wr",
              topic_title == "Wildruhezonen" ~ "WrZ")) %>%
+  # If this occurs, topic_title_short is not yet defined:
+  mutate(topic_title_short = ifelse(is.na(topic_title_short), "unbekannt", topic_title_short)) %>%
   mutate(
     publication_data = ifelse(
       publication_data %in% c("Keine Daten", "keine Daten", ""),
@@ -82,6 +87,11 @@ df %>%
   select(topic_title, count, cantons) %>%
   unique()
 
+df %>%
+  filter(topic_title_short == "unbekannt") %>%
+  group_by(topic_title) %>%
+  select(topic_title, topic_title_short) %>%
+  unique()
 
 # Compute openness scores (for data and for WMS) per dataset ----------------------------------
 
@@ -389,7 +399,7 @@ df_canton <- df2 %>%
 
 
 # Produce plot
-min_openness <- 1
+min_openness <- min(df_canton$open_score_wo_nduc_canton) - 0.15
 med_openness <- median(df_canton$open_score_wo_nduc_canton)
 max_openness <- 3 + 0.15
 min_count <- min(df_canton$count_available_canton) - 0.5

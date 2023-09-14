@@ -43,18 +43,27 @@ Zuletzt aktualisiert: `r updated`*
 ## Einführung
 
 ::: callout-tip
-Bei der Gestaltung dieser Webseite wurde darauf geachtet, dass die Informationen für möglichst viele Personen verständlich sind. Spezielle Begriffe sind mit einem Kommentar erklärt. Wenn Sie auf die hochgestellte Zahl klicken, erhalten Sie in einer Fussnote eine kurze Erklärung des vorangestellten Begriffs. Hier ist ein Beispiel^[Hier ist ein Beispiel eines erläuternden Kommentars. Mit Klick auf das Symbol &laquo;↩︎&raquo; gelangen Sie übrigens an genau den Ort zurück, von dem Sie zu dieser Erklärung gesprungen sind: ].
+Bei der Gestaltung dieser Webseite wurde darauf geachtet, dass die Informationen für möglichst viele Personen verständlich sind. Spezielle Begriffe sind mit einem Kommentar erklärt. Wenn Sie auf die hochgestellte Zahl klicken, erhalten Sie in einer Fussnote eine kurze Erklärung des vorangestellten Begriffs. Hier ist ein Beispiel[^1].
 :::
 
-Unter [geodienste.ch](https://geodienste.ch) stellen die Kantone und das Fürstentum Liechtenstein ihre sogenannten Geobasisdaten^[Geobasisdaten 
-sind eine spezielle Art von Geodaten, nämlich «Geodaten, die auf einem rechtsetzenden Erlass des Bundes, eines Kantons oder einer Gemeinde beruhen» (siehe [Artikel 3 des Bundesgesetzes über Geoinformation, Fedlex 510.62](https://www.fedlex.admin.ch/eli/cc/2008/388/de#art_3))] zur Verfügung. Die Daten sind so für interessierte Personen und Organisationen zugänglich.
+[^1]: Hier ist ein Beispiel eines erläuternden Kommentars. Mit Klick auf das Symbol «↩︎» gelangen Sie übrigens an genau den Ort zurück, von dem Sie zu dieser Erklärung gesprungen sind:
 
-Die Geobasisdaten sind möglichst schweizweit verfügbar, strukturell harmonisiert^[das heisst: in pro Thema einheitlichen Datenmodellen] und aggregiert^[das heisst: über Kantonsgrenzen hinweg zusammengefügt]. Sie können von geodienste.ch auf verschiedenen Wegen bezogen und gemäss der jeweiligen Nutzungsbedingungen für eigene Zwecke genutzt werden.
+Unter [geodienste.ch](https://geodienste.ch) stellen die Kantone und das Fürstentum Liechtenstein ihre sogenannten Geobasisdaten[^2] zur Verfügung. Die Daten sind so für interessierte Personen und Organisationen zugänglich.
+
+[^2]: Geobasisdaten sind eine spezielle Art von Geodaten, nämlich «Geodaten, die auf einem rechtsetzenden Erlass des Bundes, eines Kantons oder einer Gemeinde beruhen» (siehe [Artikel 3 des Bundesgesetzes über Geoinformation, Fedlex 510.62](https://www.fedlex.admin.ch/eli/cc/2008/388/de#art_3))
+
+Die Geobasisdaten sind möglichst schweizweit verfügbar, strukturell harmonisiert[^3] und aggregiert[^4]. Sie können von geodienste.ch auf verschiedenen Wegen bezogen und gemäss der jeweiligen Nutzungsbedingungen für eigene Zwecke genutzt werden.
+
+[^3]: das heisst: in pro Thema einheitlichen Datenmodellen
+
+[^4]: das heisst: über Kantonsgrenzen hinweg zusammengefügt
 
 Die Geodaten können entweder in Form von Daten-Downloads oder in Form von Darstellungsdiensten genutzt werden:
 
 -   **Darstellungsdienste** sind Schnittstellen, welche das Ansehen der Daten in einer vom Datenanbieter vordefinierten Darstellung ermöglichen.
--   **Daten-Download** bezeichnet in der vorliegenden Analyse das Herunterladen von Daten in Form von Dateien oder die Nutzung eines sogenannten Downloaddienstes. geodienste.ch bietet dateibasierte Daten-Downloads in verschiedenen gängigen Datenformaten^[aktuell: Interlis, Shapefile und Geopackage] an.
+-   **Daten-Download** bezeichnet in der vorliegenden Analyse das Herunterladen von Daten in Form von Dateien oder die Nutzung eines sogenannten Downloaddienstes. geodienste.ch bietet dateibasierte Daten-Downloads in verschiedenen gängigen Datenformaten[^5] an.
+
+[^5]: aktuell: Interlis, Shapefile und Geopackage
 
 Bei der Nutzung von Darstellungsdiensten erhalten die Nutzerinnen und Nutzer also ein Bild der Daten, beim Daten-Download die Daten selbst. Wieso Nutzerinnen und Nutzer je nach Situation den einen oder anderen Bezugskanal bevorzugen können, ist in @sec-daten-downloads-versus-darstellungsdienste erklärt. In der Folge werden Daten-Downloads thematisiert.
 
@@ -153,7 +162,7 @@ Haben Sie einen Fehler entdeckt? Bitte geben Sie mir einen [Hinweis per Mail](ma
 
 ## Veränderungen der letzten Wochen
 
-Die folgende Tabelle zeigt Veränderungen der Zugriffskategorie gegenüber dem `r date_recent`, falls welche aufgetreten sind. 
+Die folgende Tabelle zeigt Veränderungen der Zugriffskategorie gegenüber dem `r date_recent`, falls welche aufgetreten sind.
 
 ```{r}
 #| label: Changes
@@ -169,11 +178,15 @@ df_changes
 
 [geodienste.ch](https://geodienste.ch) bietet Geodaten in fünf **Zugriffskategorien** an:
 
--   *Frei verfügbar*: Dies ist die offenste Zugriffskategorie. Geodaten in dieser Kategorie können, müssen aber nicht^[denn: Manche Kantone schränken die Nutzungsrechte auch von frei verfügbaren Geodaten ein], offene Verwaltungsdaten bzw. Open Government Data (OGD)^[das heisst: Jede Person und Organisation darf frei darauf zugreifen, sie nutzen, verändern und teilen &ndash; eingeschränkt höchstens durch Massnahmen, die Ursprung und Offenheit der Daten bewahren] sein.
+-   *Frei verfügbar*: Dies ist die offenste Zugriffskategorie. Geodaten in dieser Kategorie können, müssen aber nicht[^6], offene Verwaltungsdaten bzw. Open Government Data (OGD)[^7] sein.
 -   *Registrierung erforderlich* \[der Nutzerin oder des Nutzers\]
 -   *Freigabe erforderlich* \[durch den jeweiligen Kanton\]
 -   *Im Aufbau*: Die Geodaten werden durch den jeweiligen Kanton gerade erstellt.
 -   *Keine Daten*: Es liegen zum jeweiligen Thema im jeweiligen Kanton keine Geodaten vor.
+
+[^6]: denn: Manche Kantone schränken die Nutzungsrechte auch von frei verfügbaren Geodaten ein
+
+[^7]: das heisst: Jede Person und Organisation darf frei darauf zugreifen, sie nutzen, verändern und teilen -- eingeschränkt höchstens durch Massnahmen, die Ursprung und Offenheit der Daten bewahren
 
 Zusätzlich zu den Zugriffskategorien geben die Kantone auf geodienste.ch an, ob die Nutzerinnen und die Nutzer eines Datensatzes einen **Vertrag** unterschreiben müssen (Vertragspflicht) oder nicht.
 
@@ -195,9 +208,10 @@ Wenn für die Nutzung eines Datensatzes ein Vertrag unterschrieben werden muss, 
 In den Abbildungen oben werden Datensätze auf geodienste.ch wegen dem beschränkten Platz mit den folgenden Abkürzungen bezeichnet:
 
 | Abkürzung | Datensatz                                                                                            |
-|----------------------|--------------------------------------------------|
+|-----------------------|-------------------------------------------------|
 | AV        | Amtliche Vermessung                                                                                  |
 | BdF       | Landwirtschaftliche Bewirtschaftung -- Biodiversitätsförderflächen, Qualitätsstufe II und Vernetzung |
+| EAl36     | Elektrische Anlagen mit einer Nennspannung von über 36 kV                                            |
 | ELq       | Landwirtschaftliche Bewirtschaftung -- Elemente mit Landschaftsqualität                              |
 | FFF       | Fruchtfolgeflächen                                                                                   |
 | FP        | Fixpunkte Kategorie 2                                                                                |
@@ -210,6 +224,7 @@ In den Abbildungen oben werden Datensätze auf geodienste.ch wegen dem beschrän
 | LeS       | Lärmempfindlichkeitsstufen (in Nutzungszonen)                                                        |
 | NF        | Landwirtschaftliche Bewirtschaftung -- Nutzungsflächen                                               |
 | NeK       | Naturereigniskataster                                                                                |
+| NeKe      | Naturereigniskataster erweitert                                                                      |
 | NuP       | Nutzungsplanung (kantonal / kommunal)                                                                |
 | PGs       | Planerischer Gewässerschutz                                                                          |
 | PLSF      | Landwirtschaftliche Bewirtschaftung -- Perimeter LN- und Sömmerungsflächen                           |
@@ -230,20 +245,34 @@ Je nach Verwendungszweck von Geodaten kann die Nutzung von Daten-Downloads oder 
 
 **Daten-Downloads** können für Nutzerinnen und Nutzer aus unterschiedlichen Gründen praktisch sein, zum Beispiel:
 
--   *«Ich möchte mit den Daten arbeiten»*: Manche Nutzerinnen und Nutzer möchten Geodaten nicht nur ansehen, sondern sie selbst auswerten, verändern oder weiterverarbeiten -- beispielsweise mit einem GIS^[Geographisches Informationssystem: eine Software zur Erstellung, Pflege und Analyse von räumlichen Daten], mit einem CAD-Programm^[Computer-Aided Design-Programm: eine Software zur Erstellung von technischen Zeichnungen] oder mit einer Statistik-Software.
+-   *«Ich möchte mit den Daten arbeiten»*: Manche Nutzerinnen und Nutzer möchten Geodaten nicht nur ansehen, sondern sie selbst auswerten, verändern oder weiterverarbeiten -- beispielsweise mit einem GIS[^8], mit einem CAD-Programm[^9] oder mit einer Statistik-Software.
 -   *«Ich möchte die Daten auf eine bestimmte Weise darstellen»*: Manche Nutzerinnen und Nutzer brauchen eine bestimmte Darstellung eines Datensatzes, also zum Beispiel die Unterscheidung von Objekten in bestimmte Kategorien, die Verwendung spezifischer Symbole, Farben oder Beschriftungen oder die Optimierung der Darstellung auf einen bestimmten Massstab. Von den meisten Datensätzen besteht nur *ein* Darstellungsdienst und somit nur *eine* vordefinierte Darstellung des Datensatzes. Wenn diese Darstellung die Bedürfnisse der Nutzerinnen und Nutzer nicht ausreichend erfüllt, bieten der Daten-Download und die Verarbeitung der Daten in einer Software die notwendige Flexibilität. Insbesondere wenn Nutzerinnen und Nutzer viele Geodaten überlagernd in einer Karte darstellen möchten, passen die verschiedenen Darstellungsdienste selten genügend gut zusammen.
 -   *«Ich möchte einen bestimmten Stand der Daten sichern»*: Manchen Nutzerinnen und Nutzer ist es wichtig, dass sie genau den Zustand der für sie interessanten Daten zu einem bestimmten Zeitpunkt aufbewahren können. Manche Nutzerinnen und Nutzer sind aus irgendeinem Grund vielleicht sogar dazu verpflichtet.
 -   *«Ich möchte über die Daten auch offline verfügen können»*: Manche Nutzerinnen und Nutzer möchten die Daten auch benutzen können -- und sie beispielsweise betrachten oder auswerten -- wenn sie keinen Internet-Zugriff haben.
 
-Neben dem Download von Geodaten von geodienste.ch in Form einer Datei ist auch die Nutzung von sogenannten WFS^[Abkürzung für «Web Feature Service», ein Standard des Open Geospatial Consortium OGC] möglich. Die Geodaten aus dem WFS können entweder dynamisch genutzt^[Hier ist gemeint: Die Daten werden zum Nutzungszeitpunkt vom WFS bezogen. Die Nutzerin oder der Nutzer verwendet somit immer denjenigen Stand der Daten, den der Betreiber zum aktuellen Zeitpunkt dem WFS hinterlegt hat. Somit können sich die Daten zwischen zwei Nutzungszeitpunkten verändern. Dies ist der Nutzerin oder dem Nutzer in der Regel aber nicht bewusst und ist oft nicht trivial herauszufinden.] werden oder durch die Nutzerin oder den Nutzer in einer Datei dauerhaft gespeichert werden.
+[^8]: Geographisches Informationssystem: eine Software zur Erstellung, Pflege und Analyse von räumlichen Daten
+
+[^9]: Computer-Aided Design-Programm: eine Software zur Erstellung von technischen Zeichnungen
+
+Neben dem Download von Geodaten von geodienste.ch in Form einer Datei ist auch die Nutzung von sogenannten WFS[^10] möglich. Die Geodaten aus dem WFS können entweder dynamisch genutzt[^11] werden oder durch die Nutzerin oder den Nutzer in einer Datei dauerhaft gespeichert werden.
+
+[^10]: Abkürzung für «Web Feature Service», ein Standard des Open Geospatial Consortium OGC
+
+[^11]: Hier ist gemeint: Die Daten werden zum Nutzungszeitpunkt vom WFS bezogen. Die Nutzerin oder der Nutzer verwendet somit immer denjenigen Stand der Daten, den der Betreiber zum aktuellen Zeitpunkt dem WFS hinterlegt hat. Somit können sich die Daten zwischen zwei Nutzungszeitpunkten verändern. Dies ist der Nutzerin oder dem Nutzer in der Regel aber nicht bewusst und ist oft nicht trivial herauszufinden.
 
 ### Angaben für technisch Interessierte
 
-Als Datenquelle für diese Webseite wird die auf [Swagger](https://swagger.io) und der [OpenAPI Specification 3](https://spec.openapis.org/oas/latest.html) basierende Programmierschnittstelle (API^[Application Programming Interface]) von geodienste.ch genutzt. Via den `services`-Endpoint des API werden mit dem folgenden API-Call die zur Verfügung stehenden Daten und Darstellungsdienste im JSON-Format^[Javascript Object Notation-Format] abgefragt: `https://www.geodienste.ch/info/services.json?restricted_topics=false&language=de`.
+Als Datenquelle für diese Webseite wird die auf [Swagger](https://swagger.io) und der [OpenAPI Specification 3](https://spec.openapis.org/oas/latest.html) basierende Programmierschnittstelle (API[^12]) von geodienste.ch genutzt. Via den `services`-Endpoint des API werden mit dem folgenden API-Call die zur Verfügung stehenden Daten und Darstellungsdienste im JSON-Format[^13] abgefragt: `https://www.geodienste.ch/info/services.json?restricted_topics=false&language=de`.
+
+[^12]: Application Programming Interface
+
+[^13]: Javascript Object Notation-Format
 
 Die Informationen von geodienste.ch werden vor der eigentlichen Analyse einer Vorprozessierung unterzogen. Für die Abfrage der Informationen von geodienste.ch und die Vorprozessierung wird [Python 3.9](https://www.python.org/downloads/release/python-390) mit [Pandas](https://pandas.pydata.org) benutzt. Für die nachfolgenden Berechnungen, die Erstellung der interaktiven Visualisierungen und das Rendering des vorliegenden Reports werden [R](https://www.r-project.org) und [Quarto](https://quarto.org) verwendet. Die Daten und die Analyse werden jeweils wöchentlich am frühen Montagmorgen aktualisiert.
 
-Die Workflows für den Bezug der Daten und für die Analyse selbst werden mittels [GitHub Actions](https://github.com/features/actions) automatisch umgesetzt. Das Dependency Management^[Verwaltung der für die erfolgreiche Ausführung eines Programms notwendigen Ressourcen wie beispielsweise Libraries oder Module] erfolgt mit [pip](https://pypi.org/project/pip) und einer `requirements.txt`-Datei für die Python-Komponente bzw. mit [renv](https://rstudio.github.io/renv/articles/renv.html) für die R-Komponente.
+Die Workflows für den Bezug der Daten und für die Analyse selbst werden mittels [GitHub Actions](https://github.com/features/actions) automatisch umgesetzt. Das Dependency Management[^14] erfolgt mit [pip](https://pypi.org/project/pip) und einer `requirements.txt`-Datei für die Python-Komponente bzw. mit [renv](https://rstudio.github.io/renv/articles/renv.html) für die R-Komponente.
+
+[^14]: Verwaltung der für die erfolgreiche Ausführung eines Programms notwendigen Ressourcen wie beispielsweise Libraries oder Module
 
 ### Programm-Code
 

@@ -27,11 +27,18 @@
     },
     "MASS": {
       "Package": "MASS",
-      "Version": "7.3-57",
+      "Version": "7.3-59",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "71476c1d88d1ebdf31580e5a257d5d31",
-      "Requirements": []
+      "Requirements": [
+        "R",
+        "grDevices",
+        "graphics",
+        "methods",
+        "stats",
+        "utils"
+      ],
+      "Hash": "26570ae748e78cb2b0f56019dd2ba354"
     },
     "Matrix": {
       "Package": "Matrix",
@@ -137,7 +144,7 @@
       "Repository": "CRAN",
       "Hash": "da09d82223e669d270e47ed24ac8686e",
       "Requirements": [
-        "MASS"
+        ""
       ]
     },
     "classInt": {
@@ -333,7 +340,7 @@
       "Repository": "CRAN",
       "Hash": "313d31eff2274ecf4c1d3581db7241f9",
       "Requirements": [
-        "MASS",
+        "",
         "cli",
         "glue",
         "gtable",

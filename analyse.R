@@ -7,8 +7,7 @@ library(here)
 library(tidylog)
 library(plotly)
 library(ggrepel)
-library(rnaturalearth)
-library(rnaturalearthhires)
+library(sf)
 
 source(here("config.R"), encoding = "UTF-8")
 
@@ -487,9 +486,7 @@ df_canton %>%
       open_score_wo_nduc_canton < med_openness & count_available_canton >= med_count ~ "überdurchschnittlich viele Daten,\nunterdurchschnittlich offen")) -> df_canton
 
 
-swiss_map <- ne_states(country = "Switzerland", returnclass = "sf") %>%
-  select(iso_3166_2) %>%
-  mutate(iso_3166_2 = str_replace(iso_3166_2, 'CH-', '')) %>%
+swiss_map <- st_read(here("data", "switzerland-canton-map.geojson"), quiet = TRUE) %>%
   left_join(df_canton, by = c("iso_3166_2" = "canton"))
 
 cantons_map <- ggplot(data = swiss_map,

@@ -155,9 +155,9 @@ In @fig-map-data-openness-completeness sind die Kantone gemäss der Offenheit un
 :::
 
 ::: callout-note
-Sämtlicher Programm-Code hinter dieser Webseite -- inklusive Bezug, Aufbereitung und Analyse der Daten von geodienste.ch -- ist [auf GitHub einsehbar](https://github.com/rastrau/geodienste-ch).
+Sämtlicher Programm-Code hinter dieser Webseite -- inklusive Bezug, Aufbereitung und Analyse der Daten von geodienste.ch -- ist [auf GitHub einsehbar](https://github.com/rastrau/monitoring-geodienste-ch).
 
-Haben Sie einen Fehler entdeckt? Bitte geben Sie mir einen [Hinweis per Mail](mailto:geodienste-ch@ralphstraumann.ch) oder [eröffnen Sie einen Issue auf GitHub](https://github.com/rastrau/geodienste-ch/issues). Vielen Dank!
+Haben Sie einen Fehler entdeckt? Bitte geben Sie mir einen [Hinweis per Mail](mailto:geodienste-ch@ralphstraumann.ch) oder [eröffnen Sie einen Issue auf GitHub](https://github.com/rastrau/monitoring-geodienste-ch/issues). Vielen Dank!
 :::
 
 ## Veränderungen der letzten Wochen
@@ -276,4 +276,4 @@ Die Workflows für den Bezug der Daten und für die Analyse selbst werden mittel
 
 ### Programm-Code
 
-Sämtlicher Programm-Code hinter dieser Webseite -- inklusive Bezug, Aufbereitung und Analyse der Daten von geodienste.ch -- ist [auf GitHub einsehbar](https://github.com/rastrau/geodienste-ch).
+Sämtlicher Programm-Code hinter dieser Webseite -- inklusive Bezug, Aufbereitung und Analyse der Daten von geodienste.ch -- ist [auf GitHub einsehbar](https://github.com/rastrau/monitoring-geodienste-ch).

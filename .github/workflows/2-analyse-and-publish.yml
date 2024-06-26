@@ -25,20 +25,15 @@ jobs:
       - name: Install libudunits2 (for {units} in R)
         run: sudo apt-get install libudunits2-dev
         
-      - name: Install gdal
+      - name: Install gdal, libgdal, libgeos, libproj and libsqlite0
         run: |
-          # sudo add-apt-repository ppa:ubuntugis/ppa
           sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
           sudo apt-get update
           sudo apt-get install gdal-bin
-
-      - name: List available packages
-        run: |
-          sudo apt-cache madison libproj
-
-      - name: Install libgdal, libgeos, libproj and libsqlite0
-        run: |
-          sudo apt-get install libgdal-dev libgeos-dev libproj-dev libsqlite0-dev
+          sudo apt-get install libgdal-dev
+          sudo apt-get install libgeos-dev
+          sudo apt-get install libproj=8.2.0-1
+          sudo apt-get install libsqlite0-dev
         
       - name: Install libraries
         uses: r-lib/actions/setup-renv@v2

@@ -7,7 +7,7 @@ library(here)
 library(tidylog)
 library(plotly)
 library(ggrepel)
-library(sf)
+# library(sf)
 
 source(here("config.R"), encoding = "UTF-8")
 
@@ -486,35 +486,35 @@ df_canton %>%
       open_score_wo_nduc_canton < med_openness & count_available_canton >= med_count ~ "überdurchschnittlich viele Daten,\nunterdurchschnittlich offen")) -> df_canton
 
 
-swiss_map <- st_read(here("data", "switzerland-canton-map.geojson"), quiet = TRUE) %>%
-  left_join(df_canton, by = c("iso_3166_2" = "canton"))
-
-cantons_map <- ggplot(data = swiss_map,
-                      aes(fill = category)) +
-  geom_sf(color = "white") +
-  scale_fill_manual(values = c("#54B987", "#85CCA9", "#85CCD2", "#AABFDB")) +
-  theme_options +
-  theme(axis.text = element_blank(),
-        legend.position = "bottom",
-        legend.spacing.x = unit(0.3, 'cm'),
-        legend.spacing.y = unit(0.3, 'cm'),
-        legend.text = element_text(size = 9),
-        panel.background = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.margin = unit(c(0, 0, 0, 0), "cm"),
-        axis.ticks = element_blank(),
-        axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        plot.background = element_rect(fill = "white", colour = NA),
-        plot.margin = unit(c(-1.4, -1, -1, -1.1), "cm")) +
-  labs(x = NULL, y = NULL) +
-  guides(fill = guide_legend(nrow = 2, byrow = TRUE))
-
-ggsave(here("map-data-openness-completeness.png"),
-       cantons_map, width = 22, height = 17.3, units = "cm")
+# swiss_map <- st_read(here("data", "switzerland-canton-map.geojson"), quiet = TRUE) %>%
+#   left_join(df_canton, by = c("iso_3166_2" = "canton"))
+#
+# cantons_map <- ggplot(data = swiss_map,
+#                       aes(fill = category)) +
+#   geom_sf(color = "white") +
+#   scale_fill_manual(values = c("#54B987", "#85CCA9", "#85CCD2", "#AABFDB")) +
+#   theme_options +
+#   theme(axis.text = element_blank(),
+#         legend.position = "bottom",
+#         legend.spacing.x = unit(0.3, 'cm'),
+#         legend.spacing.y = unit(0.3, 'cm'),
+#         legend.text = element_text(size = 9),
+#         panel.background = element_blank(),
+#         panel.grid.major = element_blank(),
+#         panel.grid.minor = element_blank(),
+#         panel.margin = unit(c(0, 0, 0, 0), "cm"),
+#         axis.ticks = element_blank(),
+#         axis.text.x = element_blank(),
+#         axis.text.y = element_blank(),
+#         axis.title.x = element_blank(),
+#         axis.title.y = element_blank(),
+#         plot.background = element_rect(fill = "white", colour = NA),
+#         plot.margin = unit(c(-1.4, -1, -1, -1.1), "cm")) +
+#   labs(x = NULL, y = NULL) +
+#   guides(fill = guide_legend(nrow = 2, byrow = TRUE))
+#
+# ggsave(here("map-data-openness-completeness.png"),
+#        cantons_map, width = 22, height = 17.3, units = "cm")
 
 
 # Change detection

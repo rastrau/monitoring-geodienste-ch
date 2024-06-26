@@ -30,6 +30,7 @@ jobs:
           sudo add-apt-repository ppa:ubuntugis/ppa
           sudo apt-get update
           sudo apt-get install gdal-bin
+          sudo apt-cache madison libproj
           sudo apt-get install libgdal-dev libgeos-dev libproj-dev libsqlite0-dev
           
       - name: Install libraries

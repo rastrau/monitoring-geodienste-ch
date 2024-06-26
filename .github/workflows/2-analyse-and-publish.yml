@@ -32,7 +32,7 @@ jobs:
           sudo apt-get install gdal-bin
           sudo apt-get install libgdal-dev
           sudo apt-get install libgeos-dev
-          sudo apt-get install libproj=8.2.0-1
+          sudo apt-get install libproj-dev=8.2.0-1
           sudo apt-get install libsqlite0-dev
         
       - name: Install libraries

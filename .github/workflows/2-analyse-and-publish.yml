@@ -30,9 +30,15 @@ jobs:
           sudo add-apt-repository ppa:ubuntugis/ppa
           sudo apt-get update
           sudo apt-get install gdal-bin
+
+      - name: List available packages
+        run: |
           sudo apt-cache madison libproj
+
+      - name: Install libgdal, libgeos, libproj and libsqlite0
+        run: |
           sudo apt-get install libgdal-dev libgeos-dev libproj-dev libsqlite0-dev
-          
+        
       - name: Install libraries
         uses: r-lib/actions/setup-renv@v2
         with:

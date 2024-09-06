@@ -208,33 +208,36 @@ Wenn für die Nutzung eines Datensatzes ein Vertrag unterschrieben werden muss, 
 In den Abbildungen oben werden Datensätze auf geodienste.ch wegen dem beschränkten Platz mit den folgenden Abkürzungen bezeichnet:
 
 | Abkürzung | Datensatz                                                                                            |
-|------------------------|------------------------------------------------|
+|-----------|------------------------------------------------------------------------------------------------------|
 | AV        | Amtliche Vermessung                                                                                  |
-| BdF       | Landwirtschaftliche Bewirtschaftung -- Biodiversitätsförderflächen, Qualitätsstufe II und Vernetzung |
+| BdF       | Biodiversitätsförderflächen, Qualitätsstufe II und Vernetzung                                        |
+| BewE      | Bewirtschaftungseinheiten                                                                            |
 | EAl36     | Elektrische Anlagen mit einer Nennspannung von über 36 kV                                            |
 | ELq       | Landwirtschaftliche Bewirtschaftung -- Elemente mit Landschaftsqualität                              |
 | FFF       | Fruchtfolgeflächen                                                                                   |
 | FP        | Fixpunkte Kategorie 2                                                                                |
 | Gk        | Gefahrenkarten                                                                                       |
+| Gwr       | Gewässerraum                                                                                         |
 | KAtr      | Kantonale Ausnahmetransportrouten                                                                    |
 | KbS       | Kataster der belasteten Standorte                                                                    |
 | LB        | Luftbild                                                                                             |
-| LBe       | Landwirtschaftliche Bewirtschaftung -- Bewirtschaftungseinheit                                       |
 | LK        | Leitungskataster                                                                                     |
 | LeS       | Lärmempfindlichkeitsstufen (in Nutzungszonen)                                                        |
-| NF        | Landwirtschaftliche Bewirtschaftung -- Nutzungsflächen                                               |
+| NF        | Nutzungsflächen                                                                                      |
 | NeK       | Naturereigniskataster                                                                                |
 | NeKe      | Naturereigniskataster erweitert                                                                      |
 | NuP       | Nutzungsplanung (kantonal / kommunal)                                                                |
 | PGs       | Planerischer Gewässerschutz                                                                          |
-| PLSF      | Landwirtschaftliche Bewirtschaftung -- Perimeter LN- und Sömmerungsflächen                           |
-| PTr       | Landwirtschaftliche Bewirtschaftung -- Perimeter Terrassenreben                                      |
+| PLSF      | Perimeter Landwirtschaftliche Nutzfläche und Sömmerung                                               |
+| PTr       | Perimeter Terrassenreben                                                                             |
 | Pz        | Planungszonen                                                                                        |
 | RSu       | Planung der Revitalisierungen von Seeufern                                                           |
-| RbK       | Landwirtschaftliche Bewirtschaftung -- Rebbaukataster                                                |
+| RbK       | Rebbaukataster                                                                                       |
 | ReE       | Richtplanung erneuerbare Energien                                                                    |
+| RuR       | Rodungen und Rodungsersatz                                                                           |
 | SNG       | Stromversorgungssicherheit                                                                           |
 | SWG       | Statische Waldgrenzen                                                                                |
+| SWk       | Planung und Berichterstattung der Sanierung Wasserkraft                                              |
 | WaL       | Waldabstandslinien                                                                                   |
 | Wr        | Waldreservate                                                                                        |
 | WrZ       | Wildruhezonen                                                                                        |

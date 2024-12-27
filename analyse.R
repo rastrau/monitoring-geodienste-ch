@@ -7,17 +7,16 @@ library(here)
 library(tidylog)
 library(plotly)
 library(ggrepel)
-# library(sf)
 
 source(here("config.R"), encoding = "UTF-8")
+source(here("functions.R"), encoding = "UTF-8")
 
 # Ingest CSV as provided by the Python script (the geodienste.ch API also offers
-# a CSV directly, but it is malformed in several ways as of 05.2022)
+# a CSV directly, but it is malformed in several ways as of 05.2022). Store
+# the update date of the input data in a variable for use in the Quarto report.
 df <- read_delim(csv_path, delim = ";", na = c("{}", "''", '""', ""))
-
 updated <- format(min(df$updated), "%d.%m.%Y")
 
-source(here("functions.R"), encoding = "UTF-8")
 
 # Clean the raw data -----------------------------------------------------------
 df <- clean_data(df)

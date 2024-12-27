@@ -42,7 +42,7 @@ df %>%
 
 
 # Compute openness scores (for data and for WMS) per topic ---------------------
-df <- compute_openness(df)
+df <- compute_openness_per_topic(df)
 
 
 # Reshape data for easier canton-level analysis --------------------------------

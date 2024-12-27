@@ -82,7 +82,7 @@ clean_data <- function(df) {
   df
 }
 
-compute_openness <- function(df) {
+compute_openness_per_topic <- function(df) {
   df <- df %>%
   # Assign an openness score (for data and for WMS) to each dataset based on publication type
   mutate(open_score_data =
@@ -149,11 +149,6 @@ harmonise_data_and_wms_atts <- function(df) {
   df
 }
 
-
-# Reassemble data into a long table
-df <- rbind(df_data, df_wms)
-rm(df_data)
-rm(df_wms)
 
 sort_chr_attribute_values_helper_func <- function(dataframe, col_index, output){
   str_c(unlist(dataframe[col_index]), collapse = ", ")

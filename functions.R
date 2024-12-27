@@ -74,31 +74,35 @@ clean_data <- function(df) {
         publication_wms)) %>%
     mutate(
       contract_required_data = replace_na(contract_required_data, FALSE),
-      contract_required_wms = replace_na(contract_required_data, FALSE))
+      contract_required_wms = replace_na(contract_required_data, FALSE),
+      # Convert some attributes to factors
+      canton = factor(canton, levels = unique(canton)),
+      publication_data = factor(publication_data, factor_levels_publication),
+      publication_wms = factor(publication_wms, factor_levels_publication))
   df
 }
 
 compute_openness <- function(df) {
   df <- df %>%
-  # Compute openness scores (for data and for WMS) per dataset
   # Assign an openness score (for data and for WMS) to each dataset based on publication type
+  mutate(open_score_data =
+           case_when(
+             publication_data == "Frei erhältlich" ~ 3,
+             publication_data == "Registrierung erforderlich" ~ 2,
+             publication_data == "Freigabe erforderlich" ~ 1,
+             publication_data == "Im Aufbau" ~ 0,
+             publication_data == "Keine Daten" ~ 0),
+         open_score_wms =
+           case_when(
+             publication_wms == "Frei erhältlich" ~ 3,
+             publication_wms == "Registrierung erforderlich" ~ 2,
+             publication_wms == "Freigabe erforderlich" ~ 1,
+             publication_wms == "Im Aufbau" ~ 0,
+             publication_wms == "Keine Daten" ~ 0)) %>%
+  # Modify the raw openness scores based on contract requirements (the openness score is halfed, if
+  # using the dataset requires a contract) and adapt the publication type ("mit Vertrag" is added
+  # to datasets that require a contract)
   mutate(
-    open_score_data = case_when(
-      publication_data == "Frei erhältlich" ~ 3,
-      publication_data == "Registrierung erforderlich" ~ 2,
-      publication_data == "Freigabe erforderlich" ~ 1,
-      publication_data == "Im Aufbau" ~ 0,
-      publication_data == "Keine Daten" ~ 0),
-    open_score_wms = case_when(
-      publication_wms == "Frei erhältlich" ~ 3,
-      publication_wms == "Registrierung erforderlich" ~ 2,
-      publication_wms == "Freigabe erforderlich" ~ 1,
-      publication_wms == "Im Aufbau" ~ 0,
-      publication_wms == "Keine Daten" ~ 0),
-    # Modify the raw openness scores based on contract requirements (the
-    # openness score is halfed, if using the dataset requires a contract)
-    # and adapt the publication type ("mit Vertrag" is added to datasets
-    # that require a contract)
     open_score_data = ifelse(
       contract_required_data == TRUE,
       open_score_data / 2,
@@ -118,15 +122,6 @@ compute_openness <- function(df) {
   df
 }
 
-create_factors <- function(df) {
-  df <- df %>%
-  # Convert some attributes to factors
-  mutate(
-    canton = factor(canton, levels = unique(canton)),
-    publication_data = factor(publication_data, factor_levels_publication),
-    publication_wms = factor(publication_wms, factor_levels_publication))
-  df
-}
 
 harmonise_data_and_wms_atts <- function(df) {
   # Split data into data about data downloads and about WMS, and reassemble the
@@ -153,6 +148,12 @@ harmonise_data_and_wms_atts <- function(df) {
   rm(df_wms)
   df
 }
+
+
+# Reassemble data into a long table
+df <- rbind(df_data, df_wms)
+rm(df_data)
+rm(df_wms)
 
 sort_chr_attribute_values_helper_func <- function(dataframe, col_index, output){
   str_c(unlist(dataframe[col_index]), collapse = ", ")

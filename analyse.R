@@ -17,85 +17,31 @@ df <- read_delim(csv_path, delim = ";", na = c("{}", "''", '""', ""))
 
 updated <- format(min(df$updated), "%d.%m.%Y")
 
+source(here("functions.R"), encoding = "UTF-8")
 
-
-# Clean the raw data --------------------------------------------------------------------------
-
-# This step takes care of the following:
-# - remove administration-internal datasets (these datasets contain the term "verwaltungsintern"
-#   in their German `topic_title`)
-# - abbreviate topic names for later use as labels in the visualizations
-# - harmonise values for missing data or service for both data downloads and WMS
-# - fill NAs in contract requirement attributes
-
-df <- df %>%
-  filter(!str_detect(topic_title, "verwaltungsintern")) %>%
-  filter(!str_detect(canton, "Broker")) %>%
-  mutate(topic_title_short =
-           case_when(
-             topic_title == "Amtliche Vermessung" ~ "AV",
-             topic_title == "Bewirtschaftungseinheiten" ~ "BewE",
-             topic_title == "Biodiversitätsförderflächen, Qualitätsstufe II und Vernetzung" ~ "BdF",
-             topic_title == "Elektrische Anlagen mit einer Nennspannung von über 36 kV" ~ "EAl36",
-             topic_title == "Fixpunkte (Kategorie 2)" ~ "FP",
-             topic_title == "Fruchtfolgeflächen" ~ "FFF",
-             topic_title == "Gefahrenkarten" ~ "Gk",
-             topic_title == "Gewässerraum" ~ "Gwr",
-             topic_title == "Kantonale Ausnahmetransportrouten" ~ "KAtr",
-             topic_title == "Kataster der belasteten Standorte" ~ "KbS",
-             topic_title == "Landw. Bewirtschaftung: Elemente mit Landschaftsqualität" ~ "ELq",
-             topic_title == "Leitungskataster" ~ "LK",
-             topic_title == "Luftbild" ~ "LB",
-             topic_title == "Lärmempfindlichkeitsstufen (in Nutzungszonen)" ~ "LeS",
-             topic_title == "Naturereigniskataster" ~ "NeK",
-             topic_title == "Naturereigniskataster erweitert" ~ "NeKe",
-             topic_title == "Nutzungsflächen" ~ "NF",
-             topic_title == "Nutzungsplanung (kantonal / kommunal)" ~ "NuP",
-             topic_title == "Perimeter Landwirtschaftliche Nutzfläche und Sömmerung" ~ "PLSF",
-             topic_title == "Perimeter Terrassenreben" ~ "PTr",
-             topic_title == "Planerischer Gewässerschutz" ~ "PGs",
-             topic_title == "Planung der Revitalisierungen von Seeufern" ~ "RSu",
-             topic_title == "Planung und Berichterstattung der Sanierung Wasserkraft" ~ "SWk",
-             topic_title == "Planungszonen" ~ "Pz",
-             topic_title == "Rebbaukataster" ~ "RbK",
-             topic_title == "Richtplanung erneuerbare Energien" ~ "ReE",
-             topic_title == "Rodungen und Rodungsersatz" ~ "RuR",
-             topic_title == "Statische Waldgrenzen" ~ "SWG",
-             topic_title == "Stromversorgungssicherheit: Netzgebiete" ~ "SNG",
-             topic_title == "Waldabstandslinien" ~ "WaL",
-             topic_title == "Waldreservate" ~ "Wr",
-             topic_title == "Wildruhezonen" ~ "WrZ")) %>%
-  # If this occurs, topic_title_short is not yet defined:
-  mutate(topic_title_short = ifelse(is.na(topic_title_short), "unbekannt", topic_title_short)) %>%
-  mutate(
-    publication_data = ifelse(
-      publication_data %in% c("Keine Daten", "keine Daten", ""),
-      "Keine Daten",
-      publication_data),
-    publication_wms = ifelse(
-      publication_wms %in% c("Keine Daten","keine Daten", ""),
-      "Keine Daten",
-      publication_wms)) %>%
-  mutate(
-    contract_required_data = replace_na(contract_required_data, FALSE),
-    contract_required_wms = replace_na(contract_required_data, FALSE))
-
+# Clean the raw data -----------------------------------------------------------
+df <- clean_data(df)
 df_current_cleaned <- df
 
+# Quality assurance: Is there data for all topics over all cantons and FL
+# (27 entities)? If yes, count should be 27 for all records.
 df %>%
   group_by(topic_title) %>%
   mutate(cantons = paste0(canton, collapse = ", "),
          count = n()) %>%
   select(topic_title, count, cantons) %>%
-  unique()
+  unique() %>%
+  print(n=50)
 
+# Quality assurance: Are <topic_title_short> values defined for all values of
+# <topic_title>? If yes, result set should be empty.
 df %>%
   filter(topic_title_short == "unbekannt") %>%
   group_by(topic_title) %>%
   select(topic_title, topic_title_short) %>%
   unique()
 
-# Compute openness scores (for data and for WMS) per dataset ----------------------------------
+# Compute openness scores (for data and for WMS) per dataset -------------------
 
 df <- df %>%
   # Assign an openness score (for data and for WMS) to each dataset based on publication type

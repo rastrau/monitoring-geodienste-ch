@@ -20,25 +20,9 @@ updated <- format(min(df$updated), "%d.%m.%Y")
 
 # Clean the raw data -----------------------------------------------------------
 df <- clean_data(df)
+quality_assurance_after_import(df)
+# Copy this dataframe for comparison later on
 df_current_cleaned <- df
-
-# Quality assurance: Is there data for all topics over all cantons and FL
-# (27 entities)? If yes, count should be 27 for all records.
-df %>%
-  group_by(topic_title) %>%
-  mutate(cantons = paste0(canton, collapse = ", "),
-         count = n()) %>%
-  select(topic_title, count, cantons) %>%
-  unique() %>%
-  print(n=100)
-
-# Quality assurance: Are <topic_title_short> values defined for all values of
-# <topic_title>? If yes, result set should be empty.
-df %>%
-  filter(topic_title_short == "unbekannt") %>%
-  group_by(topic_title) %>%
-  select(topic_title, topic_title_short) %>%
-  unique()
 
 
 # Compute openness scores (for data and for WMS) per topic ---------------------
@@ -49,11 +33,11 @@ df <- compute_openness_per_topic(df)
 df <- harmonise_data_and_wms_atts(df)
 
 
-# Compute openness scores per canton and per offering -----------------------------------------
+# Compute openness scores per offering (data and wms) and per canton -----------
 
 df2 <- df %>%
-  # Aggregate topics per canton, per offering (data or WMS) and per publication type
-  # (and open score - which is the same aggregation as publication type)
+  # Aggregate topics per canton, per offering (data or WMS) and per publication
+  # type (and open score - which is the same aggregation as publication type)
   group_by(canton,
            offering,
            publication_type,
@@ -179,7 +163,6 @@ plt_data_prop_wo_nduc <- df2 %>%
   theme_options +
   theme(axis.title.y = element_blank())
 
-plt_data_prop_wo_nduc
 
 plotlyfy <- function(plt){
   ggplotly(plt, tooltip = c("text")) %>%

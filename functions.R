@@ -23,7 +23,10 @@ clean_data <- function(df) {
   df <- df %>%
     filter(!str_detect(topic_title, "verwaltungsintern")) %>%
     filter(!str_detect(canton, "Broker")) %>%
-    mutate(topic_title_short =
+    select(-version, -comment) %>%
+    mutate(
+      canton = factor(canton, levels = unique(canton)),
+      topic_title_short =
              case_when(
                topic_title == "Amtliche Vermessung" ~ "AV",
                topic_title == "Bewirtschaftungseinheiten" ~ "BewE",
@@ -74,13 +77,32 @@ clean_data <- function(df) {
         publication_wms)) %>%
     mutate(
       contract_required_data = replace_na(contract_required_data, FALSE),
-      contract_required_wms = replace_na(contract_required_data, FALSE),
-      # Convert some attributes to factors
-      canton = factor(canton, levels = unique(canton)),
-      publication_data = factor(publication_data, factor_levels_publication),
-      publication_wms = factor(publication_wms, factor_levels_publication))
+      contract_required_wms = replace_na(contract_required_data, FALSE))
   df
 }
+
+
+quality_assurance_after_import <- function(df) {
+
+  # Quality assurance: Is there data for all topics over all cantons and FL
+  # (27 entities)? If yes, count should be 27 for all records.
+  df %>%
+    group_by(topic_title) %>%
+    mutate(cantons = paste0(canton, collapse = ", "),
+           count = n()) %>%
+    select(topic_title, count, cantons) %>%
+    unique() %>%
+    print(n=100)
+
+  # Quality assurance: Are <topic_title_short> values defined for all values of
+  # <topic_title>? If yes, result set should be empty.
+  df %>%
+    filter(topic_title_short == "unbekannt") %>%
+    group_by(topic_title) %>%
+    select(topic_title, topic_title_short) %>%
+    unique()
+}
+
 
 compute_openness_per_topic <- function(df) {
   df <- df %>%
@@ -118,7 +140,10 @@ compute_openness_per_topic <- function(df) {
     publication_wms = ifelse(
       contract_required_wms == TRUE & publication_wms != "Im Aufbau",
       str_c(publication_wms, ", mit Vertrag"),
-      publication_wms))
+      publication_wms)) %>%
+  mutate(
+    publication_data = factor(publication_data, factor_levels_publication),
+    publication_wms = factor(publication_wms, factor_levels_publication))
   df
 }
 
@@ -128,7 +153,7 @@ harmonise_data_and_wms_atts <- function(df) {
   # data into a long table with harmonised attribute names
   df_data <- df %>%
     mutate(offering = "data download") %>%
-    select(canton, topic_title, topic_title_short, version, offering,
+    select(canton, topic_title, topic_title_short, offering,
            publication_data, contract_required_data, open_score_data,
            updated) %>%
     rename(publication_type = publication_data,
@@ -137,7 +162,7 @@ harmonise_data_and_wms_atts <- function(df) {
 
   df_wms <- df %>%
     mutate(offering = "WMS") %>%
-    select(canton, topic_title, topic_title_short, version, offering,
+    select(canton, topic_title, topic_title_short, offering,
            publication_wms, contract_required_wms, open_score_wms, updated) %>%
     rename(publication_type = publication_wms,
            contract_required = contract_required_wms,

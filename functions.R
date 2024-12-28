@@ -6,9 +6,6 @@ library(ggplot2)
 library(here)
 library(tidylog)
 library(plotly)
-library(ggrepel)
-library(rnaturalearth)
-library(rnaturalearthhires)
 
 source(here("config.R"), encoding = "UTF-8")
 

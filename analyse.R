@@ -6,7 +6,6 @@ library(ggplot2)
 library(here)
 library(tidylog)
 library(plotly)
-library(ggrepel)
 
 source(here("config.R"), encoding = "UTF-8")
 source(here("functions.R"), encoding = "UTF-8")

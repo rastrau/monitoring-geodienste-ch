@@ -32,6 +32,7 @@ library(here)
 
 source(here("config.R"), encoding = "UTF-8")
 source(here("analyse.R"), encoding = "UTF-8")
+source(here("time-series.R"), encoding = "UTF-8")
 
 ```
 
@@ -169,6 +170,38 @@ Sämtlicher Programm-Code hinter dieser Webseite -- inklusive Bezug, Aufbereitun
 Haben Sie einen Fehler entdeckt? Bitte geben Sie mir einen [Hinweis per Mail](mailto:geodienste-ch@ralphstraumann.ch) oder [eröffnen Sie einen Issue auf GitHub](https://github.com/rastrau/monitoring-geodienste-ch/issues). Vielen Dank!
 :::
 
+## Veränderungen über die Jahre
+
+@fig-lineplot_number zeigt die Anzahl der verfügbaren Datensätze der Kantone über die Jahre. Die Statistiken werden seit dem 03.04.2023 wöchentlich erhoben. Die Grafiken zeigen den Zeitraum seit 01.06.2023, da nach der ersten Veröffentlichung des vorliegenden Monitorings seitens Kantone und Betreiber noch diverse Korrekturen an den Grundlagen von geodienste.ch erfolgt sind.
+
+```{r}
+#| label: fig-lineplot_number
+#| fig-cap: Anzahl der auf geodienste.ch verfügbaren Datensätze pro Kanton über die Jahre
+#| column: page-inset-right
+#| fig-height: 13
+#| fig-width: 10
+#| warning: false
+#| echo: false
+
+lineplot_number
+
+```
+
+@fig-lineplot_open_score zeigt die mittlere Offenheit der auf geodienste.ch verfügbaren Datensätze der Kantone über die Jahre. Achtung: Die mittlere Offenheit bezieht sich auf die verfügbaren Daten, *nicht* auf den Kanton. Stellt ein Kanton über die Jahre zwar zusätzliche Daten auf geodienste.ch bereit, aber mit gegenüber den früher bereitgestellten Daten restriktiveren Bedingungen (zum Beispiel in der Zugriffskategorie «Registrierung erforderlich» statt «Frei erhältlich»), führt dies dazu, dass sich die mittlere Offenheit verschlechtert. Um die Entwicklung der grundsätzlichen Verfügbarkeit von Daten zu beurteilen, ist @fig-lineplot_number (oder die *Kombination* von @fig-lineplot_number und @fig-lineplot_open_score) besser geeignet.
+
+```{r}
+#| label: fig-lineplot_open_score
+#| fig-cap: Mittlere Offenheit der auf geodienste.ch verfügbaren Datensätze pro Kanton über die Jahre
+#| column: page-inset-right
+#| fig-height: 13
+#| fig-width: 10
+#| warning: false
+#| echo: false
+
+lineplot_open_score
+
+```
+
 ## Veränderungen der letzten Wochen
 
 Die folgende Tabelle zeigt Veränderungen der Zugriffskategorie gegenüber dem `r date_recent`, falls welche aufgetreten sind.
@@ -217,7 +250,7 @@ Wenn für die Nutzung eines Datensatzes ein Vertrag unterschrieben werden muss, 
 In den Abbildungen oben werden Datensätze auf geodienste.ch wegen dem beschränkten Platz mit den folgenden Abkürzungen bezeichnet:
 
 | Abkürzung | Datensatz                                                               |
-|-------------|-----------------------------------------------------------|
+|------------------|------------------------------------------------------|
 | AV        | Amtliche Vermessung                                                     |
 | BdF       | Biodiversitätsförderflächen, Qualitätsstufe II und Vernetzung           |
 | BewE      | Bewirtschaftungseinheiten                                               |

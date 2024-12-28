@@ -213,6 +213,9 @@ In den Abbildungen oben werden Datensätze auf geodienste.ch wegen dem beschrän
 | FP        | Fixpunkte Kategorie 2                                                   |
 | Gk        | Gefahrenkarten                                                          |
 | Gwr       | Gewässerraum                                                            |
+| Gwv       | Grundwasservorkommen                                                    |
+| Hnb       | Holznutzungsbewilligung                                                 |
+| IbWe      | Inventar der bestehenden Wasserentnahmen                                |
 | KAtr      | Kantonale Ausnahmetransportrouten                                       |
 | KbS       | Kataster der belasteten Standorte                                       |
 | LB        | Luftbild                                                                |
@@ -226,9 +229,10 @@ In den Abbildungen oben werden Datensätze auf geodienste.ch wegen dem beschrän
 | PLSF      | Perimeter Landwirtschaftliche Nutzfläche und Sömmerung                  |
 | PTr       | Perimeter Terrassenreben                                                |
 | Pz        | Planungszonen                                                           |
-| RSu       | Planung der Revitalisierungen von Seeufern                              |
 | RbK       | Rebbaukataster                                                          |
 | ReE       | Richtplanung erneuerbare Energien                                       |
+| RFg       | Planung der Revitalisierungen von Fliessgewässern                       |
+| RSu       | Planung der Revitalisierungen von Seeufern                              |
 | RuR       | Rodungen und Rodungsersatz                                              |
 | SNG       | Stromversorgungssicherheit                                              |
 | SWG       | Statische Waldgrenzen                                                   |

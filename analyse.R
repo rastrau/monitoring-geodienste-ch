@@ -210,7 +210,7 @@ df_canton <- df2 %>%
   distinct()
 
 
-# Produce plot
+# Produce 2D plot of available datasets vs. openness of available datasets -----
 min_openness <- min(df_canton$open_score_wo_nduc_canton) - 0.15
 med_openness <- median(df_canton$open_score_wo_nduc_canton)
 max_openness <- 3 + 0.15
@@ -218,119 +218,29 @@ min_count <- min(df_canton$count_available_canton) - 0.5
 med_count <- median(df_canton$count_available_canton)
 max_count <- max(df_canton$count_available_canton) + 0.5
 
-plt_data_comparison <- df_canton %>%
-  ggplot() +
-  # In sequence: bottom left, bottom right, top left, and top right
-  geom_rect(aes(xmin = min_openness, xmax = med_openness,
-                ymin = min_count, ymax = med_count,
-                text = "unterdurchschnittliche Anzahl verfügbarer Datensätze,\nunterdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#AABFDB") +
-  geom_rect(aes(xmin = min_openness, xmax = med_openness,
-                ymin = med_count, ymax = max_count,
-                text = "überdurchschnittliche Anzahl verfügbarer Datensätze,\nunterdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#85CCA9") +
-  geom_rect(aes(xmin = med_openness, xmax = max_openness,
-                ymin = min_count, ymax = med_count,
-                text = "unterdurchschnittliche Anzahl verfügbarer Datensätze,\nüberdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#85CCD2") +
-  geom_rect(aes(xmin = med_openness, xmax = max_openness,
-                ymin = med_count, ymax = max_count,
-                text = "überdurchschnittliche Anzahl verfügbarer Datensätze,\nüberdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#54B987") +
-  geom_text(aes(x = open_score_wo_nduc_canton,
-                y = count_available_canton,
-                label = paste0(sprintf("<b>%s</b>", canton)),
-                text = str_c("Kanton ", canton, "\n\n",
-                             "Offenheit: ", round(open_score_wo_nduc_canton, 2), "\n",
-                             "Verfügbare Datensätze: ", count_available_canton)),
-            size = 5,
-            position = position_jitter(width = 0.05, height = 0.2)) +
-  scale_x_continuous(limits = c(min_openness, max_openness),
-                     breaks = seq(0, 3, 0.5),
-                     expand = expansion(add = c(0.03, 0))) +
-  scale_y_continuous(breaks = seq(0, max_count, 1),
-                     expand = expansion(add = c(0.3, 0.2))) +
-  labs(y = "Anzahl verfügbarer Datensätze",
-       x = "Offenheit der verfügbaren Datensätze") +
-  theme_options
-
+plt_data_comparison <- plot_comparison(df_canton, theme_options,
+                                       min_openness, med_openness, max_openness,
+                                       min_count, med_count, max_count, 0.05,
+                                       0.2)
 plt_data_comparison <- plotlyfy_w_zoom(plt_data_comparison)
 plt_data_comparison
 
-min_openness <- med_openness - 0.23
-max_openness <- 3.02
-min_count <- med_count - 4
 
-plt_data_comparison_subset <- df_canton %>%
-  ggplot() +
-  # In sequence: bottom left, top left, bottom right, and top right
-  geom_rect(aes(xmin = min_openness, xmax = med_openness,
-                ymin = min_count, ymax = med_count,
-                text = "unterdurchschnittliche Anzahl verfügbarer Datensätze,\nunterdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#AABFDB") +
-  geom_rect(aes(xmin = min_openness, xmax = med_openness,
-                ymin = med_count, ymax = max_count,
-                text = "überdurchschnittliche Anzahl verfügbarer Datensätze,\nunterdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#85CCA9") +
-  geom_rect(aes(xmin = med_openness, xmax = max_openness,
-                ymin = min_count, ymax = med_count,
-                text = "unterdurchschnittliche Anzahl verfügbarer Datensätze,\nüberdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#85CCD2") +
-  geom_rect(aes(xmin = med_openness, xmax = max_openness,
-                ymin = med_count, ymax = max_count,
-                text = "überdurchschnittliche Anzahl verfügbarer Datensätze,\nüberdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"), fill = "#54B987") +
-  geom_text(aes(x = open_score_wo_nduc_canton,
-                y = count_available_canton,
-                label = canton,
-                text = str_c("Kanton ", canton, "\n\n",
-                             "Offenheit: ", round(open_score_wo_nduc_canton, 2), "\n",
-                             "Verfügbare Datensätze: ", count_available_canton)),
-            fontface = "bold",
-            position = position_jitter(width = 0.005, height = 0.2)) +
-  scale_x_continuous(limits = c(min_openness, max_openness), breaks = seq(0, 3, 0.05)) +
-  scale_y_continuous(limits = c(min_count, max_count), breaks = seq(min_count, max_count, 2)) +
-  labs(y = "Anzahl verfügbarer Datensätze",
-       x = "Offenheit der verfügbaren Datensätze") +
-  theme_options
+# Produce 2D plot of available datasets vs. openness of available datasets,
+# showing only a subset of the data (zoomed in)
+min_openness <- med_openness - (3.01 - med_openness)
+max_openness <- 3.01
+min_count <- med_count - (max_count - med_count)
 
+plt_data_comparison_subset <- plot_comparison(df_canton, theme_options,
+                                       min_openness, med_openness, max_openness,
+                                       min_count, med_count, max_count, 0.01,
+                                       0.2)
 plt_data_comparison_subset <- plotlyfy_w_zoom(plt_data_comparison_subset)
 plt_data_comparison_subset
 
-# Produce map of categorized cantons
-df_canton %>%
-  mutate(
-    category = case_when(
-      open_score_wo_nduc_canton >= med_openness & count_available_canton >= med_count ~ "überdurchschnittlich viele Daten,\nüberdurchschnittlich offen",
-      open_score_wo_nduc_canton >= med_openness & count_available_canton < med_count ~ "unterdurchschnittliche Anzahl Daten,\nüberdurchschnittlich offen",
-      open_score_wo_nduc_canton < med_openness & count_available_canton < med_count ~ "unterdurchschnittliche Anzahl Daten,\nunterdurchschnittlich offen",
-      open_score_wo_nduc_canton < med_openness & count_available_canton >= med_count ~ "überdurchschnittlich viele Daten,\nunterdurchschnittlich offen")) -> df_canton
 
-
-# swiss_map <- st_read(here("data", "switzerland-canton-map.geojson"), quiet = TRUE) %>%
-#   left_join(df_canton, by = c("iso_3166_2" = "canton"))
-#
-# cantons_map <- ggplot(data = swiss_map,
-#                       aes(fill = category)) +
-#   geom_sf(color = "white") +
-#   scale_fill_manual(values = c("#54B987", "#85CCA9", "#85CCD2", "#AABFDB")) +
-#   theme_options +
-#   theme(axis.text = element_blank(),
-#         legend.position = "bottom",
-#         legend.spacing.x = unit(0.3, 'cm'),
-#         legend.spacing.y = unit(0.3, 'cm'),
-#         legend.text = element_text(size = 9),
-#         panel.background = element_blank(),
-#         panel.grid.major = element_blank(),
-#         panel.grid.minor = element_blank(),
-#         panel.margin = unit(c(0, 0, 0, 0), "cm"),
-#         axis.ticks = element_blank(),
-#         axis.text.x = element_blank(),
-#         axis.text.y = element_blank(),
-#         axis.title.x = element_blank(),
-#         axis.title.y = element_blank(),
-#         plot.background = element_rect(fill = "white", colour = NA),
-#         plot.margin = unit(c(-1.4, -1, -1, -1.1), "cm")) +
-#   labs(x = NULL, y = NULL) +
-#   guides(fill = guide_legend(nrow = 2, byrow = TRUE))
-#
-# ggsave(here("map-data-openness-completeness.png"),
-#        cantons_map, width = 22, height = 17.3, units = "cm")
-
-
-# Change detection
+# Change detection -------------------------------------------------------------
 
 # Find the CSV file from four weeks ago
 csv_files <- list.files(path="data",

@@ -210,6 +210,54 @@ analyse_openness <- function(df) {
   df
 }
 
+
+plot_comparison <- function(df_canton, theme_options, min_openness, med_openness, max_openness,
+                            min_count, med_count, max_count,
+                            jitter_horizontal, jitter_vertical) {
+
+  ggplot(data = df_canton) +
+    # Define rectangles for different categories
+    geom_rect(aes(xmin = min_openness, xmax = med_openness,
+                  ymin = min_count, ymax = med_count,
+                  text = "unterdurchschnittliche Anzahl verfügbarer Datensätze,\nunterdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"),
+              fill = "#AABFDB") +
+    geom_rect(aes(xmin = min_openness, xmax = med_openness,
+                  ymin = med_count, ymax = max_count,
+                  text = "überdurchschnittliche Anzahl verfügbarer Datensätze,\nunterdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"),
+              fill = "#85CCA9") +
+    geom_rect(aes(xmin = med_openness, xmax = max_openness,
+                  ymin = min_count, ymax = med_count,
+                  text = "unterdurchschnittliche Anzahl verfügbarer Datensätze,\nüberdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"),
+              fill = "#85CCD2") +
+    geom_rect(aes(xmin = med_openness, xmax = max_openness,
+                  ymin = med_count, ymax = max_count,
+                  text = "überdurchschnittliche Anzahl verfügbarer Datensätze,\nüberdurchschnittlich offene Nutzbarkeit\nder vorhandenen Datensätze"),
+              fill = "#54B987") +
+    geom_text(aes(x = open_score_wo_nduc_canton,
+                  y = count_available_canton,
+                  label = paste0(sprintf("<b>%s</b>", canton)),
+                  text = str_c("Kanton ", canton, "\n\n",
+                               "Offenheit: ", round(open_score_wo_nduc_canton, 2), "\n",
+                               "Verfügbare Datensätze: ", count_available_canton)),
+              size = 5,
+              position = position_jitter(width = jitter_horizontal,
+                                         height = jitter_vertical)) +
+    #scale_x_continuous(limits = c(min_openness, max_openness),
+                       #breaks = seq(0, 3, 0.5),
+                       #                  expand = expansion(add = c(0.03, 0))) +
+    #scale_y_continuous(breaks = seq(0, max_count, 1),
+                       #expand = expansion(add = c(0.3, 0.2))) +
+    scale_x_continuous(limits = c(min_openness, max_openness),
+                       breaks = pretty(c(min_openness, max_openness), n = 5)) +
+    scale_y_continuous(limits = c(min_count, max_count),
+                       breaks = pretty(c(min_count + 0.5, max_count - 0.5), n = 5)) +
+
+    labs(y = "Anzahl verfügbarer Datensätze",
+         x = "Offenheit der verfügbaren Datensätze") +
+    theme_options
+}
+
+
 plotlyfy <- function(plt){
   ggplotly(plt, tooltip = c("text")) %>%
     config(locale = "de-ch",

@@ -165,8 +165,6 @@ plt_data_prop_wo_nduc <- plotlyfy(plt_data_prop_wo_nduc)
 
 # -------------------------------------------------------------------------
 
-
-
 df2_missing <- df2 %>%
   mutate(
     temp_order_nd = count_missing_canton * 1000 + count_nd_canton,
@@ -343,54 +341,8 @@ recent_csv_file <- csv_files[5]
 
 # Read and clean the previous CSV file
 df_recent <- read_delim(recent_csv_file, delim = ";", na = c("{}", "''", '""', ""))
-df_recent <- df_recent %>%
-  filter(!str_detect(topic_title, "verwaltungsintern")) %>%
-  mutate(topic_title_short =
-           case_when(
-             topic_title == "Amtliche Vermessung" ~ "AV",
-             topic_title == "Bewirtschaftungseinheiten" ~ "BewE",
-             topic_title == "Biodiversitätsförderflächen, Qualitätsstufe II und Vernetzung" ~ "BdF",
-             topic_title == "Elektrische Anlagen mit einer Nennspannung von über 36 kV" ~ "EAl36",
-             topic_title == "Fixpunkte (Kategorie 2)" ~ "FP",
-             topic_title == "Fruchtfolgeflächen" ~ "FFF",
-             topic_title == "Gefahrenkarten" ~ "Gk",
-             topic_title == "Gewässerraum" ~ "Gwr",
-             topic_title == "Kantonale Ausnahmetransportrouten" ~ "KAtr",
-             topic_title == "Kataster der belasteten Standorte" ~ "KbS",
-             topic_title == "Landw. Bewirtschaftung: Elemente mit Landschaftsqualität" ~ "ELq",
-             topic_title == "Leitungskataster" ~ "LK",
-             topic_title == "Luftbild" ~ "LB",
-             topic_title == "Lärmempfindlichkeitsstufen (in Nutzungszonen)" ~ "LeS",
-             topic_title == "Naturereigniskataster" ~ "NeK",
-             topic_title == "Naturereigniskataster erweitert" ~ "NeKe",
-             topic_title == "Nutzungsflächen" ~ "NF",
-             topic_title == "Nutzungsplanung (kantonal / kommunal)" ~ "NuP",
-             topic_title == "Perimeter Landwirtschaftliche Nutzfläche und Sömmerung" ~ "PLSF",
-             topic_title == "Perimeter Terrassenreben" ~ "PTr",
-             topic_title == "Planerischer Gewässerschutz" ~ "PGs",
-             topic_title == "Planung der Revitalisierungen von Seeufern" ~ "RSu",
-             topic_title == "Planung und Berichterstattung der Sanierung Wasserkraft" ~ "SWk",
-             topic_title == "Planungszonen" ~ "Pz",
-             topic_title == "Rebbaukataster" ~ "RbK",
-             topic_title == "Richtplanung erneuerbare Energien" ~ "ReE",
-             topic_title == "Rodungen und Rodungsersatz" ~ "RuR",
-             topic_title == "Statische Waldgrenzen" ~ "SWG",
-             topic_title == "Stromversorgungssicherheit: Netzgebiete" ~ "SNG",
-             topic_title == "Waldabstandslinien" ~ "WaL",
-             topic_title == "Waldreservate" ~ "Wr",
-             topic_title == "Wildruhezonen" ~ "WrZ")) %>%
-  mutate(
-    publication_data = ifelse(
-      publication_data %in% c("Keine Daten", "keine Daten", ""),
-      "Keine Daten",
-      publication_data),
-    publication_wms = ifelse(
-      publication_wms %in% c("Keine Daten","keine Daten", ""),
-      "Keine Daten",
-      publication_wms)) %>%
-  mutate(
-    contract_required_data = replace_na(contract_required_data, FALSE),
-    contract_required_wms = replace_na(contract_required_data, FALSE))
+df_recent <- clean_data(df_recent)
+quality_assurance_after_import(df_recent)
 
 # Join the recent data to the current data and keep records with changes
 df_changes <- df_current_cleaned %>%

@@ -153,23 +153,7 @@ plt_data_prop_wo_nduc <- df2 %>%
   theme(axis.title.y = element_blank())
 
 
-plotlyfy <- function(plt){
-  ggplotly(plt, tooltip = c("text")) %>%
-    config(locale = "de-ch",
-           modeBarButtonsToRemove = plotly_buttons_to_remove,
-           displaylogo = FALSE) %>%
-    layout(dragmode = FALSE)
-}
 
-
-plotlyfy_w_zoom <- function(plt){
-  ggplotly(plt, tooltip = c("text")) %>%
-    config(locale = "de-ch",
-           modeBarButtonsToRemove = plotly_w_zoom_buttons_to_remove,
-           displaylogo = FALSE,
-           displayModeBar = TRUE) %>%
-    layout(dragmode = FALSE)
-}
 
 plt_data_prop_all <- plotlyfy(plt_data_prop_all)
 plt_data_prop_wo_nd <- plotlyfy(plt_data_prop_wo_nd)

@@ -104,73 +104,56 @@ quality_assurance_after_import <- function(df) {
 }
 
 
-compute_openness_per_topic <- function(df) {
-  df <- df %>%
-  # Assign an openness score (for data and for WMS) to each dataset based on publication type
-  mutate(open_score_data =
-           case_when(
-             publication_data == "Frei erhältlich" ~ 3,
-             publication_data == "Registrierung erforderlich" ~ 2,
-             publication_data == "Freigabe erforderlich" ~ 1,
-             publication_data == "Im Aufbau" ~ 0,
-             publication_data == "Keine Daten" ~ 0),
-         open_score_wms =
-           case_when(
-             publication_wms == "Frei erhältlich" ~ 3,
-             publication_wms == "Registrierung erforderlich" ~ 2,
-             publication_wms == "Freigabe erforderlich" ~ 1,
-             publication_wms == "Im Aufbau" ~ 0,
-             publication_wms == "Keine Daten" ~ 0)) %>%
-  # Modify the raw openness scores based on contract requirements (the openness score is halfed, if
-  # using the dataset requires a contract) and adapt the publication type ("mit Vertrag" is added
-  # to datasets that require a contract)
-  mutate(
-    open_score_data = ifelse(
-      contract_required_data == TRUE,
-      open_score_data / 2,
-      open_score_data),
-    open_score_wms = ifelse(
-      contract_required_wms == TRUE,
-      open_score_wms / 2,
-      open_score_wms),
-    publication_data = ifelse(
-      contract_required_data == TRUE & publication_data != "Im Aufbau",
-      str_c(publication_data, ", mit Vertrag"),
-      publication_data),
-    publication_wms = ifelse(
-      contract_required_wms == TRUE & publication_wms != "Im Aufbau",
-      str_c(publication_wms, ", mit Vertrag"),
-      publication_wms)) %>%
-  mutate(
-    publication_data = factor(publication_data, factor_levels_publication),
-    publication_wms = factor(publication_wms, factor_levels_publication))
-  df
-}
-
-
 harmonise_data_and_wms_atts <- function(df) {
   # Split data into data about data downloads and about WMS, and reassemble the
   # data into a long table with harmonised attribute names
   df_data <- df %>%
     mutate(offering = "data download") %>%
     select(canton, topic_title, topic_title_short, offering,
-           publication_data, contract_required_data, open_score_data,
-           updated) %>%
+           publication_data, contract_required_data, updated) %>%
     rename(publication_type = publication_data,
-           contract_required = contract_required_data,
-           open_score = open_score_data)
+           contract_required = contract_required_data)
 
   df_wms <- df %>%
     mutate(offering = "WMS") %>%
     select(canton, topic_title, topic_title_short, offering,
-           publication_wms, contract_required_wms, open_score_wms, updated) %>%
+           publication_wms, contract_required_wms, updated) %>%
     rename(publication_type = publication_wms,
-           contract_required = contract_required_wms,
-           open_score = open_score_wms)
+           contract_required = contract_required_wms)
 
   df <- rbind(df_data, df_wms)
   rm(df_data)
   rm(df_wms)
+  df
+}
+
+
+compute_openness_per_topic <- function(df) {
+  df <- df %>%
+    # Mutate the publication type ("mit Vertrag" is added to datasets that
+    # require a contract)
+    mutate(
+      publication_type =
+        ifelse(contract_required == TRUE & publication_type != "Im Aufbau",
+               str_c(publication_type, ", mit Vertrag"),
+               publication_type)) %>%
+    # Assign an openness score to each dataset based on publication type. The
+    # openness score is halfed, if using the dataset requires a contract.
+    mutate(
+      open_score =
+        case_when(
+          publication_type == "Frei erhältlich" ~ 3,
+          publication_type == "Frei erhältlich, mit Vertrag" ~ 1.5,
+          publication_type == "Registrierung erforderlich" ~ 2,
+          publication_type == "Registrierung erforderlich, mit Vertrag" ~ 1,
+          publication_type == "Freigabe erforderlich" ~ 1,
+          publication_type == "Freigabe erforderlich, mit Vertrag" ~ 0.5,
+          publication_type == "Im Aufbau" ~ 0,
+          publication_type == "Keine Daten" ~ 0),
+      publication_type = factor(publication_type, factor_levels_publication)
+      ) %>%
+    select(canton, topic_title, topic_title_short, updated, offering,
+           publication_type, open_score)
   df
 }
 

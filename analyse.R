@@ -24,13 +24,13 @@ quality_assurance_after_import(df)
 # Copy this dataframe for comparison later on
 df_current_cleaned <- df
 
+# Transform data into long format ----------------------------------------------
+df <- harmonise_data_and_wms_atts(df)
 
 # Compute openness scores (for data and for WMS) per topic ---------------------
 df <- compute_openness_per_topic(df)
 
 
-# Reshape data for easier canton-level analysis --------------------------------
-df <- harmonise_data_and_wms_atts(df)
 
 
 # Compute openness scores per offering (data and wms) and per canton -----------

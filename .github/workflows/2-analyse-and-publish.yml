@@ -24,6 +24,11 @@ jobs:
         
       - name: Install libudunits2 (for {units} in R)
         run: sudo apt-get install libudunits2-dev
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          cache-version: 3
         
       - name: Install libraries
         uses: r-lib/actions/setup-renv@v2

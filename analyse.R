@@ -18,19 +18,20 @@ df <- read_delim(csv_path, delim = ";", na = c("{}", "''", '""', ""))
 updated <- format(min(df$updated), "%d.%m.%Y")
 
 
-# Clean the raw data -----------------------------------------------------------
+# Clean and transform the raw data ---------------------------------------------
+
 df <- clean_data(df)
+
 quality_assurance_after_import(df)
+
 # Copy this dataframe for comparison later on
 df_current_cleaned <- df
 
-# Transform data into long format ----------------------------------------------
+# Transform data into long format
 df <- harmonise_data_and_wms_atts(df)
 
 # Compute openness scores (for data and for WMS) per topic ---------------------
 df <- compute_openness_per_topic(df)
-
-
 
 
 # Compute openness scores per offering (data and wms) and per canton -----------
@@ -38,25 +39,24 @@ df <- compute_openness_per_topic(df)
 df2 <- df %>%
   # Aggregate topics per canton, per offering (data or WMS) and per publication
   # type (and open score - which is the same aggregation as publication type)
-  group_by(canton,
-           offering,
-           publication_type,
-           open_score) %>%
-  summarise(count = n(),
-            topics = paste0(topic_title_short, collapse = ", ")) %>%
-  ungroup() %>%
+  group_by(canton, offering, publication_type, open_score) %>%
+  summarise(
+    count = n(),
+    topics = paste0(topic_title_short, collapse = ", "),
+    .groups = 'drop') %>%
   # Compute several auxiliary metrics:
-  # - ..._wo_nd: without, i.e. ignoring, "Keine Daten" (no data)
-  # - ..._wo_nduc: without, i.e. ignoring, "Keine Daten" (no data) and "Im Aufbau" (under
-  #   construction)
+  # - ..._wo_nd:    without, i.e. ignoring (=not counting as available),
+  #                 "Keine Daten" (no data)
+  # - ..._wo_nduc:  without, i.e. ignoring (=not counting as available)
+  #                 "Keine Daten" (no data) and "Im Aufbau" (under construction)
   mutate(
     open_score_wo_nd = ifelse(publication_type == "Keine Daten", NA, open_score),
     count_wo_nd = ifelse(publication_type == "Keine Daten", NA, count),
     open_score_wo_nduc = ifelse(publication_type %in% c("Keine Daten", "Im Aufbau"), NA, open_score),
-    count_wo_nduc = ifelse(publication_type %in% c("Keine Daten", "Im Aufbau"), NA, count)) %>%
+    count_wo_nduc = ifelse(publication_type %in% c("Keine Daten", "Im Aufbau"), NA, count)
+  ) %>%
   # Compute proportion of each publication type per canton
-  group_by(canton,
-           offering) %>%
+  group_by(canton, offering) %>%
   mutate(
     proportion = count / sum(count, na.rm = TRUE),
     proportion_wo_nd = count_wo_nd / sum(count_wo_nd, na.rm = TRUE),
@@ -69,49 +69,38 @@ df2 <- df %>%
          proportion, proportion_wo_nd, proportion_wo_nduc,
          open_score_canton, open_score_wo_nd_canton, open_score_wo_nduc_canton)
 
-# Compute some canton-level metrics ------------------------
+# Sort abbreviated topic titles in the "topics" attribute alphabetically
+df2 <- sort_topics(df2, width = 30)
 
+
+# Compute some canton-level metrics and join them to df2 -----------------------
+
+# Create a summary for missing data counts by canton
+missing_data_summary <- df2 %>%
+  filter(offering == "data download") %>%
+  group_by(canton) %>%
+  summarise(
+    count_missing_canton =
+      sum(count[publication_type %in% c("Keine Daten", "Im Aufbau")],
+          na.rm = TRUE),
+    count_nd_canton =
+      sum(count[publication_type == "Keine Daten"], na.rm = TRUE),
+    count_available_canton =
+      sum(count[!publication_type %in% c("Keine Daten", "Im Aufbau")],
+          na.rm = TRUE),
+    .groups = 'drop'
+  )
+
+# Join the summaries back to df2
 df2 <- df2 %>%
-  left_join(
-    df2 %>%
-      filter(offering == "data download") %>%
-      filter(publication_type %in% c("Keine Daten", "Im Aufbau")) %>%
-      group_by(canton) %>%
-      summarise(count_missing_canton = sum(count)),
-    by = "canton") %>%
-  left_join(
-    df2 %>%
-      filter(offering == "data download") %>%
-      filter(publication_type %in% c("Keine Daten")) %>%
-      group_by(canton) %>%
-      summarise(count_nd_canton = sum(count)),
-    by = "canton") %>%
-  left_join(
-    df2 %>%
-      filter(offering == "data download") %>%
-      filter(!publication_type %in% c("Keine Daten", "Im Aufbau")) %>%
-      group_by(canton) %>%
-      summarise(count_available_canton = sum(count)),
-    by = "canton") %>%
+  left_join(missing_data_summary, by = "canton") %>%
+
+  # Replace NA values with zero for counts
   mutate(
     count_missing_canton = ifelse(is.na(count_missing_canton), 0, count_missing_canton),
     count_nd_canton = ifelse(is.na(count_nd_canton), 0, count_nd_canton),
-    count_available_canton = ifelse(is.na(count_available_canton), 0, count_available_canton))
-
-
-# Sort the abbreviated topic titles in the "topics" attribute alphabetically ------------------
-
-# Hmm, this seems somewhat more complicated than necessary (?)
-sort_topics <- function(dataframe, output){
-  str_c(unlist(dataframe[4]), collapse = ", ")
-}
-
-df2$topics = lapply(str_split(df2$topics, ", "), sort)
-df2 <- cbind(df2, sorted_topics = apply(df2, 1, sort_topics))
-df2$sorted_topics = str_wrap(df2$sorted_topics, width = 30)
-df2$topics <- df2$sorted_topics
-df2$sorted_topics <- NULL
-
+    count_available_canton = ifelse(is.na(count_available_canton), 0, count_available_canton)
+  )
 
 
 # Produce plots of publication type proportions ---------------------------

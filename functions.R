@@ -78,7 +78,8 @@ clean_data <- function(df) {
     mutate(
       contract_required_data = replace_na(contract_required_data, FALSE),
       contract_required_wms = replace_na(contract_required_data, FALSE))
-  df
+
+  return(df)
 }
 
 
@@ -124,7 +125,8 @@ harmonise_data_and_wms_atts <- function(df) {
   df <- rbind(df_data, df_wms)
   rm(df_data)
   rm(df_wms)
-  df
+
+  return(df)
 }
 
 
@@ -154,27 +156,21 @@ compute_openness_per_topic <- function(df) {
       ) %>%
     select(canton, topic_title, topic_title_short, updated, offering,
            publication_type, open_score)
-  df
+
+  return(df)
 }
 
 
-sort_chr_attribute_values_helper_func <- function(dataframe, col_index, output){
-  str_c(unlist(dataframe[col_index]), collapse = ", ")
-}
+sort_topics <- function(df, width = 30) {
+  df <- df %>%
+    mutate(
+      topics = str_split(topics, ", ") %>%     # Split the topics into a list
+        lapply(sort) %>%                       # Sort each list element
+        sapply(paste, collapse = ", ")         # Collapse back into a string
+    ) %>%
+    mutate(topics = str_wrap(topics, width = width)) # Wrap text for better readability
 
-sort_chr_attribute_values <- function(df, col_index) {
-  # Sort the abbreviated topic titles alphabetically (this seems a bit more
-  # complicated than necessary (?)
-  df$topics = lapply(str_split(df$topics, ", "), sort)
-  df <- cbind(df,
-              sorted_topics = apply(df,
-                                    1,
-                                    sort_chr_attribute_values_helper_func,
-                                    col_index = col_index))
-  df$sorted_topics = str_wrap(df$sorted_topics, width = 30)
-  df$topics <- df$sorted_topics
-  df$sorted_topics <- NULL
-  df
+  return(df)
 }
 
 

@@ -148,6 +148,20 @@ plt_data_comparison
 
 ```
 
+@fig-data-openness-completeness-subset zeigt einen Ausschnitt von @fig-data-openness-completeness rund um den Bereich *mittlerer* Geodaten-Offenheit und *mittlerer* Gesamtzahl der auf geodienste.ch angebotenen Datensätze.
+
+```{r}
+#| label: fig-data-openness-completeness-subset
+#| fig-cap: !expr str_c("Mittlere Offenheit der auf geodienste.ch verfügbaren Datensätze (horizontale Achse) und Anzahl auf geodienste.ch verfügbarer Datensätze (vertikale Achse) (Stand ", updated, "). Achtung, die Grafik zeigt einen Ausschnitt von @fig-data-openness-completeness. Die Achsen beginnen *nicht* bei 0.")
+#| column: page-inset-right
+#| fig-height: 13
+#| fig-width: 10
+#| warning: false
+#| echo: false
+
+plt_data_comparison_subset
+
+```
 
 ::: callout-note
 Sämtlicher Programm-Code hinter dieser Webseite -- inklusive Bezug, Aufbereitung und Analyse der Daten von geodienste.ch -- ist [auf GitHub einsehbar](https://github.com/rastrau/monitoring-geodienste-ch).

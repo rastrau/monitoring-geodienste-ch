@@ -238,11 +238,6 @@ plot_comparison <- function(df_canton, theme_options, min_openness, med_openness
               size = 5,
               position = position_jitter(width = jitter_horizontal,
                                          height = jitter_vertical)) +
-    #scale_x_continuous(limits = c(min_openness, max_openness),
-                       #breaks = seq(0, 3, 0.5),
-                       #                  expand = expansion(add = c(0.03, 0))) +
-    #scale_y_continuous(breaks = seq(0, max_count, 1),
-                       #expand = expansion(add = c(0.3, 0.2))) +
     scale_x_continuous(limits = c(min_openness, max_openness),
                        breaks = pretty(c(min_openness, max_openness), n = 5)) +
     scale_y_continuous(limits = c(min_count, max_count),

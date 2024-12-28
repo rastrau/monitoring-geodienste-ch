@@ -89,8 +89,7 @@ quality_assurance_after_import <- function(df) {
     mutate(cantons = paste0(canton, collapse = ", "),
            count = n()) %>%
     select(topic_title, count, cantons) %>%
-    unique() %>%
-    print(n=100)
+    unique()
 
   # Quality assurance: Are <topic_title_short> values defined for all values of
   # <topic_title>? If yes, result set should be empty.

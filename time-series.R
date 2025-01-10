@@ -50,7 +50,7 @@ facet_plot_theme_options <- theme_options +
     panel.grid.major.y = element_line(color = "#DDDDDD", linewidth = 0.2),
     panel.grid.minor.y = element_line(color = "#DDDDDD", linewidth = 0.1),
     panel.grid.major.x = element_line(color = "#DDDDDD", linewidth = 0.2),
-    axis.text.x = element_text(angle = 45, hjust = 1),
+    axis.text.x = element_text(angle = 55, hjust = 1),
     strip.text = element_text(face = "bold")
   )
 

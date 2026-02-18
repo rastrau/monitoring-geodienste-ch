@@ -250,7 +250,7 @@ Wenn für die Nutzung eines Datensatzes ein Vertrag unterschrieben werden muss, 
 In den Abbildungen oben werden Datensätze auf geodienste.ch wegen dem beschränkten Platz mit den folgenden Abkürzungen bezeichnet:
 
 | Abkürzung | Datensatz |
-|-------------------|-----------------------------------------------------|
+|----|----|
 | ARAF | Abwasserreinigungsanlagen (ARA) mit Finanzkennzahlen |
 | ARA | Abwasserreinigungsanlagen (ARA) ohne Finanzkennzahlen |
 | AV | Amtliche Vermessung |

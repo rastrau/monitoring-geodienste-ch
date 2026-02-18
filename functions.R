@@ -38,7 +38,7 @@ clean_data <- function(df) {
                topic_title == "Grundwasservorkommen" ~ "Gwv",
                topic_title == "Holznutzungsbewilligung" ~ "Hnb",
                topic_title == "Inventar der bestehenden Wasserentnahmen" ~ "IbWe",
-               topic_title == "Kantonale Klimakarte – Physiologisch äquivalente Temperatur" ~ "KKäT",
+               topic_title == "Kantonale Klimakarte – Physiologisch äquivalente Temperatur (PET)" ~ "PET",
                topic_title == "Kantonale Ausnahmetransportrouten" ~ "KAtr",
                topic_title == "Kataster der belasteten Standorte" ~ "KbS",
                topic_title == "Kommunale Entwässerungsplanung (GEP) mit Finanzkennzahlen" ~ "GEPF",

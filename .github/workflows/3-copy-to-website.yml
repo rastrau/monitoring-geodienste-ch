@@ -11,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
+        
       - name: Copy files to website
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:

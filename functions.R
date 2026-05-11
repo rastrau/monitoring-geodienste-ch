@@ -38,6 +38,7 @@ clean_data <- function(df) {
                topic_title == "Grundwasservorkommen" ~ "Gwv",
                topic_title == "Holznutzungsbewilligung" ~ "Hnb",
                topic_title == "Inventar der bestehenden Wasserentnahmen" ~ "IbWe",
+               topic_title == "Kantonale Erhebungen Gewässerzustand: Standorte der Messstationen" ~ "GwSt",
                topic_title == "Kantonale Klimakarte – Physiologisch äquivalente Temperatur (PET)" ~ "PET",
                topic_title == "Kantonale Ausnahmetransportrouten" ~ "KAtr",
                topic_title == "Kataster der belasteten Standorte" ~ "KbS",
@@ -146,8 +147,7 @@ compute_openness_per_topic <- function(df) {
     # Assign an openness score to each dataset based on publication type. The
     # openness score is halfed, if using the dataset requires a contract.
     mutate(
-      open_score =
-        case_when(
+      open_score = case_when(
           publication_type == "Frei erhältlich" ~ 3,
           publication_type == "Frei erhältlich, mit Vertrag" ~ 1.5,
           publication_type == "Registrierung erforderlich" ~ 2,
@@ -155,7 +155,8 @@ compute_openness_per_topic <- function(df) {
           publication_type == "Freigabe erforderlich" ~ 1,
           publication_type == "Freigabe erforderlich, mit Vertrag" ~ 0.5,
           publication_type == "Im Aufbau" ~ 0,
-          publication_type == "Keine Daten" ~ 0),
+          publication_type == "Keine Daten" ~ 0,
+          publication_type == "keine Daten / Bereitstellung" ~ 1.5),
       publication_type = factor(publication_type, factor_levels_publication)
       ) %>%
     select(canton, topic_title, topic_title_short, updated, offering,

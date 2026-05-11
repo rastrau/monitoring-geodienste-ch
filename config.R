@@ -10,7 +10,8 @@ factor_levels_publication <- c("Frei erhältlich",
                                "Freigabe erforderlich",
                                "Freigabe erforderlich, mit Vertrag",
                                "Im Aufbau",
-                               "Keine Daten")
+                               "Keine Daten",
+                               "keine Daten / Bereitstellung")
 
 factor_levels_publication_missing <- c("Keine Daten", "Im Aufbau")
 

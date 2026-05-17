@@ -2,11 +2,14 @@
 #
 # {targets} pipeline for the geodienste-ch analysis.
 #
-# Step 2 of the refactor wraps the existing analysis without changing any
-# behaviour. Step 3 replaces the inline case_when()s in functions.R with
-# CSV-driven joins (clean_data_v2 / compute_openness_per_topic_v2 in
-# R/pipeline.R), keeping outputs bit-for-bit identical. Verified via
-# tests/golden/check_equivalence.R.
+# Orchestration helpers live in R/ and are auto-sourced by tar_source().
+# The data flow per dataset is:
+#
+#   csv file --> raw --> cleaned --> harmonised --> with-openness
+#
+# downstream of which the aggregations, change detection, time-series and
+# plots branch off. clean_data_v2 + compute_openness_per_topic_v2 are
+# CSV-driven equivalents of the inline case_when()s in functions.R.
 #
 # Run with:
 #   LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 Rscript -e 'targets::tar_make()'
@@ -20,13 +23,14 @@ library(tarchetypes)
 library(here)
 
 # Source the existing analysis functions (unit functions in functions.R) and
-# the constants in config.R. These files are intentionally not modified at
-# this step.
+# the constants in config.R. These files are intentionally not modified.
 source(here("config.R"),    encoding = "UTF-8")
 source(here("functions.R"), encoding = "UTF-8")
 
-# Orchestration helpers (new, in R/).
-source(here("R", "pipeline.R"), encoding = "UTF-8")
+# Auto-source every R/*.R helper file. Splitting R/pipeline.R into
+# concern-oriented files (data_io.R, data_clean.R, plot_proportions.R, ...)
+# is purely organisational; tar_source() handles it transparently.
+tar_source(files = here("R"))
 
 tar_option_set(
   packages = c("here", "dplyr", "tidyr", "stringr", "readr", "ggplot2",
@@ -35,7 +39,7 @@ tar_option_set(
 )
 
 list(
-  # ---- Inputs (file-tracked) -------------------------------------------------
+  # ---- File inputs ----------------------------------------------------------
   tar_target(current_csv_file,
              here("data", "geodienste-ch.csv"),
              format = "file"),
@@ -46,7 +50,7 @@ list(
              list_archive_csvs(here("data"), decreasing = TRUE),
              format = "file"),
 
-  # ---- Reference data (file-tracked CSVs replacing inline case_when()s) ----
+  # ---- Reference data (CSV-driven replacements for inline case_when()s) ----
   tar_target(topic_shortnames_file,
              here("data", "reference", "topic_shortnames.csv"),
              format = "file"),
@@ -61,40 +65,53 @@ list(
   tar_target(openness_scores,  read_openness_scores(openness_scores_file)),
   tar_target(cantons,          read_cantons(cantons_file)),
 
-  # ---- Current dataset ------------------------------------------------------
-  # clean_current_v2() / long_with_openness_v2() use the reference CSVs
-  # above instead of the hard-coded case_when()s in functions.R.
+  # ---- Current dataset chain ------------------------------------------------
+  # csv -> raw -> clean -> harmonised -> long (with openness)
+  tar_target(current_raw,
+             read_geodienste_csv(current_csv_file)),
   tar_target(current_clean,
-             clean_current_v2(current_csv_file, topic_shortnames, cantons)),
-  tar_target(long_data,
-             long_with_openness_v2(current_clean, openness_scores,
-                                   factor_levels_publication)),
-  tar_target(canton_aggregates,    aggregate_per_canton(long_data)),
+             clean_data_v2(current_raw, topic_shortnames, cantons)),
+  tar_target(current_harmonised,
+             harmonise_data_and_wms_atts(current_clean)),
+  tar_target(current_long,
+             compute_openness_per_topic_v2(current_harmonised, openness_scores,
+                                           factor_levels_publication)),
+
+  tar_target(canton_aggregates,    aggregate_per_canton(current_long)),
   tar_target(canton_summary,       summarise_per_canton(canton_aggregates)),
 
-  # ---- Change detection (4-weeks-ago) ---------------------------------------
+  # ---- Recent (4-weeks-ago) dataset chain -----------------------------------
+  # Only needs raw + clean; change detection compares cleaned frames.
   tar_target(recent_csv_file,
              pick_recent_csv(archive_csv_files_desc),
              format = "file"),
+  tar_target(recent_raw,
+             read_geodienste_csv(recent_csv_file)),
   tar_target(recent_clean,
-             clean_recent_v2(recent_csv_file, topic_shortnames, cantons)),
+             clean_data_v2(recent_raw, topic_shortnames, cantons)),
+
   tar_target(df_changes,           compute_changes(current_clean, recent_clean)),
 
-  # ---- Time series ----------------------------------------------------------
+  # ---- Historic dataset chain (time-series) ---------------------------------
   # Uses the ASCENDING file order, matching time-series.R's list.files()
-  # default; this affects the canton factor levels via clean_data().
+  # default; this affects the canton factor levels via clean_data_v2().
+  tar_target(historic_raw,
+             purrr::map_df(archive_csv_files_asc, read_geodienste_csv)),
+  tar_target(historic_clean,
+             clean_data_v2(historic_raw, topic_shortnames, cantons)),
+  tar_target(historic_harmonised,
+             harmonise_data_and_wms_atts(historic_clean)),
+  tar_target(historic_long_full,
+             compute_openness_per_topic_v2(historic_harmonised, openness_scores,
+                                           factor_levels_publication)),
   tar_target(historic_long,
-             build_historic_long_v2(archive_csv_files_asc, topic_shortnames,
-                                    openness_scores, factor_levels_publication,
-                                    cantons)),
+             filter_historic_for_timeseries(historic_long_full)),
+
   tar_target(timeseries,           compute_timeseries(historic_long)),
 
   # ---- Plots ---------------------------------------------------------------
-  # The colour vector for the proportion plots is the one defined in config.R
-  # (`cols`); the missing-data plot uses its own greyscale palette internally,
-  # so we no longer overwrite the global `cols` mid-pipeline as analyse.R does.
-  # Each ggplot is wrapped in plotlyfy() to match the script pipeline's
-  # final outputs (which are plotly widgets consumed by index.qmd).
+  # Each proportion ggplot is wrapped in plotlyfy() to match the script
+  # pipeline's final outputs (which are plotly widgets consumed by index.qmd).
   tar_target(plt_data_prop_all,
              plotlyfy(plot_prop_all(canton_aggregates, cols, theme_options))),
   tar_target(plt_data_prop_wo_nd,

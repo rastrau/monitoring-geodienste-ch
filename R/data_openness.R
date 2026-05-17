@@ -17,16 +17,16 @@ suppressPackageStartupMessages({
 compute_openness_per_topic_v2 <- function(df, openness_scores,
                                           factor_levels_publication) {
   df %>%
-    dplyr::mutate(
+    mutate(
       publication_type = ifelse(
         contract_required == TRUE & publication_type != "Im Aufbau",
-        stringr::str_c(publication_type, ", mit Vertrag"),
+        str_c(publication_type, ", mit Vertrag"),
         publication_type)
     ) %>%
-    dplyr::left_join(openness_scores, by = "publication_type") %>%
-    dplyr::mutate(
+    left_join(openness_scores, by = "publication_type") %>%
+    mutate(
       publication_type = factor(publication_type, factor_levels_publication)
     ) %>%
-    dplyr::select(canton, topic_title, topic_title_short, updated, offering,
-                  publication_type, open_score)
+    select(canton, topic_title, topic_title_short, updated, offering,
+           publication_type, open_score)
 }

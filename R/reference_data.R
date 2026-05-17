@@ -9,19 +9,19 @@ suppressPackageStartupMessages({
 })
 
 read_topic_shortnames <- function(path) {
-  readr::read_csv(path, show_col_types = FALSE,
-                  col_types = readr::cols(.default = readr::col_character()))
+  read_csv(path, show_col_types = FALSE,
+           col_types = cols(.default = col_character()))
 }
 
 read_openness_scores <- function(path) {
-  readr::read_csv(path, show_col_types = FALSE,
-                  col_types = readr::cols(
-                    publication_type = readr::col_character(),
-                    open_score = readr::col_double()
-                  ))
+  read_csv(path, show_col_types = FALSE,
+           col_types = cols(
+             publication_type = col_character(),
+             open_score = col_double()
+           ))
 }
 
 read_cantons <- function(path) {
-  readr::read_csv(path, show_col_types = FALSE,
-                  col_types = readr::cols(canton = readr::col_character()))$canton
+  read_csv(path, show_col_types = FALSE,
+           col_types = cols(canton = col_character()))$canton
 }

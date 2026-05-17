@@ -12,8 +12,8 @@ suppressPackageStartupMessages({
 # Read a geodienste-ch CSV with the same parsing options as the existing
 # scripts (analyse.R:16, time-series.R:12).
 read_geodienste_csv <- function(path) {
-  readr::read_delim(path, delim = ";", na = c("{}", "''", '""', ""),
-                    show_col_types = FALSE)
+  read_delim(path, delim = ";", na = c("{}", "''", '""', ""),
+             show_col_types = FALSE)
 }
 
 # List archival CSVs in data/.
@@ -25,12 +25,12 @@ read_geodienste_csv <- function(path) {
 #   - analyse.R sorts descending and picks the 5th element for the
 #     4-weeks-ago comparison.
 # Both orderings are preserved exactly to keep behaviour identical.
-list_archive_csvs <- function(data_dir = here::here("data"),
+list_archive_csvs <- function(data_dir = here("data"),
                               decreasing = FALSE) {
   files <- list.files(path = data_dir,
                       pattern = "^\\d{4}-\\d{2}-\\d{2}-geodienste-ch\\.csv$",
                       full.names = TRUE)
-  stringr::str_sort(files, decreasing = decreasing)
+  str_sort(files, decreasing = decreasing)
 }
 
 # Pick the 4-weeks-ago CSV by position, exactly as analyse.R:249 does. Expects

@@ -56,29 +56,6 @@ pick_recent_csv <- function(csv_files_desc) {
   csv_files_desc[5]
 }
 
-# ---- Cleaning and per-topic computation --------------------------------------
-# These wrap the unit functions defined in functions.R (sourced in _targets.R).
-
-clean_current <- function(csv_path) {
-  df <- read_geodienste_csv(csv_path)
-  df <- clean_data(df)
-  quality_assurance_after_import(df)
-  df
-}
-
-clean_recent <- function(csv_path) {
-  df <- read_geodienste_csv(csv_path)
-  df <- clean_data(df)
-  quality_assurance_after_import(df)
-  df
-}
-
-long_with_openness <- function(df_clean) {
-  df <- harmonise_data_and_wms_atts(df_clean)
-  df <- compute_openness_per_topic(df)
-  df
-}
-
 # ---- Per-canton aggregation (df2 in analyse.R) -------------------------------
 # Verbatim extract of analyse.R lines 38-102, made a pure function.
 
@@ -181,20 +158,6 @@ compute_changes <- function(df_current_cleaned, df_recent) {
 }
 
 # ---- Time-series (time-series.R) ---------------------------------------------
-
-build_historic_long <- function(archive_csvs) {
-  df <- purrr::map_df(archive_csvs, read_geodienste_csv)
-  df <- clean_data(df)
-  quality_assurance_after_import(df)
-  df <- harmonise_data_and_wms_atts(df)
-  df <- compute_openness_per_topic(df)
-  df %>%
-    dplyr::filter(publication_type != "Keine Daten") %>%
-    dplyr::filter(publication_type != "Im Aufbau") %>%
-    dplyr::filter(offering != "WMS") %>%
-    dplyr::filter(canton != "FL") %>%
-    dplyr::filter(updated >= "2023-06-06")
-}
 
 compute_timeseries <- function(df_hist_long) {
   df_hist_long %>%

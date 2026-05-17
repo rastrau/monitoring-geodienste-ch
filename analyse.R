@@ -198,7 +198,7 @@ df_canton <- df2 %>%
   filter(offering == "data download") %>%
   filter(!canton == "FL") %>%
   group_by(canton) %>%
-  summarise(
+  reframe(
     open_score_canton = open_score_canton,
     open_score_wo_nd_canton = open_score_wo_nd_canton,
     open_score_wo_nduc_canton = open_score_wo_nduc_canton,
@@ -276,3 +276,4 @@ names(df_changes) <- c("Kanton", "Datensatz",
                       str_c("Zugriffsregelung am ", date_recent),
                       "Zugriffsregelung neu")
 df_changes <- arrange(df_changes, Kanton, Datensatz)
+

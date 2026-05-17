@@ -50,7 +50,25 @@ clean_data_v2 <- function(df, topic_shortnames, valid_cantons = NULL) {
     filter(!str_detect(canton, "Broker")) %>%
     select(-version, -comment) %>%
     mutate(canton = factor(canton, levels = unique(canton))) %>%
-    left_join(topic_shortnames, by = "topic_title") %>%
+    left_join(topic_shortnames, by = "topic_title")
+
+  # Alert on new geodienste.ch topics that aren't in topic_shortnames.csv
+  # yet. Such topics get the placeholder "unbekannt" label below; the
+  # proper fix is to add a row to data/reference/topic_shortnames.csv
+  # so plot tooltips and table headers show a real abbreviation.
+  unknown_topics <- out %>%
+    filter(is.na(topic_title_short)) %>%
+    pull(topic_title) %>%
+    unique()
+  if (length(unknown_topics) > 0) {
+    warning(
+      "Unknown topic(s) in input — add to data/reference/topic_shortnames.csv: ",
+      paste(shQuote(unknown_topics), collapse = ", "),
+      call. = FALSE
+    )
+  }
+
+  out <- out %>%
     mutate(topic_title_short = ifelse(is.na(topic_title_short),
                                       "unbekannt",
                                       topic_title_short)) %>%

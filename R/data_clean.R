@@ -18,16 +18,42 @@ suppressPackageStartupMessages({
 })
 
 clean_data_v2 <- function(df, topic_shortnames, valid_cantons = NULL) {
+  # Identify "federal-only" topics: ones for which Broker is the sole
+  # publisher (data or WMS) while no canton publishes anything. These get
+  # dropped from the cantonal analysis so cantons aren't penalised for
+  # topics they aren't responsible for. Self-maintaining: if a canton
+  # later starts publishing such a topic, it re-enters automatically.
+  empty_values <- c("Keine Daten", "keine Daten", "")
+  federal_only_topics <- df %>%
+    filter(!str_detect(topic_title, "verwaltungsintern")) %>%
+    group_by(topic_title) %>%
+    summarise(
+      broker_has_any = any(
+        str_detect(canton, "Broker") &
+          (!publication_data %in% empty_values |
+           !publication_wms  %in% empty_values)
+      ),
+      cantons_have_any = any(
+        !str_detect(canton, "Broker") &
+          (!publication_data %in% empty_values |
+           !publication_wms  %in% empty_values)
+      ),
+      .groups = "drop"
+    ) %>%
+    filter(broker_has_any & !cantons_have_any) %>%
+    pull(topic_title)
+
   out <- df %>%
-    dplyr::filter(!stringr::str_detect(topic_title, "verwaltungsintern")) %>%
-    dplyr::filter(!stringr::str_detect(canton, "Broker")) %>%
-    dplyr::select(-version, -comment) %>%
-    dplyr::mutate(canton = factor(canton, levels = unique(canton))) %>%
-    dplyr::left_join(topic_shortnames, by = "topic_title") %>%
-    dplyr::mutate(topic_title_short = ifelse(is.na(topic_title_short),
-                                             "unbekannt",
-                                             topic_title_short)) %>%
-    dplyr::mutate(
+    filter(!str_detect(topic_title, "verwaltungsintern")) %>%
+    filter(!topic_title %in% federal_only_topics) %>%
+    filter(!str_detect(canton, "Broker")) %>%
+    select(-version, -comment) %>%
+    mutate(canton = factor(canton, levels = unique(canton))) %>%
+    left_join(topic_shortnames, by = "topic_title") %>%
+    mutate(topic_title_short = ifelse(is.na(topic_title_short),
+                                      "unbekannt",
+                                      topic_title_short)) %>%
+    mutate(
       publication_data = ifelse(
         publication_data %in% c("Keine Daten", "keine Daten", ""),
         "Keine Daten",
@@ -37,11 +63,11 @@ clean_data_v2 <- function(df, topic_shortnames, valid_cantons = NULL) {
         "Keine Daten",
         publication_wms)
     ) %>%
-    dplyr::mutate(
-      contract_required_data = tidyr::replace_na(contract_required_data, FALSE),
+    mutate(
+      contract_required_data = replace_na(contract_required_data, FALSE),
       # bug-compat with functions.R:86 — should plausibly reference
       # contract_required_wms; preserved so equivalence holds.
-      contract_required_wms  = tidyr::replace_na(contract_required_data, FALSE)
+      contract_required_wms  = replace_na(contract_required_data, FALSE)
     )
 
   # Optional validation: warn if unexpected cantons appear. Does not change

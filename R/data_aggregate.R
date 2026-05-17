@@ -2,12 +2,27 @@
 #
 # Per-canton aggregations: the wide canton/topic frame (df2 in analyse.R
 # lines 38-102) and the canton-level summary used by the scatter plots.
-# `sort_topics()` (from functions.R) is called to factor the publication
-# types in the configured order.
+# Also includes `sort_topics()`, the small helper that alphabetises and
+# wraps the concatenated topic labels for plot tooltips.
 
 suppressPackageStartupMessages({
   library(dplyr)
+  library(stringr)
 })
+
+# Copied verbatim from functions.R::sort_topics. The project-root copy
+# is kept untouched for the legacy scripts.
+sort_topics <- function(df, width = 30) {
+  df <- df %>%
+    mutate(
+      topics = str_split(topics, ", ") %>%     # Split the topics into a list
+        lapply(sort) %>%                       # Sort each list element
+        sapply(paste, collapse = ", ")         # Collapse back into a string
+    ) %>%
+    mutate(topics = str_wrap(topics, width = width)) # Wrap text for better readability
+
+  return(df)
+}
 
 # Verbatim extract of analyse.R lines 38-102, made a pure function.
 aggregate_per_canton <- function(df_long) {

@@ -22,14 +22,14 @@ library(targets)
 library(tarchetypes)
 library(here)
 
-# Source the existing analysis functions (unit functions in functions.R) and
-# the constants in config.R. These files are intentionally not modified.
-source(here("config.R"),    encoding = "UTF-8")
-source(here("functions.R"), encoding = "UTF-8")
-
-# Auto-source every R/*.R helper file. Splitting R/pipeline.R into
-# concern-oriented files (data_io.R, data_clean.R, plot_proportions.R, ...)
-# is purely organisational; tar_source() handles it transparently.
+# Auto-source every R/*.R helper file. The pipeline does NOT source the
+# project-root config.R or functions.R any more: R/config.R holds the
+# constants the pipeline needs, and the few still-live functions from
+# functions.R (harmonise_data_and_wms_atts, sort_topics, plot_comparison,
+# plotlyfy*) have copies under R/. The project-root config.R and
+# functions.R are preserved untouched so the legacy scripts (analyse.R,
+# time-series.R), used by the equivalence harness's scripts mode, keep
+# working.
 tar_source(files = here("R"))
 
 tar_option_set(

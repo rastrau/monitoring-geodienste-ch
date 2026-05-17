@@ -144,5 +144,13 @@ list(
   tar_target(updated_string,
              format(min(current_clean$updated), "%d.%m.%Y")),
   tar_target(date_recent_string,
-             format(min(recent_clean$updated), "%d.%m.%Y"))
+             format(min(recent_clean$updated), "%d.%m.%Y")),
+
+  # ---- Quarto report --------------------------------------------------------
+  # tar_quarto() renders index.qmd into _site/. tarchetypes statically scans
+  # the .qmd for tar_read()/tar_load() calls so the render depends on the
+  # right upstream targets automatically. cue = tar_cue("always") forces a
+  # re-render on every tar_make() so the report's date stamps refresh
+  # weekly, even when the underlying CSVs are byte-identical.
+  tar_quarto(report, path = "index.qmd", cue = tar_cue("always"))
 )

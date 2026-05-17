@@ -125,5 +125,7 @@ list(
 
   # ---- Convenience scalars (used by the Quarto report) ----------------------
   tar_target(updated_string,
-             format(min(current_clean$updated), "%d.%m.%Y"))
+             format(min(current_clean$updated), "%d.%m.%Y")),
+  tar_target(date_recent_string,
+             format(min(recent_clean$updated), "%d.%m.%Y"))
 )

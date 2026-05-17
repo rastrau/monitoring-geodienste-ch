@@ -2,14 +2,15 @@
 #
 # CSV-driven equivalent of functions.R:clean_data().
 #
-# Observable behaviour is identical to the legacy clean_data(), including:
+# Observable behaviour mirrors the legacy clean_data() except for one
+# deliberate fix:
 #   - factor(canton, levels = unique(canton)) — the level order is taken
 #     from the input row order so the time-series and current-data
 #     pipelines retain the same factor structure they had before.
-#   - the contract_required_wms <- contract_required_data assignment in
-#     functions.R:86 (apparent copy/paste bug) is preserved verbatim
-#     to keep equivalence; cleanup is tracked as a follow-up task.
 #   - topics not found in the shortnames CSV are labelled "unbekannt".
+#   - functions.R:86 had a copy/paste bug where contract_required_wms was
+#     filled from contract_required_data instead of contract_required_wms;
+#     fixed here so WMS contract flags reflect their own column.
 
 suppressPackageStartupMessages({
   library(dplyr)
@@ -65,9 +66,7 @@ clean_data_v2 <- function(df, topic_shortnames, valid_cantons = NULL) {
     ) %>%
     mutate(
       contract_required_data = replace_na(contract_required_data, FALSE),
-      # bug-compat with functions.R:86 — should plausibly reference
-      # contract_required_wms; preserved so equivalence holds.
-      contract_required_wms  = replace_na(contract_required_data, FALSE)
+      contract_required_wms  = replace_na(contract_required_wms,  FALSE)
     )
 
   # Optional validation: warn if unexpected cantons appear. Does not change

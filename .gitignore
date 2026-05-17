@@ -39,3 +39,12 @@ vignettes/*.pdf
 .Renviron
 
 /.quarto/
+
+# {targets} cache — rebuilt by tar_make()
+_targets/
+
+# Local golden-artefact fixture for tests/golden/check_equivalence.R
+# Regenerate with: Rscript tests/golden/capture_golden.R
+tests/golden/artefacts/
+
+**/*.quarto_ipynb

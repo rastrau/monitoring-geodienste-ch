@@ -29,10 +29,23 @@ link-external-icon: false
 #| warning: false
 #| echo: false
 library(here)
+library(stringr)
+library(targets)
 
-source(here("config.R"), encoding = "UTF-8")
-source(here("analyse.R"), encoding = "UTF-8")
-source(here("time-series.R"), encoding = "UTF-8")
+# Pull all artefacts from the {targets} pipeline. Run
+#   LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 Rscript -e 'targets::tar_make()'
+# (or rely on tar_quarto() in CI) before rendering this report.
+updated                    <- tar_read(updated_string)
+date_recent                <- tar_read(date_recent_string)
+plt_data_prop_all          <- tar_read(plt_data_prop_all)
+plt_data_prop_wo_nd        <- tar_read(plt_data_prop_wo_nd)
+plt_data_prop_wo_nduc      <- tar_read(plt_data_prop_wo_nduc)
+plt_data_missingdata       <- tar_read(plt_data_missingdata)
+plt_data_comparison        <- tar_read(plt_data_comparison)
+plt_data_comparison_subset <- tar_read(plt_data_comparison_subset)
+lineplot_number            <- tar_read(lineplot_number)
+lineplot_open_score        <- tar_read(lineplot_open_score)
+df_changes                 <- tar_read(df_changes)
 
 ```
 

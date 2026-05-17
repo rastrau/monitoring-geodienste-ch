@@ -35,10 +35,12 @@ jobs:
         with:
           cache-version: 3
 
-      - name: Render
-        uses: quarto-dev/quarto-actions/render@v2
+      - name: Build {targets} pipeline (data + Quarto report)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # this secret is always available for github actions
+          LC_ALL: en_US.UTF-8
+          LANG: en_US.UTF-8
+        run: Rscript -e 'targets::tar_make()'
 
       - name: Push contents of _site folder to repo
         uses: github-actions-x/commit@v2.9

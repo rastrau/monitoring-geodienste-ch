@@ -23,7 +23,10 @@ jobs:
         run: sudo apt-get install -y libcurl4-openssl-dev
         
       - name: Install libudunits2 (for {units} in R)
-        run: sudo apt-get install libudunits2-dev
+        run: sudo apt-get install -y libudunits2-dev
+
+      - name: Install GLPK (for {igraph} in R)
+        run: sudo apt-get install -y libglpk-dev
 
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
@@ -45,9 +48,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: renv/library
-          key: r-${{ runner.os }}-4.5.3-refblas-renv-v14-${{ hashFiles('renv.lock') }}
+          key: r-${{ runner.os }}-4.5.3-refblas-renv-v15-${{ hashFiles('renv.lock') }}
           restore-keys: |
-            r-${{ runner.os }}-4.5.3-refblas-renv-v14-
+            r-${{ runner.os }}-4.5.3-refblas-renv-v15-
 
       - name: Bootstrap renv
         run: |

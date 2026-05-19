@@ -31,21 +31,34 @@ jobs:
           r-version: '4.6.0'
           use-public-rspm: true
 
-      - name: Install R package dependencies
-        uses: r-lib/actions/setup-r-dependencies@v2
+      - name: Cache R packages
+        uses: actions/cache@v4
         with:
-          # Read package list from renv.lock; pak resolves and installs
-          # PPM binaries built for the matching R minor version. This
-          # avoids the renv binary-cache ABI staleness that has been
-          # crashing processx::process_wait in quarto::quarto_inspect().
-          packages: |
-            any::renv
-            any::quarto
-          extra-packages: |
-            local::.
-          needs: |
-            website
-          cache-version: 6
+          path: ${{ env.R_LIBS_USER }}
+          key: r-${{ runner.os }}-4.6.0-pak-v7-${{ hashFiles('renv.lock') }}
+          restore-keys: |
+            r-${{ runner.os }}-4.6.0-pak-v7-
+
+      - name: Install pak
+        run: |
+          install.packages("pak", repos = sprintf(
+            "https://r-lib.github.io/p/pak/stable/%s/%s/%s",
+            .Platform$pkgType, R.Version()$os, R.Version()$arch
+          ))
+        shell: Rscript {0}
+
+      - name: Install R package dependencies from renv.lock
+        # pak::lockfile_install() reads renv.lock natively and installs
+        # PPM binaries built for the running R minor version. This avoids
+        # the renv binary-cache ABI staleness that has been crashing
+        # processx::process_wait in quarto::quarto_inspect().
+        run: |
+          options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/noble/latest"))
+          pak::lockfile_install("renv.lock", update = FALSE)
+          # Ensure quarto + renv themselves are present even if missing
+          # from the lockfile.
+          pak::pkg_install(c("quarto", "renv"), upgrade = FALSE)
+        shell: Rscript {0}
 
       - name: Diagnostics (sessionInfo + Quarto inspect)
         run: |

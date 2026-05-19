@@ -35,29 +35,21 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: r-${{ runner.os }}-4.6.0-pak-v7-${{ hashFiles('renv.lock') }}
+          key: r-${{ runner.os }}-4.6.0-renv-v8-${{ hashFiles('renv.lock') }}
           restore-keys: |
-            r-${{ runner.os }}-4.6.0-pak-v7-
+            r-${{ runner.os }}-4.6.0-renv-v8-
 
-      - name: Install pak
+      - name: Install renv
         run: |
-          install.packages("pak", repos = sprintf(
-            "https://r-lib.github.io/p/pak/stable/%s/%s/%s",
-            .Platform$pkgType, R.Version()$os, R.Version()$arch
-          ))
+          install.packages("renv")
         shell: Rscript {0}
 
       - name: Install R package dependencies from renv.lock
-        # pak::lockfile_install() reads renv.lock natively and installs
-        # PPM binaries built for the running R minor version. This avoids
-        # the renv binary-cache ABI staleness that has been crashing
-        # processx::process_wait in quarto::quarto_inspect().
+        # renv.lock is an renv-format lockfile. Restore it with renv;
+        # pak::lockfile_install() expects pak's own lockfile schema.
         run: |
           options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/noble/latest"))
-          pak::lockfile_install("renv.lock", update = FALSE)
-          # Ensure quarto + renv themselves are present even if missing
-          # from the lockfile.
-          pak::pkg_install(c("quarto", "renv"), upgrade = FALSE)
+          renv::restore(lockfile = "renv.lock", prompt = FALSE)
         shell: Rscript {0}
 
       - name: Diagnostics (sessionInfo + Quarto inspect)

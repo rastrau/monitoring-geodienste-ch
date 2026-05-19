@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.6.0",
+    "Version": "4.5.3",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -1034,27 +1034,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "de342ebfebdbf40477d0758d05426646"
-    },
-    "tarchetypes": {
-      "Package": "tarchetypes",
-      "Version": "0.14.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "dplyr",
-        "fs",
-        "parallel",
-        "rlang",
-        "secretbase",
-        "targets",
-        "tibble",
-        "tidyselect",
-        "utils",
-        "vctrs",
-        "withr"
-      ],
-      "Hash": "f1c58e0dabb39e34df1faaefc99f73dc"
     },
     "targets": {
       "Package": "targets",

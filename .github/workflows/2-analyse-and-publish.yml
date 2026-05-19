@@ -28,11 +28,11 @@ jobs:
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
         with:
-          r-version: '4.6.0'
+          r-version: '4.5.3'
           use-public-rspm: true
 
       - name: Switch R to reference BLAS
-        # The GitHub runner currently starts R 4.6 with OpenBLAS. Quarto's
+        # The GitHub runner has been starting R with OpenBLAS. Quarto's
         # issue tracker points to OpenBLAS/native-library conflicts as a
         # cause of otherwise opaque segfaults in R subprocesses.
         run: |
@@ -45,13 +45,13 @@ jobs:
         uses: actions/cache@v4
         with:
           path: renv/library
-          key: r-${{ runner.os }}-4.6.0-refblas-renv-v13-${{ hashFiles('renv.lock') }}
+          key: r-${{ runner.os }}-4.5.3-refblas-renv-v14-${{ hashFiles('renv.lock') }}
           restore-keys: |
-            r-${{ runner.os }}-4.6.0-refblas-renv-v13-
+            r-${{ runner.os }}-4.5.3-refblas-renv-v14-
 
-      - name: Install renv
+      - name: Bootstrap renv
         run: |
-          install.packages("renv")
+          cat("renv ", as.character(utils::packageVersion("renv")), "\n", sep = "")
         shell: Rscript {0}
 
       - name: Install R package dependencies from renv.lock
@@ -64,7 +64,10 @@ jobs:
         run: |
           options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/noble/latest"))
           renv::restore(lockfile = "renv.lock", prompt = FALSE)
-          renv::status()
+          status <- renv::status()
+          if (!isTRUE(status$synchronized)) {
+            stop("renv restore did not synchronize the project with renv.lock", call. = FALSE)
+          }
         shell: Rscript {0}
 
       - name: Diagnostics (sessionInfo + Quarto CLI)

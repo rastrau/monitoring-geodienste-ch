@@ -34,10 +34,10 @@ jobs:
       - name: Cache R packages
         uses: actions/cache@v4
         with:
-          path: ${{ env.R_LIBS_USER }}
-          key: r-${{ runner.os }}-4.6.0-renv-v8-${{ hashFiles('renv.lock') }}
+          path: renv/library
+          key: r-${{ runner.os }}-4.6.0-renv-v10-${{ hashFiles('renv.lock') }}
           restore-keys: |
-            r-${{ runner.os }}-4.6.0-renv-v8-
+            r-${{ runner.os }}-4.6.0-renv-v10-
 
       - name: Install renv
         run: |
@@ -47,9 +47,15 @@ jobs:
       - name: Install R package dependencies from renv.lock
         # renv.lock is an renv-format lockfile. Restore it with renv;
         # pak::lockfile_install() expects pak's own lockfile schema.
+        # Rebuild processx from source so quarto::quarto_inspect() and
+        # tar_quarto() do not pick up a stale native binary from cache.
+        env:
+          RENV_CONFIG_CACHE_ENABLED: "FALSE"
         run: |
           options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/noble/latest"))
           renv::restore(lockfile = "renv.lock", prompt = FALSE)
+          renv::install("processx@3.8.6", rebuild = TRUE, type = "source")
+          renv::status()
         shell: Rscript {0}
 
       - name: Diagnostics (sessionInfo + Quarto inspect)

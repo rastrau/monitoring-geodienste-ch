@@ -35,9 +35,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: renv/library
-          key: r-${{ runner.os }}-4.6.0-renv-v10-${{ hashFiles('renv.lock') }}
+          key: r-${{ runner.os }}-4.6.0-renv-v11-${{ hashFiles('renv.lock') }}
           restore-keys: |
-            r-${{ runner.os }}-4.6.0-renv-v10-
+            r-${{ runner.os }}-4.6.0-renv-v11-
 
       - name: Install renv
         run: |
@@ -54,6 +54,7 @@ jobs:
         run: |
           options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/noble/latest"))
           renv::restore(lockfile = "renv.lock", prompt = FALSE)
+          renv::install(c("igraph@2.2.2", "processx@3.8.6", "callr@3.7.6"), rebuild = TRUE, type = "source")
           renv::status()
         shell: Rscript {0}
 
@@ -66,7 +67,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # this secret is always available for github actions
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
-        run: Rscript -e 'targets::tar_make()'
+        run: Rscript -e 'targets::tar_make(callr_function = NULL)'
 
       - name: Push contents of _site folder to repo
         uses: github-actions-x/commit@v2.9

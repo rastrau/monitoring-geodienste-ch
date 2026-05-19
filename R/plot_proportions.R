@@ -3,8 +3,8 @@
 # Three stacked horizontal bar plots of per-canton publication-type
 # proportions, with progressively narrower exclusions:
 #   plot_prop_all      — all publication types
-#   plot_prop_wo_nd    — excludes "Keine Daten"
-#   plot_prop_wo_nduc  — excludes "Keine Daten" and "Im Aufbau"
+#   plot_prop_wo_nd    — excludes no-data categories
+#   plot_prop_wo_nduc  — excludes no-data categories and "Im Aufbau"
 #
 # All three are wrapped in plotlyfy() at the target level (see _targets.R).
 # The colour vector `cols` is passed explicitly to avoid the side-effecting
@@ -38,13 +38,13 @@ plot_prop_all <- function(df2, cols, theme_options) {
 plot_prop_wo_nd <- function(df2, cols, theme_options) {
   df2 %>%
     filter(offering == "data download") %>%
-    filter(!publication_type == "Keine Daten") %>%
+    filter(!publication_type %in% publication_types_no_data) %>%
     ggplot(aes(
       proportion_wo_nd, reorder(canton, +open_score_wo_nd_canton),
       fill = publication_type,
       text = str_c("Kanton ", canton, "\n\n",
                    publication_type, ": ", round(100 * proportion_wo_nd, 1),
-                   "% der untersuchten Datens\u00e4tze\n(ohne \"Keine Daten\")\n\n",
+                   "% der untersuchten Datens\u00e4tze\n(ohne Kategorien ohne Daten)\n\n",
                    "Datens\u00e4tze in dieser Kategorie:\n", topics))) +
     geom_col(position = position_stack(reverse = TRUE)) +
     scale_fill_manual(values = cols) +
@@ -57,14 +57,14 @@ plot_prop_wo_nd <- function(df2, cols, theme_options) {
 plot_prop_wo_nduc <- function(df2, cols, theme_options) {
   df2 %>%
     filter(offering == "data download") %>%
-    filter(!publication_type %in% c("Keine Daten", "Im Aufbau")) %>%
+    filter(!publication_type %in% publication_types_unavailable) %>%
     ggplot(aes(
       proportion_wo_nduc,
       reorder(canton, +(open_score_wo_nduc_canton * 1000 + count_available_canton)),
       fill = publication_type,
       text = str_c("Kanton ", canton, "\n\n",
                    publication_type, ": ", round(100 * proportion_wo_nduc, 1),
-                   "% der untersuchten Datens\u00e4tze\n(ohne \"Keine Daten\" und ohne \"Im Aufbau\")\n\n",
+                   "% der untersuchten Datens\u00e4tze\n(ohne Kategorien ohne Daten und ohne \"Im Aufbau\")\n\n",
                    "Datens\u00e4tze in dieser Kategorie:\n", topics))) +
     geom_col(position = position_stack(reverse = TRUE)) +
     scale_fill_manual(values = cols) +

@@ -23,10 +23,15 @@ factor_levels_publication <- c("Frei erh\u00e4ltlich",
                                "Keine Daten",
                                "keine Daten / Bereitstellung")
 
-factor_levels_publication_missing <- c("Keine Daten", "Im Aufbau")
+publication_types_no_data <- c("Keine Daten", "keine Daten / Bereitstellung")
+publication_types_unavailable <- c(publication_types_no_data, "Im Aufbau")
+factor_levels_publication_missing <- c("Keine Daten",
+                                       "keine Daten / Bereitstellung",
+                                       "Im Aufbau")
 
 cols <- c("#54B987", "#85CCA9", "#4575B4", "#91BFDB",
-          "#FF9F73", "#E66244", "#B9B9B9", "#9F9F9F")
+          "#FF9F73", "#E66244", "#B9B9B9", "#9F9F9F",
+          "#7F7F7F")
 
 theme_options <-
   theme_minimal() +

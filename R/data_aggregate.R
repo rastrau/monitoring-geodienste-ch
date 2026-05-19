@@ -33,10 +33,10 @@ aggregate_per_canton <- function(df_long) {
       topics = paste0(topic_title_short, collapse = ", "),
       .groups = "drop") %>%
     mutate(
-      open_score_wo_nd = ifelse(publication_type == "Keine Daten", NA, open_score),
-      count_wo_nd = ifelse(publication_type == "Keine Daten", NA, count),
-      open_score_wo_nduc = ifelse(publication_type %in% c("Keine Daten", "Im Aufbau"), NA, open_score),
-      count_wo_nduc = ifelse(publication_type %in% c("Keine Daten", "Im Aufbau"), NA, count)
+      open_score_wo_nd = ifelse(publication_type %in% publication_types_no_data, NA, open_score),
+      count_wo_nd = ifelse(publication_type %in% publication_types_no_data, NA, count),
+      open_score_wo_nduc = ifelse(publication_type %in% publication_types_unavailable, NA, open_score),
+      count_wo_nduc = ifelse(publication_type %in% publication_types_unavailable, NA, count)
     ) %>%
     group_by(canton, offering) %>%
     mutate(
@@ -58,12 +58,12 @@ aggregate_per_canton <- function(df_long) {
     group_by(canton) %>%
     summarise(
       count_missing_canton =
-        sum(count[publication_type %in% c("Keine Daten", "Im Aufbau")],
+        sum(count[publication_type %in% publication_types_unavailable],
             na.rm = TRUE),
       count_nd_canton =
-        sum(count[publication_type == "Keine Daten"], na.rm = TRUE),
+        sum(count[publication_type %in% publication_types_no_data], na.rm = TRUE),
       count_available_canton =
-        sum(count[!publication_type %in% c("Keine Daten", "Im Aufbau")],
+        sum(count[!publication_type %in% publication_types_unavailable],
             na.rm = TRUE),
       .groups = "drop"
     )

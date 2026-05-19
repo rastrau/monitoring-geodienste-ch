@@ -141,7 +141,8 @@ compute_openness_per_topic <- function(df) {
     # require a contract)
     mutate(
       publication_type =
-        ifelse(contract_required == TRUE & publication_type != "Im Aufbau",
+        ifelse(contract_required == TRUE &
+                 !publication_type %in% publication_types_unavailable,
                str_c(publication_type, ", mit Vertrag"),
                publication_type)) %>%
     # Assign an openness score to each dataset based on publication type. The
@@ -190,14 +191,14 @@ analyse_openness <- function(df) {
     ungroup() %>%
 
     # Compute several auxiliary metrics:
-    # - ..._wo_nd:     without, i.e. ignoring, "Keine Daten" (no data)
-    # - ..._wo_nduc:   without, i.e. ignoring, "Keine Daten" (no data)
+    # - ..._wo_nd:     without, i.e. ignoring no-data categories
+    # - ..._wo_nduc:   without, i.e. ignoring no-data categories
     #                  and "Im Aufbau" (under construction)
     mutate(
-      open_score_wo_nd = ifelse(publication_type == "Keine Daten", NA, open_score),
-      count_wo_nd = ifelse(publication_type == "Keine Daten", NA, count),
-      open_score_wo_nduc = ifelse(publication_type %in% c("Keine Daten", "Im Aufbau"), NA, open_score),
-      count_wo_nduc = ifelse(publication_type %in% c("Keine Daten", "Im Aufbau"), NA, count)) %>%
+      open_score_wo_nd = ifelse(publication_type %in% publication_types_no_data, NA, open_score),
+      count_wo_nd = ifelse(publication_type %in% publication_types_no_data, NA, count),
+      open_score_wo_nduc = ifelse(publication_type %in% publication_types_unavailable, NA, open_score),
+      count_wo_nduc = ifelse(publication_type %in% publication_types_unavailable, NA, count)) %>%
     # Compute proportion of each publication type per canton (and point in time)
     group_by(canton, offering, updated) %>%
     mutate(

@@ -22,8 +22,7 @@ compute_timeseries <- function(df_hist_long) {
 # Liechtenstein, and the pre-stabilisation period before 2023-06-06.
 filter_historic_for_timeseries <- function(df_hist_long_full) {
   df_hist_long_full %>%
-    filter(publication_type != "Keine Daten") %>%
-    filter(publication_type != "Im Aufbau") %>%
+    filter(!publication_type %in% publication_types_unavailable) %>%
     filter(offering != "WMS") %>%
     filter(canton != "FL") %>%
     filter(updated >= "2023-06-06")

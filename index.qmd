@@ -89,7 +89,7 @@ Die Idee für die Erstellung dieser Webseite entstand durch eine [Visualisierung
 
 ## Wie offen ist der Zugriff auf die Daten?
 
-@fig-data-openness-wo-nd zeigt, wie einfach und offen der Zugriff auf Daten-Downloads der einzelnen Kantone auf geodienste.ch ist. Das Vorgehen zur Bewertung der Offenheit des Zugriffs ist unter @sec-bewertung-der-offenheit erklärt. Die Abbildung zeigt die relativen Anteile der Zugriffskategorien für alle Geodaten des jeweiligen Kantons. Die Kategorie «Keine Daten» ist ausgeblendet (siehe dazu auch die Ausführungen in @sec-vollstaendigkeit).
+@fig-data-openness-wo-nd zeigt, wie einfach und offen der Zugriff auf Daten-Downloads der einzelnen Kantone auf geodienste.ch ist. Das Vorgehen zur Bewertung der Offenheit des Zugriffs ist unter @sec-bewertung-der-offenheit erklärt. Die Abbildung zeigt die relativen Anteile der Zugriffskategorien für alle Geodaten des jeweiligen Kantons, für die nicht ausdrücklich «Keine Daten» bzw. «keine Daten / Bereitstellung» ausgewiesen wird (siehe dazu auch die Ausführungen in @sec-vollstaendigkeit).
 
 ::: callout-tip
 Die meisten Abbildungen auf dieser Webseite sind interaktiv. Wenn Sie den Mauszeiger über eine Abbildung bewegen, erscheint zudem eine Werkzeugleiste oben rechts neben der Abbildung. Mit dem Kamera-Symbol können Sie die Abbildung herunterladen.
@@ -97,7 +97,7 @@ Die meisten Abbildungen auf dieser Webseite sind interaktiv. Wenn Sie den Mausze
 
 ```{r}
 #| label: fig-data-openness-wo-nd
-#| fig-cap: !expr str_c("Verfügbarkeit (Zugriffskategorie) von Geodaten auf geodienste.ch  (Stand ", updated, "). Die Kategorie «Keine Daten» ist ausgeblendet. Die Datensatz-Bezeichnungen, die beim Überfahren der Grafik erscheinen, sind in @sec-datensaetze erklärt.")
+#| fig-cap: !expr str_c("Verfügbarkeit (Zugriffskategorie) von Geodaten auf geodienste.ch  (Stand ", updated, "). Kategorien ohne Daten («Keine Daten» und «keine Daten / Bereitstellung») sind ausgeblendet. Die Datensatz-Bezeichnungen, die beim Überfahren der Grafik erscheinen, sind in @sec-datensaetze erklärt.")
 #| column: page-inset-right
 #| fig-height: 10
 #| fig-width: 10
@@ -108,11 +108,11 @@ plt_data_prop_wo_nd
 
 ```
 
-Auch in @fig-data-openness-wo-nduc wird die Offenheit des Zugriffs auf Daten-Downloads der einzelnen Kantone auf geodienste.ch dargestellt. Im Unterschied zur @fig-data-openness-wo-nd sind hier jedoch nur die Daten enthalten, die grundsätzlich verfügbar sind. Falls in einem Kanton für ein Thema die Daten noch «Im Aufbau» sind bzw. falls der Kanton für ein Thema «Keine Daten» ausweist, dann fliesst diese Information nicht in die Darstellung ein. Bewertet wird hier also nur die Zugänglichkeit der tatsächlich vorhandenen Daten.
+Auch in @fig-data-openness-wo-nduc wird die Offenheit des Zugriffs auf Daten-Downloads der einzelnen Kantone auf geodienste.ch dargestellt. Im Unterschied zur @fig-data-openness-wo-nd sind hier jedoch nur die Daten enthalten, die grundsätzlich verfügbar sind. Falls in einem Kanton für ein Thema die Daten noch «Im Aufbau» sind bzw. falls für ein Thema «Keine Daten» oder «keine Daten / Bereitstellung» ausgewiesen wird, dann fliesst diese Information nicht in die Darstellung ein. Bewertet wird hier also nur die Zugänglichkeit der tatsächlich vorhandenen Daten.
 
 ```{r}
 #| label: fig-data-openness-wo-nduc
-#| fig-cap: !expr str_c("Verfügbarkeit (Zugriffskategorie) von Geodaten auf geodienste.ch (Stand ", updated, "). Die Kategorie «Keine Daten» ist ausgeblendet. Die Datensatz-Bezeichnungen, die beim Überfahren der Grafik erscheinen, sind in @sec-datensaetze erklärt.")
+#| fig-cap: !expr str_c("Verfügbarkeit (Zugriffskategorie) von Geodaten auf geodienste.ch (Stand ", updated, "). Kategorien ohne Daten («Keine Daten» und «keine Daten / Bereitstellung») sowie «Im Aufbau» sind ausgeblendet. Die Datensatz-Bezeichnungen, die beim Überfahren der Grafik erscheinen, sind in @sec-datensaetze erklärt.")
 #| column: page-inset-right
 #| fig-height: 10
 #| fig-width: 10
@@ -124,7 +124,7 @@ plt_data_prop_wo_nduc
 
 ## Wie vollständig ist das Daten-Angebot? {#sec-vollstaendigkeit}
 
-@fig-data-completeness zeigt, für wie viele Kategorien in den einzelnen Kantonen auf geodienste.ch keine Daten angeboten werden. Laut Auskunft von verschiedenen Geoinformationsfachstellen können Geodaten aus zumindest zwei Gründen nicht verfügbar sein (und werden daher mit der Zugriffskategorie «Keine Daten» gekennzeichnet):
+@fig-data-completeness zeigt, für wie viele Kategorien in den einzelnen Kantonen auf geodienste.ch keine Daten angeboten werden oder die Daten noch im Aufbau sind. Laut Auskunft von verschiedenen Geoinformationsfachstellen können Geodaten aus zumindest zwei Gründen nicht verfügbar sein (und werden daher je nach Datengrundlage mit «Keine Daten» oder «keine Daten / Bereitstellung» gekennzeichnet):
 
 -   Die Geodaten wurden vom Kanton noch nicht digital erfasst und sind auch noch nicht «Im Aufbau».
 -   Das Thema der Geodaten kommt im Territorium des jeweiligen Kantons nicht vor -- zum Beispiel «Wildruhezonen» in einem Stadtkanton. Zu diesem Thema werden also voraussichtlich auch nie Daten verfügbar gemacht werden.
@@ -133,7 +133,7 @@ Auf geodienste.ch können die exakten Gründe für das Fehlen eines bestimmten D
 
 ```{r}
 #| label: fig-data-completeness
-#| fig-cap: !expr str_c("Nicht vorhandene Geodaten auf geodienste.ch (Zugriffskategorien «Keine Daten» und «Im Aufbau») (Stand ", updated, "). Das Fürstentum Liechtenstein verfügt nur über sehr wenige Datensätze auf geodienste.ch; es wurde deshalb aus der Visualisierung entfernt. Die Datensatz-Bezeichnungen, die beim Überfahren der Grafik erscheinen, sind in @sec-datensaetze erklärt.")
+#| fig-cap: !expr str_c("Nicht vorhandene oder noch im Aufbau befindliche Geodaten auf geodienste.ch (Kategorien «Keine Daten», «keine Daten / Bereitstellung» und «Im Aufbau») (Stand ", updated, "). Das Fürstentum Liechtenstein verfügt nur über sehr wenige Datensätze auf geodienste.ch; es wurde deshalb aus der Visualisierung entfernt. Die Datensatz-Bezeichnungen, die beim Überfahren der Grafik erscheinen, sind in @sec-datensaetze erklärt.")
 #| fig-height: 8
 #| fig-width: 10
 #| warning: false
@@ -237,7 +237,7 @@ df_changes
 -   *Registrierung erforderlich* \[der Nutzerin oder des Nutzers\]
 -   *Freigabe erforderlich* \[durch den jeweiligen Kanton\]
 -   *Im Aufbau*: Die Geodaten werden durch den jeweiligen Kanton gerade erstellt.
--   *Keine Daten*: Es liegen zum jeweiligen Thema im jeweiligen Kanton keine Geodaten vor.
+-   *Keine Daten* bzw. *keine Daten / Bereitstellung*: Es liegen zum jeweiligen Thema im jeweiligen Kanton keine Geodaten vor bzw. sie werden nicht bereitgestellt.
 
 [^6]: denn: Manche Kantone schränken die Nutzungsrechte auch von frei verfügbaren Geodaten ein
 
@@ -251,6 +251,7 @@ Für die **Bewertung der Offenheit** werden pro Datensatz folgende Punkte vergeb
 -   *Registrierung erforderlich*: 2 Punkte
 -   *Freigabe erforderlich*: 1 Punkt
 -   *Im Aufbau* oder *Keine Daten*: 0 Punkte
+-   *keine Daten / Bereitstellung*: 1.5 Punkte, da die fehlende Bereitstellung nicht durch den Kanton verantwortet wird
 
 Wenn für die Nutzung eines Datensatzes ein Vertrag unterschrieben werden muss, halbieren sich diese Punkte:
 

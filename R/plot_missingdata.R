@@ -1,7 +1,7 @@
 # R/plot_missingdata.R
 #
 # Stacked bar plot of "absence of data": for each canton, how many
-# topics are flagged "Keine Daten" or "Im Aufbau". Uses its own
+# topics are flagged with no-data categories or "Im Aufbau". Uses its own
 # greyscale palette so the global `cols` from config.R is not mutated
 # (analyse.R line 173 used to do this).
 
@@ -13,7 +13,7 @@ suppressPackageStartupMessages({
 
 plot_missingdata <- function(df2, theme_options,
                              factor_levels_publication_missing) {
-  cols_missing <- c("#9F9F9F", "#B9B9B9")
+  cols_missing <- c("#9F9F9F", "#7F7F7F", "#B9B9B9")
   df2_missing <- df2 %>%
     mutate(
       temp_order_nd = count_missing_canton * 1000 + count_nd_canton,
@@ -22,7 +22,7 @@ plot_missingdata <- function(df2, theme_options,
   df2_missing %>%
     filter(!canton == "FL") %>%
     filter(offering == "data download") %>%
-    filter(publication_type %in% c("Keine Daten", "Im Aufbau")) %>%
+    filter(publication_type %in% publication_types_unavailable) %>%
     ggplot(aes(
       count, reorder(canton, -temp_order_nd),
       fill = publication_type,

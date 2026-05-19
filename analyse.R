@@ -45,14 +45,14 @@ df2 <- df %>%
     .groups = 'drop') %>%
   # Compute several auxiliary metrics:
   # - ..._wo_nd:    without, i.e. ignoring (=not counting as available),
-  #                 "Keine Daten" (no data)
+  #                 no-data categories
   # - ..._wo_nduc:  without, i.e. ignoring (=not counting as available)
-  #                 "Keine Daten" (no data) and "Im Aufbau" (under construction)
+  #                 no-data categories and "Im Aufbau" (under construction)
   mutate(
-    open_score_wo_nd = ifelse(publication_type == "Keine Daten", NA, open_score),
-    count_wo_nd = ifelse(publication_type == "Keine Daten", NA, count),
-    open_score_wo_nduc = ifelse(publication_type %in% c("Keine Daten", "Im Aufbau"), NA, open_score),
-    count_wo_nduc = ifelse(publication_type %in% c("Keine Daten", "Im Aufbau"), NA, count)
+    open_score_wo_nd = ifelse(publication_type %in% publication_types_no_data, NA, open_score),
+    count_wo_nd = ifelse(publication_type %in% publication_types_no_data, NA, count),
+    open_score_wo_nduc = ifelse(publication_type %in% publication_types_unavailable, NA, open_score),
+    count_wo_nduc = ifelse(publication_type %in% publication_types_unavailable, NA, count)
   ) %>%
   # Compute proportion of each publication type per canton
   group_by(canton, offering) %>%
@@ -80,12 +80,12 @@ missing_data_summary <- df2 %>%
   group_by(canton) %>%
   summarise(
     count_missing_canton =
-      sum(count[publication_type %in% c("Keine Daten", "Im Aufbau")],
+      sum(count[publication_type %in% publication_types_unavailable],
           na.rm = TRUE),
     count_nd_canton =
-      sum(count[publication_type == "Keine Daten"], na.rm = TRUE),
+      sum(count[publication_type %in% publication_types_no_data], na.rm = TRUE),
     count_available_canton =
-      sum(count[!publication_type %in% c("Keine Daten", "Im Aufbau")],
+      sum(count[!publication_type %in% publication_types_unavailable],
           na.rm = TRUE),
     .groups = 'drop'
   )
@@ -121,12 +121,12 @@ plt_data_prop_all <- df2 %>%
 
 plt_data_prop_wo_nd <- df2 %>%
   filter(offering == "data download") %>%
-  filter(!publication_type == "Keine Daten") %>%
+  filter(!publication_type %in% publication_types_no_data) %>%
   ggplot(aes(proportion_wo_nd, reorder(canton, +open_score_wo_nd_canton),
              fill = publication_type,
              text = str_c("Kanton ", canton, "\n\n",
                           publication_type, ": ", round(100 * proportion_wo_nd, 1),
-                          "% der untersuchten Datensätze\n(ohne \"Keine Daten\")\n\n",
+                          "% der untersuchten Datensätze\n(ohne Kategorien ohne Daten)\n\n",
                           "Datensätze in dieser Kategorie:\n", topics))) +
   geom_col(position = position_stack(reverse = TRUE)) +
   scale_fill_manual(values = cols) +
@@ -137,12 +137,12 @@ plt_data_prop_wo_nd <- df2 %>%
 
 plt_data_prop_wo_nduc <- df2 %>%
   filter(offering == "data download") %>%
-  filter(!publication_type %in% c("Keine Daten", "Im Aufbau")) %>%
+  filter(!publication_type %in% publication_types_unavailable) %>%
   ggplot(aes(proportion_wo_nduc, reorder(canton, +(open_score_wo_nduc_canton * 1000 + count_available_canton)),
              fill = publication_type,
              text = str_c("Kanton ", canton, "\n\n",
                           publication_type, ": ", round(100 * proportion_wo_nduc, 1),
-                          "% der untersuchten Datensätze\n(ohne \"Keine Daten\" und ohne \"Im Aufbau\")\n\n",
+                          "% der untersuchten Datensätze\n(ohne Kategorien ohne Daten und ohne \"Im Aufbau\")\n\n",
                           "Datensätze in dieser Kategorie:\n", topics))) +
   geom_col(position = position_stack(reverse = TRUE)) +
   scale_fill_manual(values = cols) +
@@ -170,12 +170,12 @@ df2_missing <- df2 %>%
     publication_type = factor(publication_type, factor_levels_publication_missing)
   )
 
-cols <- c("#9F9F9F", "#B9B9B9")
+cols <- c("#9F9F9F", "#7F7F7F", "#B9B9B9")
 
 plt_data_missingdata <- df2_missing %>%
   filter(!canton == "FL") %>%
   filter(offering == "data download") %>%
-  filter(publication_type %in% c("Keine Daten", "Im Aufbau")) %>%
+  filter(publication_type %in% publication_types_unavailable) %>%
   ggplot(aes(count, reorder(canton, -temp_order_nd),
              fill = publication_type,
              text = str_c("Kanton ", canton, "\n\n",
@@ -276,4 +276,3 @@ names(df_changes) <- c("Kanton", "Datensatz",
                       str_c("Zugriffsregelung am ", date_recent),
                       "Zugriffsregelung neu")
 df_changes <- arrange(df_changes, Kanton, Datensatz)
-

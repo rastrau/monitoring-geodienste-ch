@@ -48,9 +48,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: renv/library
-          key: r-${{ runner.os }}-4.5.3-refblas-renv-v15-${{ hashFiles('renv.lock') }}
+          key: r-${{ runner.os }}-4.5.3-refblas-renv-v16-${{ hashFiles('renv.lock') }}
           restore-keys: |
-            r-${{ runner.os }}-4.5.3-refblas-renv-v15-
+            r-${{ runner.os }}-4.5.3-refblas-renv-v16-
 
       - name: Bootstrap renv
         run: |

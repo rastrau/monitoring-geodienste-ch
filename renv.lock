@@ -835,30 +835,6 @@
       ],
       "Hash": "0a35605539b085a4828ec55ad973fe60"
     },
-    "quarto": {
-      "Package": "quarto",
-      "Version": "1.5.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "cli",
-        "fs",
-        "htmltools",
-        "jsonlite",
-        "later",
-        "lifecycle",
-        "processx",
-        "rlang",
-        "rmarkdown",
-        "rstudioapi",
-        "tools",
-        "utils",
-        "xfun",
-        "yaml"
-      ],
-      "Hash": "c948476ae43811c74888f0d4534832a3"
-    },
     "rappdirs": {
       "Package": "rappdirs",
       "Version": "0.3.4",
@@ -947,13 +923,6 @@
         "R"
       ],
       "Hash": "b2453de2d29aa646afe4781defdc7903"
-    },
-    "rstudioapi": {
-      "Package": "rstudioapi",
-      "Version": "0.18.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "d6e1ecf8e39b6d53c8acde372b2f92d1"
     },
     "sass": {
       "Package": "sass",

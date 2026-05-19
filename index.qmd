@@ -34,7 +34,7 @@ library(targets)
 
 # Pull all artefacts from the {targets} pipeline. Run
 #   LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 Rscript -e 'targets::tar_make()'
-# (or rely on tar_quarto() in CI) before rendering this report.
+# (or rely on the report target in CI) before rendering this report.
 updated                    <- tar_read(updated_string)
 date_recent                <- tar_read(date_recent_string)
 plt_data_prop_all          <- tar_read(plt_data_prop_all)

@@ -47,21 +47,19 @@ jobs:
       - name: Install R package dependencies from renv.lock
         # renv.lock is an renv-format lockfile. Restore it with renv;
         # pak::lockfile_install() expects pak's own lockfile schema.
-        # Rebuild processx from source so quarto::quarto_inspect() and
-        # tar_quarto() do not pick up a stale native binary from cache.
+        # Keep renv's global cache out of CI so native packages are restored
+        # into the project library for this runner.
         env:
           RENV_CONFIG_CACHE_ENABLED: "FALSE"
         run: |
           options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/noble/latest"))
           renv::restore(lockfile = "renv.lock", prompt = FALSE)
-          renv::install("processx@3.8.6", rebuild = TRUE, type = "source")
           renv::status()
         shell: Rscript {0}
 
-      - name: Diagnostics (sessionInfo + Quarto inspect)
+      - name: Diagnostics (sessionInfo + Quarto CLI)
         run: |
           Rscript -e 'cat(R.version.string, "\n"); print(sessionInfo()); cat("Quarto: ", system("quarto --version", intern = TRUE), "\n")'
-          Rscript -e 'str(quarto::quarto_inspect("index.qmd"), max.level = 1)'
 
       - name: Build {targets} pipeline (data + Quarto report)
         env:

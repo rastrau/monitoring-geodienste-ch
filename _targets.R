@@ -19,7 +19,6 @@
 #   Rscript -e 'targets::tar_read(canton_aggregates)'
 
 library(targets)
-library(tarchetypes)
 library(here)
 
 # Auto-source every R/*.R helper file. The pipeline does NOT source the
@@ -147,10 +146,29 @@ list(
              format(min(recent_clean$updated), "%d.%m.%Y")),
 
   # ---- Quarto report --------------------------------------------------------
-  # tar_quarto() renders index.qmd into _site/. tarchetypes statically scans
-  # the .qmd for tar_read()/tar_load() calls so the render depends on the
-  # right upstream targets automatically. cue = tar_cue("always") forces a
-  # re-render on every tar_make() so the report's date stamps refresh
-  # weekly, even when the underlying CSVs are byte-identical.
-  tar_quarto(report, path = "index.qmd", cue = tar_cue("always"))
+  # Render with the Quarto CLI directly. This keeps CI away from
+  # quarto::quarto_inspect(), which currently crashes in processx on the
+  # GitHub Actions runner.
+  tar_target(report, {
+    list(
+      updated_string,
+      date_recent_string,
+      plt_data_prop_all,
+      plt_data_prop_wo_nd,
+      plt_data_prop_wo_nduc,
+      plt_data_missingdata,
+      plt_data_comparison,
+      plt_data_comparison_subset,
+      lineplot_number,
+      lineplot_open_score,
+      df_changes
+    )
+
+    status <- system2("quarto", c("render", "index.qmd"))
+    if (!identical(status, 0L)) {
+      stop("Quarto render failed with exit status ", status, call. = FALSE)
+    }
+
+    "_site/index.html"
+  }, format = "file", cue = tar_cue("always"))
 )

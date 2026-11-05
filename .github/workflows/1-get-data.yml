@@ -16,22 +16,18 @@ jobs:
       uses: actions/checkout@v6
     
     - name: Increase git buffer size
-      run: |
-        git config --global http.postBuffer 1048576000
+      run: git config --global http.postBuffer 1048576000
     
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v4
+    - name: Set up uv
+      uses: astral-sh/setup-uv@v8.1.0
       with:
-        python-version: 3.9
-    
-    - name: Install Python dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-    
+        enable-cache: true
+
+    - name: Install Python and dependencies
+      run: uv sync --locked
+
     - name: Run PREPROCESSING Python script
-      run: |
-        python preprocess.py
+      run: uv run preprocess.py
    
     - name: Push data to repo
       uses: github-actions-x/commit@v2.9

@@ -12,8 +12,22 @@ suppressPackageStartupMessages({
 # Read a geodienste-ch CSV with the same parsing options as the existing
 # scripts (analyse.R:16, time-series.R:12).
 read_geodienste_csv <- function(path) {
+  geodienste_col_spec <- cols(
+    topic_title            = col_character(),
+    topic                  = col_character(),
+    version                = col_double(),
+    canton                 = col_character(),
+    publication_data       = col_character(),
+    contract_required_data = col_logical(),
+    publication_wms        = col_character(),
+    contract_required_wms  = col_logical(),
+    comment                = col_character(),
+    updated                = col_date(format = "%Y-%m-%d"),
+    .default               = col_character()
+  )
+
   read_delim(path, delim = ";", na = c("{}", "''", '""', ""),
-             show_col_types = FALSE)
+             col_types = geodienste_col_spec)
 }
 
 # List archival CSVs in data/.

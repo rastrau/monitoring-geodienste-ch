@@ -1,4 +1,3 @@
-# Python 3.9, env geodienste-ch
 from urllib.request import urlopen
 import pandas as pd
 import json
